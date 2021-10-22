@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.commands &mdash; pmac_motorhome 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.commands</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.commands</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The commands module contains functions that can be called directly</span>
+<span class="sd">from the `PlcDefinition`.</span>
+
+<span class="sd">These functions are used to define PLCs, axes and axis groupings.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">pmac_motorhome.onlyaxes</span> <span class="kn">import</span> <span class="n">OnlyAxes</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">ControllerType</span><span class="p">,</span> <span class="n">PostHomeMove</span>
+<span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">.plc</span> <span class="kn">import</span> <span class="n">Plc</span>
+<span class="kn">from</span> <span class="nn">.snippets</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">drive_relative</span><span class="p">,</span>
+    <span class="n">drive_to_hard_limit</span><span class="p">,</span>
+    <span class="n">drive_to_initial_pos</span><span class="p">,</span>
+    <span class="n">drive_to_soft_limit</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="plc"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.plc">[docs]</a><span class="k">def</span> <span class="nf">plc</span><span class="p">(</span><span class="n">plc_num</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600000</span><span class="p">,</span> <span class="n">post</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Define a new PLC. Use this to create a new Plc context using the &#39;with&#39;</span>
+<span class="sd">    keyword.</span>
+
+<span class="sd">    Must be called in the global context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        plc_num (int): Number of the generated homing PLC</span>
+<span class="sd">        controller (ControllerType): Determines the class of controller Pmac or</span>
+<span class="sd">            Geobrick</span>
+<span class="sd">        filepath (pathlib.Path): The output file where the PLC will be written</span>
+<span class="sd">        pre (str): some raw PLC code to insert at the start of a group</span>
+<span class="sd">        post(str): some raw PLC code to insert at the end of a group</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Plc: the Plc object for use in the context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">Plc</span><span class="p">(</span><span class="n">plc_num</span><span class="p">,</span> <span class="n">ControllerType</span><span class="p">(</span><span class="n">controller</span><span class="p">),</span> <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">post</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="group"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.group">[docs]</a><span class="k">def</span> <span class="nf">group</span><span class="p">(</span>
+    <span class="n">group_num</span><span class="p">,</span>
+    <span class="n">post_home</span><span class="o">=</span><span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+    <span class="n">post_distance</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pre</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">post</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Define a new group of axes within a PLC that should be homed simultaneously.</span>
+<span class="sd">    Use this to create a new context using the &#39;with&#39; keyword from within a Plc</span>
+<span class="sd">    context.</span>
+
+<span class="sd">    Must be called in a Plc context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group_num (int): an identifying number note that group 1 is reserved for</span>
+<span class="sd">            homing all groups</span>
+<span class="sd">        axes (List[int]): a list of axis numbers to include in the group</span>
+<span class="sd">        post_home (PostHomeMove): action to perform on all axes after the</span>
+<span class="sd">            home sequence completes</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Group: The Group object for use in the context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Plc</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span>
+        <span class="n">group_num</span><span class="p">,</span> <span class="n">PostHomeMove</span><span class="p">(</span><span class="n">post_home</span><span class="p">),</span> <span class="n">post_distance</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">post</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="n">htype</span><span class="p">,</span> <span class="n">post</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">):</span>
+    <span class="n">Group</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="n">htype</span><span class="p">,</span> <span class="n">post</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="motor"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.motor">[docs]</a><span class="k">def</span> <span class="nf">motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Declare a motor for use in the current group.</span>
+
+<span class="sd">    Must be called in a group context.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        axis (int): axis number</span>
+<span class="sd">        jdist (int): number of counts to jog after reaching a home mark. Required</span>
+<span class="sd">            to far enough to move off of the home mark.</span>
+<span class="sd">        index (int): for internal use in conversion of old scripts sets</span>
+<span class="sd">            the index of this motor to a different value than the order of</span>
+<span class="sd">            declaration. -1 means use the order that motors were added.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">motor</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">Plc</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="only_axes"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.only_axes">[docs]</a><span class="k">def</span> <span class="nf">only_axes</span><span class="p">(</span><span class="o">*</span><span class="n">axes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a context in which actions are performed on a subset of the groups axes</span>
+
+<span class="sd">    Must be called in a group context.</span>
+
+<span class="sd">    For an example of the use of this, see :doc:`../tutorials/custom`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        axes (int): List of axis numbers</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        OnlyAxes: an OnlyAxes object for use in the context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">OnlyAxes</span><span class="p">(</span><span class="o">*</span><span class="n">axes</span><span class="p">)</span></div>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># post_home actions to recreate post= from the original motorhome.py</span>
+<span class="c1">###############################################################################</span>
+<div class="viewcode-block" id="post_home"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.post_home">[docs]</a><span class="k">def</span> <span class="nf">post_home</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform one of the predefined post homing actions on all axes in the</span>
+<span class="sd">    current group.</span>
+
+<span class="sd">    Must be called in a Group context.</span>
+
+<span class="sd">    This function is called as the last step in all of the :doc:`sequences`</span>
+<span class="sd">    functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">initial_position</span><span class="p">:</span>
+        <span class="n">drive_to_initial_pos</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">high_limit</span><span class="p">:</span>
+        <span class="n">drive_to_soft_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">low_limit</span><span class="p">:</span>
+        <span class="n">drive_to_soft_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">hard_hi_limit</span><span class="p">:</span>
+        <span class="n">drive_to_hard_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">hard_lo_limit</span><span class="p">:</span>
+        <span class="n">drive_to_hard_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">relative_move</span><span class="p">:</span>
+        <span class="n">drive_relative</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">post_distance</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">move_and_hmz</span><span class="p">:</span>
+        <span class="n">drive_relative</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">post_distance</span><span class="p">,</span> <span class="n">set_home</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">:</span>
+        <span class="c1"># TODO this is wrong - we need a jog absolute snippet</span>
+        <span class="n">drive_relative</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">post_distance</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

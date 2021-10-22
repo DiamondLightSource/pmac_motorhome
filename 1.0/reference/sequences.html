@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predfined Homing Sequences &mdash; pmac_motorhome 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Snippet Functions" href="snippets.html" />
+    <link rel="prev" title="Commands" href="commands.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="external.html">User API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Predfined Homing Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="external.html">User API</a> &raquo;</li>
+      <li>Predfined Homing Sequences</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/sequences.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pmac_motorhome.sequences">
+<span id="predfined-homing-sequences"></span><span id="sequences"></span><h1>Predfined Homing Sequences<a class="headerlink" href="#module-pmac_motorhome.sequences" title="Permalink to this headline"></a></h1>
+<p>Predefined homing sequences. These functions can all be called directly from
+<a class="reference internal" href="overview.html#plcdefinition"><span class="std std-ref">Homing PLC definition file</span></a></p>
+<p>Call these functions in a group context to
+perform the sequence on all axes in the group.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_rlim">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_rlim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_rlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_rlim" title="Permalink to this definition"></a></dt>
+<dd><p>Home on release of a limit</p>
+<p>This can also be used for homing on a rotary encoder (back of motor)
+with an index mark on the rotation: Drive to limit and then home away
+from limit to the first index mark.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until the limit switch is hit</p></li>
+<li><p>(Fast Search) Jog in hdir until the limit switch is released</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until the limit switch is hit</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>This example shows homing off the -ve limit with +ve hdir.
+E.g. ixx23 = 1, msyy,i912 = 10, msyy,i913 = 2.</p>
+<img alt="../_images/RLIM.png" src="../_images/RLIM.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw" title="Permalink to this definition"></a></dt>
+<dd><p>Home on a home switch or index mark.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until either index/home switch (Figure 1) or
+limit switch (Figure 2)</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<img alt="../_images/HSW.png" src="../_images/HSW.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_hstop">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_hstop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_hstop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_hstop" title="Permalink to this definition"></a></dt>
+<dd><p>Home on a home switch or index mark on a stage that has no limit switches.</p>
+<p>Detection of following error due to hitting the hard stop is taken as the
+limit indication.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until following error - Ixx97 (in-position
+trigger mode) set to 3 for this phase.</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>The axis must be configured to trigger on home index or home flag
+this is used when there are hard stops instead of limit switches
+e.g. piezo walker</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_dir">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_dir" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Home on a directional home switch (newport style)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until off the home switch</p></li>
+<li><p>(Fast Search) Jog in hdir until the home switch is hit</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>This example shows homing on a directional home switch with -ve hdir.
+E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 0.</p>
+<p>The first figure shows what happens when the axis starts on the home switch.
+E.g. Pos = -20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_DIR.png" src="../_images/HSW_DIR.png" />
+<p>The second figure shows what happens when the axis starts off the home switch.
+E.g. Pos = 20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_DIR2.png" src="../_images/HSW_DIR2.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_limit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Home on a limit switch.
+- (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
+- (Fast Retrace) Jog in -hdir until limit switch deactivates
+- (Home) Disable limits and home</p>
+<p>Finally re-enable limits and do post home move if any.</p>
+<p>This example shows homing on -ve limit with -ve hdir.
+E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 2.</p>
+<img alt="../_images/LIMIT.png" src="../_images/LIMIT.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_hlim">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_hlim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_hlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_hlim" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Home on a home switch or index mark near the limit switch in hdir.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in hdir until either index/home switch (Figure 1) or
+limit switch (Figure 2)</p></li>
+<li><p>If limit switch hit, jog in -hdir until index/home switch</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p><strong>NOTE:</strong> if using a reference mark, set jdist as described under
+<a class="reference internal" href="commands.html#pmac_motorhome.commands.group" title="pmac_motorhome.commands.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a></p>
+<p>This example shows homing on an index with -ve hdir and +ve jdist.
+E.g. ixx23 = -1, msyy,i912 = 1, jdist = 1000.</p>
+<p>The first figure shows what happens when the index is in hdir of the
+starting position. E.g. Pos = 20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_HLIM.png" src="../_images/HSW_HLIM.png" />
+<p>The second figure shows what happens when the index is in -hdir of the</p>
+<img alt="../_images/HSW_HLIM2.png" src="../_images/HSW_HLIM2.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_home" title="Permalink to this definition"></a></dt>
+<dd><p>Dumb home, shouldn’t be needed - just executes HM command on all axes
+in the group</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_nothing">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_nothing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_nothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_nothing" title="Permalink to this definition"></a></dt>
+<dd><p>NOTHING</p>
+<p>Simply goes through to post home move without homing or changing home status.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_slits_hsw">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_slits_hsw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">posx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_slits_hsw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_slits_hsw" title="Permalink to this definition"></a></dt>
+<dd><p>A special seqence for two pairs of slits in which the vertical and horizontal
+pairs may collide with each other at the extreme of their homing direction.</p>
+<ul class="simple">
+<li><p>move all axes to the limit away from their homing direction</p></li>
+<li><p>home both positive axes using home switch or mark</p></li>
+<li><p>move the positive axes out of the way</p></li>
+<li><p>home both negative axes using home switch or mark</p></li>
+<li><p>move the negative axes out of the way</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>posx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – axis number of the positive horizontal motor</p></li>
+<li><p><strong>negx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – axis number of the negative horizontal motor</p></li>
+<li><p><strong>posy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – axis number of the positive vertical motor</p></li>
+<li><p><strong>negy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – axis number of the negative vertical motor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="commands.html" class="btn btn-neutral float-left" title="Commands" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="snippets.html" class="btn btn-neutral float-right" title="Snippet Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
