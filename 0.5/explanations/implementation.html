@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How it Works &mdash; pmac_motorhome 0.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Control System Integration" href="epics.html" />
+    <link rel="prev" title="Adding Functionality" href="../how-to/modifying.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How it Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#audience-for-this-section">Audience for this section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-plc-code">Generating PLC Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#templates-and-functions">Templates and Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#root-jinja-template">Root Jinja Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snippet-jinja-templates">Snippet Jinja Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-jinja-templates">Further Jinja Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#callback-functions">Callback Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>How it Works</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/explanations/implementation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-it-works">
+<span id="id1"></span><h1>How it Works<a class="headerlink" href="#how-it-works" title="Permalink to this headline"></a></h1>
+<section id="audience-for-this-section">
+<h2>Audience for this section<a class="headerlink" href="#audience-for-this-section" title="Permalink to this headline"></a></h2>
+<p>This section is useful for users two classes of audience</p>
+<ul class="simple">
+<li><p>Users that wish to wish to create custom homing sequences from
+the existing snippets. A deep understanding is not required but will
+show how the sequences are built up.</p></li>
+<li><p>Developers wishing to contribute to the project and add their own snippets
+and / or callback functions. For this, good grasp of the concepts on this
+page is required.</p></li>
+</ul>
+</section>
+<section id="generating-plc-code">
+<span id="id2"></span><h2>Generating PLC Code<a class="headerlink" href="#generating-plc-code" title="Permalink to this headline"></a></h2>
+<p>The output code is generated using a root jinja template called plc.pmc.jinja.</p>
+<p>The render is passed a Plc object which has been generated by the definition
+code. For example, consider the following definition code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pmac_motorhome.commands</span> <span class="kn">import</span> <span class="n">group</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="n">plc</span>
+<span class="kn">from</span> <span class="nn">pmac_motorhome.sequences</span> <span class="kn">import</span> <span class="n">home_hsw</span>
+
+<span class="k">with</span> <span class="n">plc</span><span class="p">(</span>
+    <span class="n">plc_num</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="s2">&quot;GeoBrick&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;/tmp/PLC12_SLITS1_HM.pmc&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">with</span> <span class="n">group</span><span class="p">(</span><span class="n">group_num</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">home_hsw</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Executing the above will create the following structure to be passed to the
+render.</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="../reference/internal.html#pmac_motorhome.plc.Plc" title="pmac_motorhome.plc.Plc"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Plc</span></code></a> object which has <em>groups</em> that contains a single <a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> object</p></li>
+<li><p>the <a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> has <em>motors</em> which contains two <a class="reference internal" href="../reference/internal.html#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Motor</span></code></a> objects</p></li>
+<li><p><a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> also has <em>templates</em> which contains a list of <a class="reference internal" href="../reference/internal.html#pmac_motorhome.template.Template" title="pmac_motorhome.template.Template"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> objects that
+represent the sequence of snippets of PLC code to be inserted for the
+enclosing group.</p></li>
+</ul>
+<p>The <em>templates</em> list is created by the function <a class="reference internal" href="../reference/sequences.html#pmac_motorhome.sequences.home_hsw" title="pmac_motorhome.sequences.home_hsw"><code class="xref any py py-func docutils literal notranslate"><span class="pre">home_hsw</span></code></a> which is a
+sequence of calls to <a class="reference internal" href="../reference/snippets.html#snippet-functions"><span class="std std-ref">Snippet Functions</span></a>.</p>
+<p>When the Plc context completes <em>Plc.__exit__</em> is called and this will invoke
+a render of the root jinja template.</p>
+<p>The core of plc.pmc.jinja looks like this:</p>
+<div class="literal-block-wrapper docutils container" id="plc-pmc-jinja">
+<div class="code-block-caption"><span class="caption-text">plc.pmc.jinja main loop</span><a class="headerlink" href="#plc-pmc-jinja" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span><span class="c1"># Loop through the Groups in the Plc #}</span>
+ <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">plc</span><span class="o">.</span><span class="n">groups</span> <span class="o">%</span><span class="p">}</span>
+ <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">group_num</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">%</span><span class="p">}</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">HomingBackupGroup</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+ <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">HomingBackupGroup</span> <span class="o">=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">HomingBackupGroup</span> <span class="o">=</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">group_num</span> <span class="p">}})</span>
+ <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+ <span class="ow">and</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+     <span class="n">HomingGroup</span><span class="o">=</span><span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">group_num</span> <span class="p">}}</span>
+
+     <span class="p">;</span><span class="n">Clear</span> <span class="n">home</span> <span class="n">flags</span>
+     <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">htype</span> <span class="o">!=</span> <span class="s2">&quot;NOTHING&quot;</span> <span class="o">%</span><span class="p">}</span>
+     <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">clear_home</span><span class="p">()</span> <span class="p">}}</span>
+     <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+     <span class="p">{</span><span class="c1"># Loop through snippet templates in the Group #}</span>
+     <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">template</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">templates</span> <span class="o">%</span><span class="p">}</span>
+         <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">function</span> <span class="o">-%</span><span class="p">}</span>
+         <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span><span class="p">}}</span>
+         <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+         <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="n">template</span><span class="o">.</span><span class="n">jinja_file</span><span class="o">+</span><span class="s1">&#39;.pmc.jinja&#39;</span> <span class="o">%</span><span class="p">}</span>
+
+         <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+     <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+ <span class="n">endif</span>
+</pre></div>
+</div>
+</div>
+<p>This loops trough all of the groups held by Plc and though each of the
+snippet templates held by each of those groups. For each templates the
+jinja file associated with it is included into template, or the callback
+function is executed with arguments from the template object.</p>
+<p>Note that the current group object and current template object are in scope
+for the included jinja template and thus it will have access to their members
+e.g. the child jinja template will be able to see template.args.</p>
+<p>Included snippet templates may in turn include other templates and in most
+cases will also include callback functions. The following typical example is the
+snippet which searches for the home mark.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">restore_homed_flags</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_home_flags</span><span class="p">()</span> <span class="p">}}</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_to_home_jdist() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>This jinja template follows these common patterns:</p>
+<ul class="simple">
+<li><p>Uses arguments from template.args to insert literals e.g.
+<em>{{template.args.state}}</em></p></li>
+<li><p>Also uses arguments for flow control e.g.
+<em>{% if template.args.restore_homed_flags %}</em></p></li>
+<li><p>Includes further levels of jinja templates e.g.
+<em>{% include “wait_for_done.pmc.jinja” %}</em></p></li>
+<li><p>Calls a callback function in the group object to output a command that
+actions all of the group’s axes on a single line e.g.
+<em>{{ group.jog_to_home_jdist() }}</em></p></li>
+</ul>
+<p>The second level jinja includes are typically used in most snippets. They are:</p>
+<ul class="simple">
+<li><p>‘debug pause’ inserts code that will wait for user intervention when in debug
+(see <a class="reference internal" href="epics.html#homing-api"><span class="std std-ref">Homing API</span></a>).</p></li>
+<li><p>‘wait for done’ loops while the motors are completing the current move
+command.</p></li>
+</ul>
+</section>
+<section id="templates-and-functions">
+<h2>Templates and Functions<a class="headerlink" href="#templates-and-functions" title="Permalink to this headline"></a></h2>
+<p><a class="reference internal" href="#generating-plc-code"><span class="std std-ref">Generating PLC Code</span></a> describes a process that uses several levels of
+templates and callbacks. Here we will outline those levels separately to
+make the distinction clear.</p>
+<p>The rendering uses a mixture of Jinja Templates and callback functions.
+The decision as to which is used for each part of the PLC is made on this
+basis:</p>
+<ul class="simple">
+<li><p>Any block of code that can be represented easily in Jinja and might be
+used more than once goes into its own Jinja template</p></li>
+<li><p>Occasional variable substitutions and flow control are acceptable in
+Jinja as long as it is reasonably readable</p></li>
+<li><p>Where the Jinja would be unreadable we substitute in a callback function
+to output the relevant code</p></li>
+<li><p>At present the only callback functions are for lines of PLC code that
+perform an operation on all axes in a group on a single line (also
+all axes in a PLC for some cases)</p></li>
+</ul>
+<p>The following headings are in order of hierarchy with the root first.</p>
+<section id="root-jinja-template">
+<h3>Root Jinja Template<a class="headerlink" href="#root-jinja-template" title="Permalink to this headline"></a></h3>
+<p>Template plc.pmc.jinja is the root template. Rendering this template
+with a Plc object generates the entire PLC. This template may directly
+use any of the below headings.</p>
+<p>The root Jinja Template is rendered automatically when a Plc context ends in
+the definition code.</p>
+</section>
+<section id="snippet-jinja-templates">
+<h3>Snippet Jinja Templates<a class="headerlink" href="#snippet-jinja-templates" title="Permalink to this headline"></a></h3>
+<p>These templates are directly included by the root template in its inner
+loop that iterates over groups’ contents.
+These templates may directly use any of the following headings.</p>
+<p>These templates represent one block of functionality in the PLC and
+typically take the form of:</p>
+<ul class="simple">
+<li><p>Pause for debug if debugging</p></li>
+<li><p>Setup some axis parameters</p></li>
+<li><p>Initiate a move of all axes in the group</p></li>
+<li><p>Wait for all axes to complete the move</p></li>
+</ul>
+<p>Every snippet template has a corresponding snippet function whose name is the
+same as the jinja file prefix (See <a class="reference internal" href="../reference/snippets.html#snippet-functions"><span class="std std-ref">Snippet Functions</span></a>). Calling this function
+in the context of a Group object causes the snippet to be instatiated in the
+render.</p>
+</section>
+<section id="further-jinja-templates">
+<h3>Further Jinja Templates<a class="headerlink" href="#further-jinja-templates" title="Permalink to this headline"></a></h3>
+<p>Repeated functionality from Snippet Jinja Templates may be implemented in
+a further template.
+These templates can use Callback Functions below.</p>
+<p>The most common examples are debug_pause.pmc.jinja and
+wait_for_done.pmc.jinja.</p>
+</section>
+<section id="callback-functions">
+<h3>Callback Functions<a class="headerlink" href="#callback-functions" title="Permalink to this headline"></a></h3>
+<p>Callback functions exist in the <a class="reference internal" href="../reference/internal.html#pmac_motorhome.plc.Plc" title="pmac_motorhome.plc.Plc"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Plc</span></code></a> class and <a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> class. These are
+used to output a line of code that operates on all axes in the <a class="reference internal" href="../reference/internal.html#pmac_motorhome.plc.Plc" title="pmac_motorhome.plc.Plc"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Plc</span></code></a> or
+<a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a>.</p>
+<p>For example The function <a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group.home" title="pmac_motorhome.group.Group.home"><code class="xref py py-meth docutils literal notranslate"><span class="pre">home()</span></code></a>
+will output code to
+home all the axes in a group. Assumimg the group has axes 1, 2, 3
+then the output of the command <a class="reference internal" href="../reference/internal.html#pmac_motorhome.group.Group.home" title="pmac_motorhome.group.Group.home"><code class="xref py py-meth docutils literal notranslate"><span class="pre">home()</span></code></a>
+will look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#1hm #2hm #3hm</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../how-to/modifying.html" class="btn btn-neutral float-left" title="Adding Functionality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="epics.html" class="btn btn-neutral float-right" title="Control System Integration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

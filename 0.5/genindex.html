@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; pmac_motorhome 0.5 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="index.html" class="icon icon-home"> pmac_motorhome
+            <img src="_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="how-to/modifying.html#pmac_motorhome.snippets._snippet_function">_snippet_function() (in module pmac_motorhome.snippets)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.add_action">add_action() (pmac_motorhome.group.Group class method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.add_comment">add_comment() (pmac_motorhome.group.Group class method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.add_group">add_group() (pmac_motorhome.plc.Plc class method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.add_motor">add_motor() (pmac_motorhome.group.Group class method)</a>
+
+      <ul>
+        <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.add_motor">(pmac_motorhome.plc.Plc class method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.add_snippet">add_snippet() (pmac_motorhome.group.Group class method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.are_homed_flags_zero">are_homed_flags_zero() (pmac_motorhome.plc.Plc method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.ControllerType.brick">brick (pmac_motorhome.constants.ControllerType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.callback">callback() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.check_homed">check_homed() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.clear_home">clear_home() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.clear_limits">clear_limits() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.command">command() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.continue_home_maintain_axes_offset">continue_home_maintain_axes_offset() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.ControllerType">ControllerType (class in pmac_motorhome.constants)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.debug_pause">debug_pause() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.disable_limits">disable_limits() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_off_home">drive_off_home() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_relative">drive_relative() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_hard_limit">drive_to_hard_limit() (in module pmac_motorhome.snippets)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_home">drive_to_home() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_home_if_on_limit">drive_to_home_if_on_limit() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_hstop">drive_to_hstop() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_initial_pos">drive_to_initial_pos() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_limit">drive_to_limit() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.drive_to_soft_limit">drive_to_soft_limit() (in module pmac_motorhome.snippets)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.F">F (in module pmac_motorhome.snippets)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.following_err">following_err() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.motor.Motor.get_motor">get_motor() (pmac_motorhome.motor.Motor class method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group">Group (class in pmac_motorhome.group)</a>
+</li>
+      <li><a href="reference/commands.html#pmac_motorhome.commands.group">group() (in module pmac_motorhome.commands)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.hard_hi_limit">hard_hi_limit (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.hard_lo_limit">hard_lo_limit (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.high_limit">high_limit (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.home">home() (in module pmac_motorhome.snippets)</a>
+
+      <ul>
+        <li><a href="reference/internal.html#pmac_motorhome.group.Group.home">(pmac_motorhome.group.Group method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_home">home_home() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_hsw">home_hsw() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_hsw_dir">home_hsw_dir() (in module pmac_motorhome.sequences)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_hsw_hlim">home_hsw_hlim() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_hsw_hstop">home_hsw_hstop() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_limit">home_limit() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_nothing">home_nothing() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_rlim">home_rlim() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/sequences.html#pmac_motorhome.sequences.home_slits_hsw">home_slits_hsw() (in module pmac_motorhome.sequences)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.homed">homed() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState">HomingState (class in pmac_motorhome.constants)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.in_pos">in_pos() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.initial_position">initial_position (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.instance">instance() (pmac_motorhome.group.Group class method)</a>
+
+      <ul>
+        <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.instance">(pmac_motorhome.plc.Plc class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.jog">jog() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.jog_axes">jog_axes() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.jog_distance">jog_distance() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.jog_if_on_limit">jog_if_on_limit() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.jog_stopped">jog_stopped() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.jog_to_home_jdist">jog_to_home_jdist() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.limits">limits() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.low_limit">low_limit (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    module
+
+      <ul>
+        <li><a href="reference/commands.html#module-pmac_motorhome.commands">pmac_motorhome.commands</a>
+</li>
+        <li><a href="reference/constants.html#module-pmac_motorhome.constants">pmac_motorhome.constants</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.group">pmac_motorhome.group</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.motor">pmac_motorhome.motor</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.onlyaxes">pmac_motorhome.onlyaxes</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.plc">pmac_motorhome.plc</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.plcgenerator">pmac_motorhome.plcgenerator</a>
+</li>
+        <li><a href="reference/sequences.html#module-pmac_motorhome.sequences">pmac_motorhome.sequences</a>
+</li>
+        <li><a href="reference/snippets.html#module-pmac_motorhome.snippets">pmac_motorhome.snippets</a>
+</li>
+        <li><a href="reference/internal.html#module-pmac_motorhome.template">pmac_motorhome.template</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.motor.Motor">Motor (class in pmac_motorhome.motor)</a>
+</li>
+      <li><a href="reference/commands.html#pmac_motorhome.commands.motor">motor() (in module pmac_motorhome.commands)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.move_absolute">move_absolute (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.move_and_hmz">move_and_hmz (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.negate_home_flags">negate_home_flags() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.none">none (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/commands.html#pmac_motorhome.commands.only_axes">only_axes() (in module pmac_motorhome.commands)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.onlyaxes.OnlyAxes">OnlyAxes (class in pmac_motorhome.onlyaxes)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.overwrite_inverse_flags">overwrite_inverse_flags() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc">Plc (class in pmac_motorhome.plc)</a>
+</li>
+      <li><a href="reference/commands.html#pmac_motorhome.commands.plc">plc() (in module pmac_motorhome.commands)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.ControllerType.pmac">pmac (pmac_motorhome.constants.ControllerType attribute)</a>
+</li>
+      <li>
+    pmac_motorhome.commands
+
+      <ul>
+        <li><a href="reference/commands.html#module-pmac_motorhome.commands">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.constants
+
+      <ul>
+        <li><a href="reference/constants.html#module-pmac_motorhome.constants">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.group
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.group">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.motor
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.motor">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.onlyaxes
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.onlyaxes">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    pmac_motorhome.plc
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.plc">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.plcgenerator
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.plcgenerator">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.sequences
+
+      <ul>
+        <li><a href="reference/sequences.html#module-pmac_motorhome.sequences">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.snippets
+
+      <ul>
+        <li><a href="reference/snippets.html#module-pmac_motorhome.snippets">module</a>
+</li>
+      </ul></li>
+      <li>
+    pmac_motorhome.template
+
+      <ul>
+        <li><a href="reference/internal.html#module-pmac_motorhome.template">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/commands.html#pmac_motorhome.commands.post_home">post_home() (in module pmac_motorhome.commands)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.post_home_action">post_home_action() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove">PostHomeMove (class in pmac_motorhome.constants)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.PostHomeMove.relative_move">relative_move (pmac_motorhome.constants.PostHomeMove attribute)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.restore_hi_limits">restore_hi_limits() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.restore_home_flags">restore_home_flags() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.restore_homed">restore_homed() (pmac_motorhome.plc.Plc method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.restore_limit_flags">restore_limit_flags() (pmac_motorhome.group.Group method)</a>
+
+      <ul>
+        <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.restore_limit_flags">(pmac_motorhome.plc.Plc method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.restore_limits">restore_limits() (in module pmac_motorhome.snippets)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.restore_lo_limits">restore_lo_limits() (pmac_motorhome.plc.Plc method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_hi_limits">save_hi_limits() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_homed">save_homed() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_limit_flags">save_limit_flags() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_lo_limits">save_lo_limits() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_not_homed">save_not_homed() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.save_position">save_position() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.set_axis_filter">set_axis_filter() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.set_home">set_home() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.set_inpos_trigger">set_inpos_trigger() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.set_large_jog_distance">set_large_jog_distance() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateAligning">StateAligning (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateConfiguring">StateConfiguring (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateDone">StateDone (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateFastRetrace">StateFastRetrace (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateFastSearch">StateFastSearch (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateHoming">StateHoming (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateIdle">StateIdle (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateMoveNeg">StateMoveNeg (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StateMovePos">StateMovePos (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StatePostHomeMove">StatePostHomeMove (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/constants.html#pmac_motorhome.constants.HomingState.StatePreHomeMove">StatePreHomeMove (pmac_motorhome.constants.HomingState attribute)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.plc.Plc.stop_motors">stop_motors() (pmac_motorhome.plc.Plc method)</a>
+</li>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.store_position_diff">store_position_diff() (in module pmac_motorhome.snippets)</a>
+
+      <ul>
+        <li><a href="reference/internal.html#pmac_motorhome.group.Group.store_position_diff">(pmac_motorhome.group.Group method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.stored_limit_to_jogdistance">stored_limit_to_jogdistance() (pmac_motorhome.group.Group method)</a>
+</li>
+      <li><a href="reference/internal.html#pmac_motorhome.group.Group.stored_pos_to_jogdistance">stored_pos_to_jogdistance() (pmac_motorhome.group.Group method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/internal.html#pmac_motorhome.template.Template">Template (class in pmac_motorhome.template)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/snippets.html#pmac_motorhome.snippets.wait_for_done_args">wait_for_done_args (in module pmac_motorhome.snippets)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

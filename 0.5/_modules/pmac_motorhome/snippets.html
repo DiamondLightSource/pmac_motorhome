@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.snippets &mdash; pmac_motorhome 0.5 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.snippets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.snippets</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">All of these functions will insert a small snippet of PLC code into the</span>
+<span class="sd">generated PLC. Each snippet performs a specific action on all of the axes</span>
+<span class="sd">in a group simultaneously.</span>
+
+<span class="sd">These functions can all be called directly from</span>
+<span class="sd">`PlcDefinition`. They should be called in the context of a Group object.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">Group</span>
+
+
+<span class="c1"># the command action simply inserts the text in &#39;cmd&#39; into the PLC output</span>
+<span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="n">Group</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">)</span>
+
+
+<span class="n">snippet_docstring</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    This will cause the jinja template </span><span class="si">{template}</span><span class="s2"> to be expanded and inserted</span>
+<span class="s2">    into the PLC code. The template is as follows:</span>
+
+<span class="s2">    .. include:: ../../pmac_motorhome/snippets/</span><span class="si">{template}</span><span class="s2"></span>
+<span class="s2">        :literal:</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">wait_for_done_docstring</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">    The included template wait_for_done.pmc.jinja allows this function to take these</span>
+<span class="s2">    additional parameters which all default to False:</span>
+
+<span class="s2">    Args:</span>
+<span class="s2">        no_following_err (bool): don&#39;t check for following error during moves</span>
+<span class="s2">        with_limits (bool): check for limits during the move. When False we continue</span>
+<span class="s2">            waiting even if a subset of the axes have stopped on a limit</span>
+<span class="s2">        wait_for_one_motor (bool): stop wating as soon as one of the motors</span>
+<span class="s2">            has stopped instead of waiting for all motors</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># jinja snippets that include wait_for_done.pmc.jinja also may pass</span>
+<span class="c1"># these arguments - the dictionary values are the defaults</span>
+<span class="n">wait_for_done_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;no_following_err&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;with_limits&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;wait_for_one_motor&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A set of arguments to pass to the wait_for_done function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A type to represent a callable function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="_snippet_function"><a class="viewcode-back" href="../../how-to/modifying.html#pmac_motorhome.snippets._snippet_function">[docs]</a><span class="k">def</span> <span class="nf">_snippet_function</span><span class="p">(</span><span class="o">*</span><span class="n">arglists</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">F</span><span class="p">],</span> <span class="n">F</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator function to allow simple declaration of snippet functions.</span>
+<span class="sd">    Snippet functions are used to append snippets of Jinja PLC code to</span>
+<span class="sd">    the current PLC.</span>
+
+<span class="sd">    The decorated function should have:</span>
+
+<span class="sd">    - the same name as a jinja template file (less .pmc.jinja)</span>
+<span class="sd">      in the folder pmac_motorhome/snippets. The function should take</span>
+<span class="sd">    - Type hinted parameters that the template will use</span>
+<span class="sd">    - A docstring that describes the function of the snippet</span>
+
+<span class="sd">    The snippet may itself include further snippets and if this is the case</span>
+<span class="sd">    any argument lists required by further snippets should be passed to the</span>
+<span class="sd">    decorator. The only example of this at present is `wait_for_done_args`.</span>
+
+<span class="sd">    The decorator adds the following to the decorated function:</span>
+
+<span class="sd">    - code to check parameters passed at runtime</span>
+<span class="sd">    - code to implement appending the template with parameters</span>
+<span class="sd">    - appends the original Jinja to the docstring</span>
+<span class="sd">    - appends a description of parameters to the wait_for_done template</span>
+<span class="sd">      if  wait_for_done_args was passed to the decorator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="n">wrapped</span><span class="p">:</span> <span class="n">F</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">wrapped</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="s2">&quot;kwargs&quot;</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">arglists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Bad snippet function definition - </span><span class="si">{</span><span class="n">wrapped</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> must take **kwargs&quot;</span>
+
+        <span class="n">merged_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># merge in any included jinja tempates arguments with defaults</span>
+        <span class="k">for</span> <span class="n">included_args</span> <span class="ow">in</span> <span class="n">arglists</span><span class="p">:</span>
+            <span class="n">merged_args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">included_args</span><span class="p">)</span>
+        <span class="c1"># add in the snippet function&#39;s arguments, possibly overriding above defaults</span>
+        <span class="n">merged_args</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">default</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">wrapped</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">bad_keys</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="n">merged_args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">bad_keys</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;illegal arguments: </span><span class="si">{</span><span class="n">wrapped</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not take </span><span class="si">{</span><span class="n">bad_keys</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">all_merged</span> <span class="o">=</span> <span class="n">merged_args</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">all_merged</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># add a jinja snippet and its processed arguments to the current group</span>
+            <span class="n">Group</span><span class="o">.</span><span class="n">add_snippet</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="o">**</span><span class="n">all_merged</span><span class="p">)</span>
+
+        <span class="c1"># insert the original function&#39;s signature at the top of the docstring</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">wrapped</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+        <span class="c1"># then insert the original function&#39;s docstring</span>
+        <span class="n">doc</span> <span class="o">+=</span> <span class="n">wrapped</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="c1"># insert information about jinja the template this function is inserting</span>
+        <span class="n">doc</span> <span class="o">+=</span> <span class="nb">str</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">snippet_docstring</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">wrapped</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;.pmc.jinja&quot;</span><span class="p">)</span>
+        <span class="c1"># insert documentation on any jinja templates included by the above template</span>
+        <span class="k">if</span> <span class="n">wait_for_done_args</span> <span class="ow">in</span> <span class="n">arglists</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">+=</span> <span class="n">wait_for_done_docstring</span>
+        <span class="n">wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">doc</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">wrapper</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrap</span></div>
+
+
+<span class="c1"># TODO state should be an enum</span>
+<div class="viewcode-block" id="drive_to_limit"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_limit">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_limit</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;PreHomeMove&quot;</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jog all of the group&#39;s axes until they have each hit a limit</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (str): Which homing state to report to EPICS for monitoring</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            the axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_off_home"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_off_home">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_off_home</span><span class="p">(</span>
+    <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastRetrace&quot;</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jog all the group&#39;s axes until the home flag is released</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (str): Which homing state to report to EPICS for monitoring</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            the axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="store_position_diff"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.store_position_diff">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">store_position_diff</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save the current offset from the original position.</span>
+
+<span class="sd">    This is only required in order to support driving back to initial position</span>
+<span class="sd">    after the home operation is complete</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_home"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_home">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_home</span><span class="p">(</span>
+    <span class="n">state</span><span class="o">=</span><span class="s2">&quot;PreHomeMove&quot;</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">restore_homed_flags</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive all axes in the group until they hit the home flag or a limit</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (str): Which homing state to report to EPICS for monitoring</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">        restore_homed_flags (bool): restore the home flags original state before</span>
+<span class="sd">            starting. Required if a previous step changed the home flags</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_hstop"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_hstop">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_hstop</span><span class="p">(</span>
+    <span class="n">state</span><span class="o">=</span><span class="s2">&quot;PreHomeMove&quot;</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_following_err</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive all axes in the group until they hit the hard stop (following error)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (str): Which homing state to report to EPICS for monitoring</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="home"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.home">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initiate the home command on all axes in the group</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="debug_pause"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.debug_pause">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">debug_pause</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When running in debug mode, pause until the user indicates to continue</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_initial_pos"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_initial_pos">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_initial_pos</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return all axes in the group to their original positions before the homing</span>
+<span class="sd">    sequence began. Requires that store_position_diff was called before home.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_soft_limit"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_soft_limit">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_soft_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive all axes in the group until they hit their soft limits</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_relative"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_relative">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_relative</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="s2">&quot;123456&quot;</span><span class="p">,</span> <span class="n">set_home</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive all axes in the group a relative distance from current position</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        distance (str): distance in counts</span>
+<span class="sd">        set_home (bool): set the home flag afterward if True</span>
+<span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="check_homed"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.check_homed">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">check_homed</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verfiy that all axes in the group are homed. Set error condition if not.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_home_if_on_limit"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_home_if_on_limit">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_home_if_on_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive axes to the home mark or switch. Only perform this action on</span>
+<span class="sd">    axes that are currently on a limit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="disable_limits"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.disable_limits">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">disable_limits</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Disable the soft limits on all axes in the group</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="restore_limits"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.restore_limits">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">restore_limits</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Restore the saved soft limits on all axes on the group. By default the</span>
+<span class="sd">    Plc will always record the soft limits of all axes at the start.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="drive_to_hard_limit"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_to_hard_limit">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">drive_to_hard_limit</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;PostHomeMove&quot;</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Drive all axes until they hit a hard limit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        state (str): Which homing state to report to EPICS for monitoring</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="jog_if_on_limit"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.jog_if_on_limit">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">jog_if_on_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Jog all axes in the group that are currently on a limit</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        homing_direction (bool): When True Jog in the same direction as</span>
+<span class="sd">            each axis&#39; homing direction, defaults False: opposite to homing direction</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="continue_home_maintain_axes_offset"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.continue_home_maintain_axes_offset">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">continue_home_maintain_axes_offset</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Monitor axes that are homing and when one achieves home jog it in the</span>
+<span class="sd">    same direction as home. This is to avoid tilt on pairs of axes that have</span>
+<span class="sd">    misaligned home marks.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="post_home_action"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.post_home_action">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">post_home_action</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insert an extra block with the group&#39;s post home action in it</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
