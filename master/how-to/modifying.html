@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding Functionality &mdash; pmac_motorhome 0.5+1.g78ef13f documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How it Works" href="../explanations/implementation.html" />
+    <link rel="prev" title="Converting to pmac_motorhome.py" href="../tutorials/converting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding Functionality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#audience">Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-homing-sequence-function">Adding a New Homing Sequence Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-snippet-template">Adding a New Snippet Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-callback-function">Adding a New Callback Function</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Adding Functionality</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/how-to/modifying.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adding-functionality">
+<h1>Adding Functionality<a class="headerlink" href="#adding-functionality" title="Permalink to this headline"></a></h1>
+<section id="audience">
+<h2>Audience<a class="headerlink" href="#audience" title="Permalink to this headline"></a></h2>
+<p>This section is for developers who want to add homing procedures that
+require changes to the code. Note that many custom homing sequences may
+be achieved by simply recombining the existing snippets and this would
+not require code changes to this library.</p>
+<p>For an overview of how the following work together see <a class="reference internal" href="../explanations/implementation.html#how-it-works"><span class="std std-ref">How it Works</span></a></p>
+</section>
+<section id="adding-a-new-homing-sequence-function">
+<h2>Adding a New Homing Sequence Function<a class="headerlink" href="#adding-a-new-homing-sequence-function" title="Permalink to this headline"></a></h2>
+<p>TODO - flesh this out</p>
+<ul class="simple">
+<li><p>Add a new function in <a class="reference internal" href="../reference/sequences.html#module-pmac_motorhome.sequences" title="pmac_motorhome.sequences"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmac_motorhome.sequences</span></code></a></p></li>
+<li><p>Make calls to functions in <a class="reference internal" href="../reference/commands.html#module-pmac_motorhome.commands"><span class="std std-ref">Commands</span></a>, <a class="reference internal" href="../reference/snippets.html#module-pmac_motorhome.snippets" title="pmac_motorhome.snippets"><code class="xref any py py-mod docutils literal notranslate"><span class="pre">snippets</span></code></a>
+and possibly other <a class="reference internal" href="../reference/sequences.html#module-pmac_motorhome.sequences" title="pmac_motorhome.sequences"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmac_motorhome.sequences</span></code></a></p></li>
+</ul>
+<p>A nice example is home_slits_hsw</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">home_slits_hsw</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">negx</span><span class="p">,</span> <span class="n">posy</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A special seqence for two pairs of slits in which the vertical and horizontal</span>
+<span class="sd">    pairs may collide with each other at the extreme of their homing direction.</span>
+
+<span class="sd">    - move all axes to the limit away from their homing direction</span>
+<span class="sd">    - home both positive axes using home switch or mark</span>
+<span class="sd">    - move the positive axes out of the way</span>
+<span class="sd">    - home both negative axes using home switch or mark</span>
+<span class="sd">    - move the negative axes out of the way</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        posx (int): axis number of the positive horizontal motor</span>
+<span class="sd">        negx (int): axis number of the negative horizontal motor</span>
+<span class="sd">        posy (int): axis number of the positive vertical motor</span>
+<span class="sd">        negy (int): axis number of the negative vertical motor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">posy</span><span class="p">):</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">negx</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-a-new-snippet-template">
+<h2>Adding a New Snippet Template<a class="headerlink" href="#adding-a-new-snippet-template" title="Permalink to this headline"></a></h2>
+<p>TODO - flesh this out</p>
+<ul class="simple">
+<li><p>write the Jinja template</p></li>
+<li><p>add a snippet command to snippets.py using _snippet_function decorator</p></li>
+</ul>
+<p>The decorator _snippet function allows you to declare a function whose name
+is the same as the Jinja template file prefix. This function need only have
+arguments and a docstring. The decorator will provide the rest as follows:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets._snippet_function">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">_snippet_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arglists</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../reference/snippets.html#pmac_motorhome.snippets.F" title="pmac_motorhome.snippets.F"><span class="pre">pmac_motorhome.snippets.F</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="../reference/snippets.html#pmac_motorhome.snippets.F" title="pmac_motorhome.snippets.F"><span class="pre">pmac_motorhome.snippets.F</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#_snippet_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets._snippet_function" title="Permalink to this definition"></a></dt>
+<dd><p>A decorator function to allow simple declaration of snippet functions.
+Snippet functions are used to append snippets of Jinja PLC code to
+the current PLC.</p>
+<p>The decorated function should have:</p>
+<ul class="simple">
+<li><p>the same name as a jinja template file (less .pmc.jinja)
+in the folder pmac_motorhome/snippets. The function should take</p></li>
+<li><p>Type hinted parameters that the template will use</p></li>
+<li><p>A docstring that describes the function of the snippet</p></li>
+</ul>
+<p>The snippet may itself include further snippets and if this is the case
+any argument lists required by further snippets should be passed to the
+decorator. The only example of this at present is <a class="reference internal" href="../reference/snippets.html#pmac_motorhome.snippets.wait_for_done_args" title="pmac_motorhome.snippets.wait_for_done_args"><code class="xref any py py-data docutils literal notranslate"><span class="pre">wait_for_done_args</span></code></a>.</p>
+<p>The decorator adds the following to the decorated function:</p>
+<ul class="simple">
+<li><p>code to check parameters passed at runtime</p></li>
+<li><p>code to implement appending the template with parameters</p></li>
+<li><p>appends the original Jinja to the docstring</p></li>
+<li><p>appends a description of parameters to the wait_for_done template
+if  wait_for_done_args was passed to the decorator</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="adding-a-new-callback-function">
+<h2>Adding a New Callback Function<a class="headerlink" href="#adding-a-new-callback-function" title="Permalink to this headline"></a></h2>
+<p>TODO - flesh this out</p>
+<ul class="simple">
+<li><p>add the function to Plc or Group</p></li>
+<li><p>use the all_axes function to generate axis commands</p></li>
+<li><p>or output arbitrary text</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/converting.html" class="btn btn-neutral float-left" title="Converting to pmac_motorhome.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../explanations/implementation.html" class="btn btn-neutral float-right" title="How it Works" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

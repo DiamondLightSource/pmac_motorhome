@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commands &mdash; pmac_motorhome 0.5+1.g78ef13f documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Predfined Homing Sequences" href="sequences.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="external.html">User API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequences.html">Predfined Homing Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="external.html">User API</a> &raquo;</li>
+      <li>Commands</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/commands.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pmac_motorhome.commands">
+<span id="commands"></span><h1>Commands<a class="headerlink" href="#module-pmac_motorhome.commands" title="Permalink to this headline"></a></h1>
+<p>The commands module contains functions that can be called directly
+from the <a class="reference internal" href="overview.html#plcdefinition"><span class="std std-ref">Homing PLC definition file</span></a>.</p>
+<p>These functions are used to define PLCs, axes and axis groupings.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.commands.plc">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">plc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plc_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#plc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.plc" title="Permalink to this definition"></a></dt>
+<dd><p>Define a new PLC. Use this to create a new Plc context using the ‘with’
+keyword.</p>
+<p>Must be called in the global context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of the generated homing PLC</p></li>
+<li><p><strong>controller</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.ControllerType" title="pmac_motorhome.constants.ControllerType"><em>ControllerType</em></a>) – Determines the class of controller Pmac or
+Geobrick</p></li>
+<li><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – The output file where the PLC will be written</p></li>
+<li><p><strong>pre</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – some raw PLC code to insert at the start of a group</p></li>
+<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the Plc object for use in the context</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="internal.html#pmac_motorhome.plc.Plc" title="pmac_motorhome.plc.Plc">Plc</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.commands.group">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PostHomeMove.none</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.group" title="Permalink to this definition"></a></dt>
+<dd><p>Define a new group of axes within a PLC that should be homed simultaneously.
+Use this to create a new context using the ‘with’ keyword from within a Plc
+context.</p>
+<p>Must be called in a Plc context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – an identifying number note that group 1 is reserved for
+homing all groups</p></li>
+<li><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – a list of axis numbers to include in the group</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the
+home sequence completes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Group object for use in the context</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="internal.html#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group">Group</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.commands.motor">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.motor" title="Permalink to this definition"></a></dt>
+<dd><p>Declare a motor for use in the current group.</p>
+<p>Must be called in a group context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – axis number</p></li>
+<li><p><strong>jdist</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of counts to jog after reaching a home mark. Required
+to far enough to move off of the home mark.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – for internal use in conversion of old scripts sets
+the index of this motor to a different value than the order of
+declaration. -1 means use the order that motors were added.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.commands.only_axes">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">only_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#only_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.only_axes" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a context in which actions are performed on a subset of the groups axes</p>
+<p>Must be called in a group context.</p>
+<p>For an example of the use of this, see <a class="reference internal" href="../tutorials/custom.html"><span class="doc">Custom Homing PLC</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – List of axis numbers</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an OnlyAxes object for use in the context</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="internal.html#pmac_motorhome.onlyaxes.OnlyAxes" title="pmac_motorhome.onlyaxes.OnlyAxes">OnlyAxes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.commands.post_home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">post_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#post_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.post_home" title="Permalink to this definition"></a></dt>
+<dd><p>Perform one of the predefined post homing actions on all axes in the
+current group.</p>
+<p>Must be called in a Group context.</p>
+<p>This function is called as the last step in all of the <a class="reference internal" href="sequences.html"><span class="doc">Predfined Homing Sequences</span></a>
+functions</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sequences.html" class="btn btn-neutral float-right" title="Predfined Homing Sequences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

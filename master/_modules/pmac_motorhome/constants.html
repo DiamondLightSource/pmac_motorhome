@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.constants &mdash; pmac_motorhome 0.5+1.g78ef13f documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                master
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+  <!-- Add versions for selected branches + tags -->
+  <p class="caption">
+    <span class="caption-text">Versions</span>
+  </p>
+  <ul id="versions"/>
+  <script>
+    // Add any branches to appear in the side pane here, tags will be added below
+    // Will only appear if docs are built and pushed in gh-pages
+    var versions = ['main', 'master'];
+    var dirs = new Set();
+    function addVersion(name) {
+      if (dirs.has(name)) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
+        a.innerText = name;
+        li.appendChild(a)
+        document.getElementById('versions').appendChild(li);
+      }
+    }
+    Promise.all([
+      // Find gh-pages directories and populate `dirs`
+      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
+      .then(response => response.json())
+      .then(data => data.forEach(function(e) {
+        if (e.type == "dir") dirs.add(e.name);
+      })),
+      // Add tags to `versions`
+      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
+        .then(response => response.json())
+        .then(data => data.forEach(function(e) {
+          versions.push(e.name);
+        }))
+      ]).then(_ => versions.forEach(addVersion))
+  </script>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.constants</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.constants</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Defines some Enumerations for constant values</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="ControllerType"><a class="viewcode-back" href="../../reference/constants.html#pmac_motorhome.constants.ControllerType">[docs]</a><span class="k">class</span> <span class="nc">ControllerType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines the types of controller supported</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Geobrick controller</span>
+    <span class="n">brick</span> <span class="o">=</span> <span class="s2">&quot;GeoBrick&quot;</span>
+    <span class="c1">#: VME PMAC Controller</span>
+    <span class="n">pmac</span> <span class="o">=</span> <span class="s2">&quot;PMAC&quot;</span></div>
+
+
+<div class="viewcode-block" id="PostHomeMove"><a class="viewcode-back" href="../../reference/constants.html#pmac_motorhome.constants.PostHomeMove">[docs]</a><span class="k">class</span> <span class="nc">PostHomeMove</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines the set up actions available upon completion of the homing sequence</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: no action</span>
+    <span class="n">none</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+    <span class="c1">#: move jdist counts away from the home mark and set that as home</span>
+    <span class="n">move_and_hmz</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span>
+    <span class="c1">#: move jdist counts away from the home mark</span>
+    <span class="n">relative_move</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span>
+    <span class="c1">#: return to the original position before the homing sequence</span>
+    <span class="n">initial_position</span> <span class="o">=</span> <span class="s2">&quot;i&quot;</span>
+    <span class="c1">#: jog to the high limit</span>
+    <span class="n">high_limit</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span>
+    <span class="c1">#: jog to the low limit</span>
+    <span class="n">low_limit</span> <span class="o">=</span> <span class="s2">&quot;l&quot;</span>
+    <span class="c1">#: jog to the high limit, ignorning soft limits</span>
+    <span class="n">hard_hi_limit</span> <span class="o">=</span> <span class="s2">&quot;H&quot;</span>
+    <span class="c1">#: jog to the low limit, ignorning soft limits</span>
+    <span class="n">hard_lo_limit</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+    <span class="c1">#: jog to the absolute position in counts</span>
+    <span class="n">move_absolute</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span></div>
+
+
+<div class="viewcode-block" id="HomingState"><a class="viewcode-back" href="../../reference/constants.html#pmac_motorhome.constants.HomingState">[docs]</a><span class="k">class</span> <span class="nc">HomingState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines the stages of homing as reported back to the monitoring IOC</span>
+<span class="sd">    TODO docs for this are incorrect and I&#39;m confusing HomingState with HomingStatus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Homing is not running</span>
+    <span class="n">StateIdle</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">#: Homing is starting up</span>
+    <span class="n">StateConfiguring</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#: Homing is moving in opposite direction to homing direction</span>
+    <span class="n">StateMoveNeg</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c1">#: Homing is moving in the homing direction</span>
+    <span class="n">StateMovePos</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="c1">#: HM command has been issued to the pmac</span>
+    <span class="n">StateHoming</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="c1">#: executing any post home moves</span>
+    <span class="n">StatePostHomeMove</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="c1">#: executing alignment (unused)</span>
+    <span class="n">StateAligning</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="c1">#: Homing is complete</span>
+    <span class="n">StateDone</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="c1">#: Pre Home fast search for home position</span>
+    <span class="n">StateFastSearch</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="c1">#: Moving back to just before home position</span>
+    <span class="n">StateFastRetrace</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="c1">#:</span>
+    <span class="n">StatePreHomeMove</span> <span class="o">=</span> <span class="mi">10</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
