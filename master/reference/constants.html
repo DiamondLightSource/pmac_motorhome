@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Constants &mdash; pmac_motorhome 1.0 documentation</title>
+  <title>Constants &mdash; pmac_motorhome 1.0+27.g76e2bdd documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                master
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -44,7 +44,6 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-  
               <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
@@ -74,42 +73,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
 </ul>
-
-  <!-- Add versions for selected branches + tags -->
-  <p class="caption">
-    <span class="caption-text">Versions</span>
-  </p>
-  <ul id="versions"/>
-  <script>
-    // Add any branches to appear in the side pane here, tags will be added below
-    // Will only appear if docs are built and pushed in gh-pages
-    var versions = ['main', 'master'];
-    var dirs = new Set();
-    function addVersion(name) {
-      if (dirs.has(name)) {
-        var li = document.createElement("li");
-        var a = document.createElement("a");
-        a.href = 'https://dls-controls.github.io/pmac_motorhome/' + name;
-        a.innerText = name;
-        li.appendChild(a)
-        document.getElementById('versions').appendChild(li);
-      }
-    }
-    Promise.all([
-      // Find gh-pages directories and populate `dirs`
-      fetch("https://api.github.com/repos/dls-controls/pmac_motorhome/contents?ref=gh-pages")
-      .then(response => response.json())
-      .then(data => data.forEach(function(e) {
-        if (e.type == "dir") dirs.add(e.name);
-      })),
-      // Add tags to `versions`
-      fetch('https://api.github.com/repos/dls-controls/pmac_motorhome/tags')
-        .then(response => response.json())
-        .then(data => data.forEach(function(e) {
-          versions.push(e.name);
-        }))
-      ]).then(_ => versions.forEach(addVersion))
-  </script>
 
         </div>
       </div>
@@ -141,17 +104,17 @@
 <p>Defines some Enumerations for constant values</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.ControllerType">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">ControllerType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#ControllerType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.ControllerType" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">ControllerType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#ControllerType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.ControllerType" title="Permalink to this definition"></a></dt>
 <dd><p>Defines the types of controller supported</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.ControllerType.brick">
-<span class="sig-name descname"><span class="pre">brick</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'GeoBrick'</span></em><a class="headerlink" href="#pmac_motorhome.constants.ControllerType.brick" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">brick</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GeoBrick'</span></em><a class="headerlink" href="#pmac_motorhome.constants.ControllerType.brick" title="Permalink to this definition"></a></dt>
 <dd><p>Geobrick controller</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.ControllerType.pmac">
-<span class="sig-name descname"><span class="pre">pmac</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'PMAC'</span></em><a class="headerlink" href="#pmac_motorhome.constants.ControllerType.pmac" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pmac</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PMAC'</span></em><a class="headerlink" href="#pmac_motorhome.constants.ControllerType.pmac" title="Permalink to this definition"></a></dt>
 <dd><p>VME PMAC Controller</p>
 </dd></dl>
 
@@ -159,59 +122,59 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">PostHomeMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#PostHomeMove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">PostHomeMove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#PostHomeMove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove" title="Permalink to this definition"></a></dt>
 <dd><p>Defines the set up actions available upon completion of the homing sequence</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.none">
-<span class="sig-name descname"><span class="pre">none</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'None'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.none" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">none</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'None'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.none" title="Permalink to this definition"></a></dt>
 <dd><p>no action</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.move_and_hmz">
-<span class="sig-name descname"><span class="pre">move_and_hmz</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'z'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.move_and_hmz" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">move_and_hmz</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'z'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.move_and_hmz" title="Permalink to this definition"></a></dt>
 <dd><p>move jdist counts away from the home mark and set that as home</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.relative_move">
-<span class="sig-name descname"><span class="pre">relative_move</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'r'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.relative_move" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">relative_move</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'r'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.relative_move" title="Permalink to this definition"></a></dt>
 <dd><p>move jdist counts away from the home mark</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.initial_position">
-<span class="sig-name descname"><span class="pre">initial_position</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'i'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.initial_position" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">initial_position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'i'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.initial_position" title="Permalink to this definition"></a></dt>
 <dd><p>return to the original position before the homing sequence</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.high_limit">
-<span class="sig-name descname"><span class="pre">high_limit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'h'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.high_limit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">high_limit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'h'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.high_limit" title="Permalink to this definition"></a></dt>
 <dd><p>jog to the high limit</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.low_limit">
-<span class="sig-name descname"><span class="pre">low_limit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'l'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.low_limit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">low_limit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'l'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.low_limit" title="Permalink to this definition"></a></dt>
 <dd><p>jog to the low limit</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.hard_hi_limit">
-<span class="sig-name descname"><span class="pre">hard_hi_limit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'H'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.hard_hi_limit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">hard_hi_limit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'H'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.hard_hi_limit" title="Permalink to this definition"></a></dt>
 <dd><p>jog to the high limit, ignorning soft limits</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.hard_lo_limit">
-<span class="sig-name descname"><span class="pre">hard_lo_limit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'L'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.hard_lo_limit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">hard_lo_limit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.hard_lo_limit" title="Permalink to this definition"></a></dt>
 <dd><p>jog to the low limit, ignorning soft limits</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.PostHomeMove.move_absolute">
-<span class="sig-name descname"><span class="pre">move_absolute</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'a'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.move_absolute" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">move_absolute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'a'</span></em><a class="headerlink" href="#pmac_motorhome.constants.PostHomeMove.move_absolute" title="Permalink to this definition"></a></dt>
 <dd><p>jog to the absolute position in counts</p>
 </dd></dl>
 
@@ -219,72 +182,72 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">HomingState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#HomingState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.HomingState" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.constants.</span></span><span class="sig-name descname"><span class="pre">HomingState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/constants.html#HomingState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.constants.HomingState" title="Permalink to this definition"></a></dt>
 <dd><p>Defines the stages of homing as reported back to the monitoring IOC
 TODO docs for this are incorrect and I’m confusing HomingState with HomingStatus</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateIdle">
-<span class="sig-name descname"><span class="pre">StateIdle</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateIdle" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateIdle</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateIdle" title="Permalink to this definition"></a></dt>
 <dd><p>Homing is not running</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateConfiguring">
-<span class="sig-name descname"><span class="pre">StateConfiguring</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateConfiguring" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateConfiguring</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateConfiguring" title="Permalink to this definition"></a></dt>
 <dd><p>Homing is starting up</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateMoveNeg">
-<span class="sig-name descname"><span class="pre">StateMoveNeg</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateMoveNeg" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateMoveNeg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateMoveNeg" title="Permalink to this definition"></a></dt>
 <dd><p>Homing is moving in opposite direction to homing direction</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateMovePos">
-<span class="sig-name descname"><span class="pre">StateMovePos</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateMovePos" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateMovePos</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateMovePos" title="Permalink to this definition"></a></dt>
 <dd><p>Homing is moving in the homing direction</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateHoming">
-<span class="sig-name descname"><span class="pre">StateHoming</span></span><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateHoming" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateHoming</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateHoming" title="Permalink to this definition"></a></dt>
 <dd><p>HM command has been issued to the pmac</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StatePostHomeMove">
-<span class="sig-name descname"><span class="pre">StatePostHomeMove</span></span><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StatePostHomeMove" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StatePostHomeMove</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StatePostHomeMove" title="Permalink to this definition"></a></dt>
 <dd><p>executing any post home moves</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateAligning">
-<span class="sig-name descname"><span class="pre">StateAligning</span></span><em class="property"> <span class="pre">=</span> <span class="pre">6</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateAligning" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateAligning</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateAligning" title="Permalink to this definition"></a></dt>
 <dd><p>executing alignment (unused)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateDone">
-<span class="sig-name descname"><span class="pre">StateDone</span></span><em class="property"> <span class="pre">=</span> <span class="pre">7</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateDone" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateDone</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateDone" title="Permalink to this definition"></a></dt>
 <dd><p>Homing is complete</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateFastSearch">
-<span class="sig-name descname"><span class="pre">StateFastSearch</span></span><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateFastSearch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateFastSearch</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateFastSearch" title="Permalink to this definition"></a></dt>
 <dd><p>Pre Home fast search for home position</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StateFastRetrace">
-<span class="sig-name descname"><span class="pre">StateFastRetrace</span></span><em class="property"> <span class="pre">=</span> <span class="pre">9</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateFastRetrace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StateFastRetrace</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StateFastRetrace" title="Permalink to this definition"></a></dt>
 <dd><p>Moving back to just before home position</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pmac_motorhome.constants.HomingState.StatePreHomeMove">
-<span class="sig-name descname"><span class="pre">StatePreHomeMove</span></span><em class="property"> <span class="pre">=</span> <span class="pre">10</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StatePreHomeMove" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">StatePreHomeMove</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#pmac_motorhome.constants.HomingState.StatePreHomeMove" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -316,7 +279,36 @@ TODO docs for this are incorrect and I’m confusing HomingState with HomingStat
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
 
 </body>
 </html>
