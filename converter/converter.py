@@ -9,7 +9,7 @@ from converter.motionarea import MotionArea
 
 log = logging.getLogger(__name__)
 global_logger = logging.getLogger()
-global_logger.setLevel(logging.INFO)
+global_logger.setLevel(logging.DEBUG)
 
 stdout_handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter(
