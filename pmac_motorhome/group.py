@@ -224,6 +224,13 @@ class Group:
         """
         return function(self, **args)
 
+    ########################################################################
+    # The following functions are callbacks from the jinja templates they
+    # are called with {{- group.function_name(template.args) -}} from jinja
+    #
+    # The are presently Turbo PMAC specific
+    ########################################################################
+
     def jog_stopped(self) -> str:
         """
         Generate a command string that will jog any stopped axes in the group
