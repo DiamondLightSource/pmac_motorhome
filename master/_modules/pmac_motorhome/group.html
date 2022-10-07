@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.group &mdash; pmac_motorhome 1.0+27.g76e2bdd documentation</title>
+  <title>pmac_motorhome.group &mdash; pmac_motorhome 1.0+28.ge479576 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -314,6 +314,13 @@
 <span class="sd">            str: The string to insert into the PLC output file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span></div>
+
+    <span class="c1">########################################################################</span>
+    <span class="c1"># The following functions are callbacks from the jinja templates they</span>
+    <span class="c1"># are called with {{- group.function_name(template.args) -}} from jinja</span>
+    <span class="c1"># </span>
+    <span class="c1"># The are presently Turbo PMAC specific</span>
+    <span class="c1">########################################################################</span>
 
 <div class="viewcode-block" id="Group.jog_stopped"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog_stopped">[docs]</a>    <span class="k">def</span> <span class="nf">jog_stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
