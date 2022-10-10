@@ -48,7 +48,7 @@ class Plc:
 
         self.groups: List[Group] = []
         self.motors: "OrderedDict[int, Motor]" = OrderedDict()
-        self.generator = PlcGenerator()
+        self.generator = PlcGenerator(self.controller)
         if not self.filepath.parent.exists():
             log.error(f"Cant find parent of {self.filepath} from dir {Path.cwd()}")
             raise ValueError(
