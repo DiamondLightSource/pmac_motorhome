@@ -11,13 +11,10 @@ class TestMotionArea(unittest.TestCase):
     def test_shebang_looks_as_expected(self, mock_subprocess):
         # Arrange
         python_path = "/bin/python"
-        expected_shebang = "#!/bin/env /bin/python \n"
+        expected_shebang = "#!/bin/env /bin/python"
         mock_subprocess.return_value = python_path.encode("UTF-8")
-        stream = StringIO()
         motionarea = MotionArea(Path("/tmp"))
         # Act
-        motionarea.write_shebang(stream)
-        stream.seek(0)  # Change the stream position to start of the stream
-        content = stream.read()
+        content = motionarea.get_shebang()
         # Assert
         self.assertEqual(content, expected_shebang)
