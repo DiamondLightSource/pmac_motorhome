@@ -69,7 +69,7 @@ class Group:
         Group.the_group = None
 
     @classmethod
-    def add_motor(cls, axis: int, jdist: int, index: int) -> Motor:
+    def add_motor(cls, axis: int, jdist: int, index: int, enc_axes: List) -> Motor:
         """
         Add a new motor to the current group
 
@@ -77,6 +77,8 @@ class Group:
             axis (int): Axis number
             jdist (int): distance to jog to move off of home mark
             index (int): internal use
+            enc_axes (list): List of additional encoders that need zeroing on homing
+                completion
         Returns:
             Motor: The newly created Motor
         """
@@ -84,7 +86,9 @@ class Group:
         assert (
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
-        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index)
+        motor = Motor.get_motor(
+            axis, jdist, group.plc_num, index=index, enc_axes=enc_axes
+        )
         group.motors.append(motor)
         group.all_motors.append(motor)
         return motor
@@ -208,6 +212,33 @@ class Group:
         # to the string format: pass any extra arguments first, then the dictionary
         # of the axis object so its elements can be addressed by name
         all = [format.format(*arg, **ax.dict) for ax in self.motors]
+        return separator.join(all)
+
+    def _all_encoders(self, format: str, separator: str, *arg) -> str:
+        """
+        A helper function that generates a command line by applying each of every 
+        element in enc_axes of each Motor in the group as a parameter to the format 
+        string and the concatenating all of the results with a separator.
+
+        Args:
+            format (str): The format string to apply, passing each Motor in the group
+                as its arguments
+            separator (str): Separator that goes between the formatted string for each
+                axis
+            arg ([Any]): additional arguments to pass to the format string
+
+        Returns:
+            str: The resulting command string
+        """
+
+        # to the string format: pass any extra arguments first, then the dictionary
+        # of the axis object so its elements can be addressed by name
+
+        all = [
+            format.format(*arg, enc_axis=enc)
+            for ax in self.motors
+            for enc in ax.enc_axes
+        ]
         return separator.join(all)
 
     def callback(self, function: Callable, args: Dict[str, Any]) -> str:
@@ -400,6 +431,16 @@ class Group:
             return self._all_axes("home{axis}", " ")
         else:
             return self._all_axes("#{axis}hm", " ")
+
+    def homez(self) -> str:
+        """
+        Generate a command string for all group axes: home command
+        """
+
+        if self.controller == ControllerType.pbrick:
+            return self._all_encoders("homez{enc_axis}", " ")
+        else:
+            return self._all_encoders("#{enc_axis}hmz", " ")
 
     def set_home(self) -> str:
         """

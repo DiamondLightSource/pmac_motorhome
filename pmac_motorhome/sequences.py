@@ -7,10 +7,13 @@ perform the sequence on all axes in the group.
 """
 import sys
 
+from pmac_motorhome.snippets import zero_encoders
+
 if sys.version_info[0] > 2:
     from .commands import only_axes, post_home
     from .group import Group
     from .snippets import (
+        zero_encoders,
         check_homed,
         disable_limits,
         drive_off_home,
@@ -54,6 +57,7 @@ def home_rlim():
     store_position_diff()
     drive_off_home(with_limits=False)  # drive back onto limit switch
     home(with_limits=False)
+    zero_encoders()
     check_homed()
     post_home()
     post_home_action()
