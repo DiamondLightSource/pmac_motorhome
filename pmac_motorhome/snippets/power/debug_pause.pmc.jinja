@@ -1,6 +1,5 @@
-    ; Wait for user to tell us to continue if in debug
-    if (HomingStatus = StatusDebugHoming)
-        HomingStatus = StatusPaused
-        while (HomingStatus = StatusPaused)
-        endw
-    endif
+    // Wait for user to tell us to continue if in debug
+    if (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming){
+        PLC{{plc.plc_num}}_HomingStatus = PLC{{plc.plc_num}}_StatusPaused
+        while (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusPaused){}
+    }

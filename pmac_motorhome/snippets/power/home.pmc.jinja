@@ -1,11 +1,11 @@
     {% include "debug_pause.pmc.jinja" %}
 
-    ;---- Homing State ----
-    if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
-        HomingState=StateHoming
-        ; Execute the move commands
+    //---- Homing State ----
+    if (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming || PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming){
+        PLC{{plc.plc_num}}_HomingState=PLC{{plc.plc_num}}_StateHoming
+        // Execute the move commands
         {{ group.restore_home_flags() }}
-        cmd "{{ group.home() }}"
+        {{ group.home() }}
         {% include "wait_for_done.pmc.jinja" %}
-    endif
+    }
 
