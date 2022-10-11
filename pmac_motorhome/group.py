@@ -266,7 +266,11 @@ class Group:
         """
         Generate a command string that will jog any stopped axes in the group
         """
-        code = 'if (m{axis}40=1)\n    cmd "#{axis}J^*"\nendif'
+
+        if self.controller is ControllerType.pbrick:
+            code = "if (Motor[{axis}].InPos == 1){\n    jog{axis}^*\n}"
+        else:
+            code = 'if (m{axis}40=1)\n    cmd "#{axis}J^*"\nendif'
         return self._all_axes(code, "\n")
 
     def jog_axes(self) -> str:
@@ -274,7 +278,7 @@ class Group:
         Generate a command string for all group axes: jog a set distance
         """
         if self.controller is ControllerType.pbrick:
-            return self._all_axes("jog{axis}^*", " ")
+            return f'jog{self._all_axes("{axis}", ",")}^*'
         else:
             return self._all_axes("#{axis}J^*", " ")
 
@@ -301,32 +305,44 @@ class Group:
         Generate a command string for all group axes: jog indefinitely
         """
         sign = "+" if homing_direction else "-"
-        return self._all_axes("#{axis}J{0}", " ", sign)
 
-    def in_pos(self, operator="&", value=0) -> str:
+        if self.controller is ControllerType.pbrick:
+            return f'jog{sign}{self._all_axes("{axis}", ",")}'
+        else:
+            return self._all_axes("{axis}J{0}", " ", sign)
+
+    def in_pos(self, operator="&", relOperator="==", value=0) -> str:
         """
         Generate a command string for all group axes: check in postiion
+        relOperator (relationalOperator) is required for power pmac based
+        controllers as each variable needs to be evaluated separately
         """
 
         if self.controller is ControllerType.pbrick:
-            pre = "Motor[{axis}].InPos == "
-            return self._all_axes(f"{pre}{value} ", "&& ")
+            pbrickVar = "Motor[{axis}].InPos"
+            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", f"{operator} ")
         else:
             return self._all_axes("m{axis}40", operator)
 
-    def limits(self) -> str:
+    def limits(self, relOperator="!=", value=0) -> str:
         """
         Generate a command string for all group axes: check limits
+        relOperator (relationalOperator) is required for power pmac based
+        controllers as each variable needs to be evaluated separately
         """
-        return self._all_axes("m{axis}30", "|")
+        if self.controller is ControllerType.pbrick:
+            pbrickVar = "Motor[{axis}].LimitStop"
+            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+        else:
+            return self._all_axes("m{axis}30", "|")
 
-    def following_err(self, value=0) -> str:
+    def following_err(self, relOperator="==", value=0) -> str:
         """
         Generate a command string for all group axes: check following error
         """
         if self.controller is ControllerType.pbrick:
-            pre = "Motor[{axis}].FeFatal == "
-            return self._all_axes(f"{pre}{value} ", "|| ")
+            pbrickVar = "Motor[{axis}].FeFatal"
+            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
         else:
             return self._all_axes("m{axis}42", "|")
 
@@ -335,8 +351,8 @@ class Group:
         Generate a command string for all group axes: check homed
         """
         if self.controller is ControllerType.pbrick:
-            pre = "Motor[{axis}].HomeComplete == "
-            return self._all_axes(f"{pre}{value} ", "&& ")
+            pbrickVar = "Motor[{axis}].HomeComplete == "
+            return self._all_axes(f"{pbrickVar}{value} ", "&& ")
         else:
             return self._all_axes("m{axis}45", "&")
 
@@ -371,16 +387,26 @@ class Group:
         Generate a command string for all group axes: calculate jog distance
         to return to pre homed position
         """
-        return self._all_axes("m{axis}72=P{pos}", " ")
+
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("Motor[{axis}].ProgJogPos=P{pos}", " ")
+        else:
+            return self._all_axes("m{axis}72=P{pos}", " ")
 
     def stored_limit_to_jogdistance(self, homing_direction=True):
         """
         Generate a command string for all group axes: save distance to limit
         """
-        if homing_direction:
-            return self._all_axes("m{axis}72=P{hi_lim}", " ")
+        if self.controller is ControllerType.pbrick:
+            if homing_direction:
+                return self._all_axes("Motor[{axis}].ProgJogPos=P{hi_lim}", " ")
+            else:
+                return self._all_axes("Motor[{axis}].ProgJogPos=P{lo_lim}", " ")
         else:
-            return self._all_axes("m{axis}72=P{lo_lim}", " ")
+            if homing_direction:
+                return self._all_axes("m{axis}72=P{hi_lim}", " ")
+            else:
+                return self._all_axes("m{axis}72=P{lo_lim}", " ")
 
     def jog_distance(self, distance="*"):
         """
@@ -388,7 +414,10 @@ class Group:
         Useful if a program has been aborted in the middle of a move, because it
         will move the motor to the programmed move end position
         """
-        return self._all_axes("#{axis}J=%s" % (distance), " ")
+        if self.controller is ControllerType.pbrick:
+            return f'jog{self._all_axes("{axis}", ",")}={distance}'
+        else:
+            return self._all_axes("#{axis}J=%s" % (distance), " ")
 
     def negate_home_flags(self):
         """
@@ -419,7 +448,7 @@ class Group:
         """
 
         if self.controller == ControllerType.pbrick:
-            return self._all_axes("jog{axis}^*^{jdist}", " ")
+            return self._all_axes("jog{axis}^*^{jdist}\n", " ")
         else:
             return self._all_axes("#{axis}J^*^{jdist}", " ")
 
@@ -428,25 +457,24 @@ class Group:
         Generate a command string for all group axes: home command
         """
         if self.controller == ControllerType.pbrick:
-            return self._all_axes("home{axis}", " ")
+            return f'home{self._all_axes("{axis}", ",")}'
         else:
             return self._all_axes("#{axis}hm", " ")
 
-    def homez(self) -> str:
-        """
-        Generate a command string for all group axes: home command
-        """
-
-        if self.controller == ControllerType.pbrick:
-            return self._all_encoders("homez{enc_axis}", " ")
-        else:
-            return self._all_encoders("#{enc_axis}hmz", " ")
-
-    def set_home(self) -> str:
+    def set_home(self, encoder=False) -> str:
         """
         Generate a command string for all group axes: set current position as home
         """
-        return self._all_axes("#{axis}hmz", " ")
+        if encoder:
+            if self.controller == ControllerType.pbrick:
+                return f'homez{self._all_encoders("{enc_axis}", ",")}'
+            else:
+                return self._all_encoders("#{enc_axis}hmz", " ")
+        else:
+            if self.controller == ControllerType.pbrick:
+                return f'homez{self._all_axes("{axis}", ",")}'
+            else:
+                return self._all_axes("#{axis}hmz", " ")
 
     def restore_limit_flags(self):
         """

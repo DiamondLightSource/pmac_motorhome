@@ -86,6 +86,7 @@ def home_hsw():
     store_position_diff()
     drive_off_home()
     home()
+    zero_encoders()
     check_homed()
     post_home()
     post_home_action()

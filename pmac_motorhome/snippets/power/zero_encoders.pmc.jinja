@@ -2,7 +2,7 @@
     {% if motor.enc_axes_len > 0 %}
     //---- Zero encoder channels ----
     if ((PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming) || (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming)){
-        {{ group.homez() }}
+        {{ group.set_home(encoder=True) }}
     }
     {% endif %}
     {% endfor %}

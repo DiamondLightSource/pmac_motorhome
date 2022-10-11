@@ -1,10 +1,10 @@
     {% include "debug_pause.pmc.jinja" %}
 
-    ;---- PostHomeMove State ----
+    //---- PostHomeMove State ----
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StatePostHomeMove
-        ; Execute the move commands
-        cmd "{{ group.jog_distance(distance=template.args.distance) }}"
+        // Execute the move commands
+        {{ group.jog_distance(distance=template.args.distance) }}
         {% include "wait_for_done.pmc.jinja" %}
     endif
 
