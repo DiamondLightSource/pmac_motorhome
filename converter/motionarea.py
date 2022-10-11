@@ -9,24 +9,13 @@ from shutil import copy, rmtree
 from types import ModuleType
 from typing import List, Optional, Tuple
 
+from converter.indent import Indenter
+
 from .pipemessage import IPC_FIFO_NAME, get_message
 from .shim.group import Group
 from .shim.plc import PLC
 
 log = logging.getLogger(__name__)
-
-code_import = """from pmac_motorhome.sequences import {names}
-"""
-
-# The timeout variable isn't on a newline so if it is default it can be excluded
-# without lengthening plc arguments lines. Else it can be subbed for a string
-# with a newline and indent at the beginning
-code_plc = """
-with plc(
-    plc_num={plc.plc},
-    controller={plc.bricktype},
-    filepath="{plc.filename}",{timeout}
-):"""
 
 
 class MotionArea:
@@ -365,11 +354,22 @@ class MotionArea:
                 # directories name *.pmc or broken soft links
                 log.warning(f"could not copy: {in_file}, {e}")
 
-    def write_shebang(self, stream):
+    def get_shebang(self):
         # get the python path for shebang
         python_path = subprocess.check_output("which python", shell=True).strip()
         python_path = python_path.decode("utf-8")
-        stream.write(f"#!/bin/env {python_path} \n")
+        text = f"#!/bin/env {python_path}"
+        return text
+
+    def collect_imports(self, plcs):
+        # collect all the homing sequences used for the import statement
+        imports = set()
+        for plc in plcs:
+            for group in plc.groups.values():
+                imports.add(group.sequence.name)
+
+        imps = ", ".join(sorted(imports))
+        return imps
 
     def make_code(self, outpath: Path):
         """
@@ -385,62 +385,83 @@ class MotionArea:
         plcs = list(PLC.get_instances())
 
         with outpath.open("w") as stream:
+            indent_level0 = Indenter(level=0)
+            indent_level1 = Indenter(level=1)
+            indent_level2 = Indenter(level=2)
             # add shebang
-            self.write_shebang(stream)
+            stream.write(indent_level0.format_text(self.get_shebang()))
             stream.write(
-                "from pmac_motorhome.commands import ControllerType, "
-                "comment, group, motor, plc, PostHomeMove\n"
+                indent_level0.format_text(
+                    "from pmac_motorhome.commands import ControllerType, "
+                    "PostHomeMove, comment, group, motor, plc"
+                )
             )
-
             # collect all the homing sequences used for the import statement
             imports = set()
             for plc in plcs:
                 for group in plc.groups.values():
                     imports.add(group.sequence.name)
-
             imps = ", ".join(sorted(imports))
-            stream.write(code_import.format(names=imps))
-
+            text = indent_level0.format_text(
+                f"from pmac_motorhome.sequences import {imps}"
+            )
+            stream.write(text)
+            stream.write(indent_level0.format_text(""))
             for plc in plcs:
-                timeoutstr = ""
+                stream.write(indent_level0.format_text("with plc("))
+                stream.write(indent_level1.format_text(f"plc_num={plc.plc},"))
+                stream.write(indent_level1.format_text(f"controller={plc.bricktype},"))
+                stream.write(indent_level1.format_text(f'filepath="{plc.filename}",'))
                 if plc.timeout != 600000:
-                    timeoutstr = "\n    timeout={timeout},".format(timeout=plc.timeout)
-                fs = code_plc.format(plc=plc, timeout=timeoutstr)
-                stream.write(fs)
-                if plc.timeout != 600000:
-                    stream.write("\n    plc.timeout={t}".format(t=plc.timeout))
-
-                # the original created PLCs in PLC numeric order
+                    stream.write(indent_level1.format_text(f"timeout={plc.timeout}"))
+                stream.write(indent_level0.format_text("):"))
                 for group_num in sorted(plc.groups.keys()):
                     group = plc.groups[group_num]
-
                     post_code, extra_args, post_type = self.handle_post(group)
                     if group.pre:
+                        # replace tab with space
                         pre = re.sub("\t", "    ", str(group.pre))
-                        stream.write(f'\n    pre{group_num} = """{pre} """\n')
+                        stream.write(
+                            indent_level1.format_text(f'pre{group_num} = """{pre} """')
+                        )
                         extra_args += f", pre=pre{group_num}"
+                        stream.write(indent_level0.format_text(""))
                     if post_code:
                         post = re.sub("\t", "    ", str(post_code))
-                        stream.write(f'\n    post{group_num} = """{post} """\n')
-                        extra_args += f", post=post{group_num}"
-
-                    stream.write(
-                        f"\n    with group(group_num={group.group_num}{extra_args}):\n"
-                    )
-
-                    for motor in group.motors:
-                        fs = (
-                            f"        motor(axis={motor.axis}, "
-                            f"jdist={motor.jdist}, index={motor.index})\n"
+                        stream.write(
+                            indent_level1.format_text(
+                                f'post{group_num} = """{post} """'
+                            )
                         )
-                        stream.write(fs)
-
+                        extra_args += f", post=post{group_num}"
+                        stream.write(indent_level0.format_text(""))
                     stream.write(
-                        f'        comment("{group.sequence.old_name}", "{post_type}")\n'
+                        indent_level1.format_text(
+                            f"with group(group_num={group.group_num}"
+                            f"{extra_args}):"
+                        )
                     )
-                    stream.write(f"        {group.sequence.name}()\n")
-
-            stream.write("\n# End of auto converted homing definitions\n")
+                    for motor in group.motors:
+                        stream.write(
+                            indent_level2.format_text(
+                                f"motor(axis={motor.axis},"
+                                f" jdist={motor.jdist},"
+                                f" index={motor.index})"
+                            )
+                        )
+                    stream.write(
+                        indent_level2.format_text(
+                            f'comment("{group.sequence.old_name}",'
+                            f' "{post_type}")'
+                        )
+                    )
+                    stream.write(
+                        indent_level2.format_text(f"{group.sequence.name}()")
+                    )
+                    stream.write(indent_level0.format_text(""))
+            text = indent_level0.format_text("# End of auto converted homing "
+                                             "definitions")
+            stream.write(text)
 
     def handle_post(self, this_group: Group) -> Tuple[str, str, str]:
         post = this_group.post
