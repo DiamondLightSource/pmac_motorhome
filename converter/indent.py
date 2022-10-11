@@ -10,4 +10,4 @@ class Indenter:
         self.level -= 1
 
     def format_text(self, text):
-        return("    " * self.level + text +"\n")
+        return "    " * self.level + text + "\n"

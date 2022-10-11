@@ -388,9 +388,12 @@ class MotionArea:
             with Indenter() as indent:
                 # add shebang
                 stream.write(indent.format_text(self.get_shebang()))
-                stream.write(indent.format_text(
-                    "from pmac_motorhome.commands import ControllerType, PostHomeMove, "
-                    "comment, group, motor, plc"))
+                stream.write(
+                    indent.format_text(
+                        "from pmac_motorhome.commands import ControllerType, "
+                        "PostHomeMove, comment, group, motor, plc"
+                    )
+                )
                 # collect all the homing sequences used for the import statement
                 imports = set()
                 for plc in plcs:
@@ -398,7 +401,8 @@ class MotionArea:
                         imports.add(group.sequence.name)
                 imps = ", ".join(sorted(imports))
                 text = indent.format_text(
-                    f"from pmac_motorhome.sequences import {imps}")
+                    f"from pmac_motorhome.sequences import {imps}"
+                )
                 stream.write(text)
                 stream.write(indent.format_text(""))
                 for plc in plcs:
@@ -406,7 +410,7 @@ class MotionArea:
                     with indent:
                         stream.write(indent.format_text(f"plc_num={plc.plc},"))
                         stream.write(indent.format_text(f"controller={plc.bricktype},"))
-                        stream.write(indent.format_text(f"filepath=\"{plc.filename}\","))
+                        stream.write(indent.format_text(f'filepath="{plc.filename}",'))
                         if plc.timeout != 600000:
                             stream.write(indent.format_text(f"timeout={plc.timeout}"))
                     stream.write(indent.format_text("):"))
@@ -416,25 +420,43 @@ class MotionArea:
                             post_code, extra_args, post_type = self.handle_post(group)
                             if group.pre:
                                 # replace tab with space
-                                pre = re.sub("\t", "        ", str(group.pre)) 
-                                stream.write(indent.format_text(f'pre{group_num} = """{pre} """'))
+                                pre = re.sub("\t", "        ", str(group.pre))
+                                stream.write(
+                                    indent.format_text(f'pre{group_num} = """{pre} """')
+                                )
                                 extra_args += f", pre=pre{group_num}"
                             if post_code:
                                 post = re.sub("\t", "        ", str(post_code))
-                                stream.write(indent.format_text(f'post{group_num} = """{post} """'))
-                                extra_args += f", post=post{group_num}"                           
-                            stream.write(indent.format_text(f"with group(group_num={group.group_num}{extra_args}):"))
+                                stream.write(
+                                    indent.format_text(
+                                        f'post{group_num} = """{post} """'
+                                    )
+                                )
+                                extra_args += f", post=post{group_num}"
+                            stream.write(
+                                indent.format_text(
+                                    f"with group(group_num={group.group_num}"
+                                    f"{extra_args}):"
+                                )
+                            )
                             with indent:
                                 for motor in group.motors:
-                                    stream.write(indent.format_text(
-                                        f"motor(axis={motor.axis},"
-                                        f" jdist={motor.jdist},"
-                                        f" index={motor.index})"))
-                                stream.write(indent.format_text(
-                                    f"comment(\"{group.sequence.old_name}\","
-                                    f" \"{post_type}\")"
-                                ))
-                                stream.write(indent.format_text(f"{group.sequence.name}()"))
+                                    stream.write(
+                                        indent.format_text(
+                                            f"motor(axis={motor.axis},"
+                                            f" jdist={motor.jdist},"
+                                            f" index={motor.index})"
+                                        )
+                                    )
+                                stream.write(
+                                    indent.format_text(
+                                        f'comment("{group.sequence.old_name}",'
+                                        f' "{post_type}")'
+                                    )
+                                )
+                                stream.write(
+                                    indent.format_text(f"{group.sequence.name}()")
+                                )
                 text = indent.format_text("# End of auto converted homing definitions")
                 stream.write(text)
 
