@@ -30,7 +30,6 @@ class Motor:
         plc_num: int,
         post_home: PostHomeMove = PostHomeMove.none,
         index: int = -1,
-        enc_axes: List = list(),
     ) -> None:
         """
         Args:
@@ -43,13 +42,9 @@ class Motor:
             index (int): for internal use in conversion of old scripts sets
                 the index of this motor to a different value than the order of
                 declaration.
-            enc_axes (list): List of additional encoders that need zeroing on homing
-                completion
         """
         self.axis = axis
         self.jdist = jdist
-        self.enc_axes = enc_axes
-        self.enc_axes_len = len(enc_axes)
         if index == -1:
             self.index = len(self.instances)
         else:
@@ -79,7 +74,6 @@ class Motor:
         plc_num: int,
         post_home: PostHomeMove = PostHomeMove.none,
         index: int = -1,
-        enc_axes: List = list(),
     ) -> "Motor":
         """
         A factory function to return a Motor object but ensure that there
@@ -88,7 +82,7 @@ class Motor:
         """
         motor = cls.instances.get(axis)
         if motor is None:
-            motor = Motor(axis, jdist, plc_num, post_home, index, enc_axes)
+            motor = Motor(axis, jdist, plc_num, post_home, index)
 
         return motor
 

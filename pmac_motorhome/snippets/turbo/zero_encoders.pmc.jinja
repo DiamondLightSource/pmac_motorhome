@@ -1,9 +1,7 @@
-    {% for motor in group.motors %}
-    {% if motor.enc_axes_len > 0 %}
+    {% if group.has_encoders %}
     ;---- Zero encoder channels ----
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         cmd "{{ group.set_home(encoder=True) }}"
     endif
     {% endif %}
-    {% endfor %}
 

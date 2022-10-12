@@ -241,13 +241,19 @@ class Plc:
         """
         Generate a command string for saving all axes limit flags
         """
-        return self._all_axes("P{lim_flags}=i{axis}24", " ")
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("P{lim_flags}=Motor[{axis}].pLimits", " ")
+        else:
+            return self._all_axes("P{lim_flags}=i{axis}24", " ")
 
     def restore_limit_flags(self):
         """
         Generate a command string for restoring all axes limit flags
         """
-        return self._all_axes("i{axis}24=P{lim_flags}", " ")
+        if self.controller == ControllerType.pbrick:
+            return self._all_axes("Motor[{axis}].pLimits=P{lim_flags}", " ")
+        else:
+            return self._all_axes("i{axis}24=P{lim_flags}", " ")
 
     def save_position(self):
         """

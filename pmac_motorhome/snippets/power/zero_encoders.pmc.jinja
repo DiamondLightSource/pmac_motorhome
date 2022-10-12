@@ -1,9 +1,7 @@
-    {% for motor in group.motors %}
-    {% if motor.enc_axes_len > 0 %}
+    {% if group.has_encoders %}
     //---- Zero encoder channels ----
     if ((PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming) || (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming)){
         {{ group.set_home(encoder=True) }}
     }
     {% endif %}
-    {% endfor %}
 

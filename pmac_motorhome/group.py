@@ -41,7 +41,9 @@ class Group:
                 at the beginning of this group's definition
         """
         self.motors = []
+        self.encoders = []
         self.all_motors = []
+        self.has_encoders = False
         self.post_home = post_home
         self.post_distance = post_distance
         self.comment = comment
@@ -86,10 +88,13 @@ class Group:
         assert (
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
-        motor = Motor.get_motor(
-            axis, jdist, group.plc_num, index=index, enc_axes=enc_axes
-        )
+        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index)
         group.motors.append(motor)
+
+        group.encoders = group.encoders + enc_axes
+        if len(group.encoders) > 0:
+            group.has_encoders = True
+
         group.all_motors.append(motor)
         return motor
 
@@ -234,11 +239,7 @@ class Group:
         # to the string format: pass any extra arguments first, then the dictionary
         # of the axis object so its elements can be addressed by name
 
-        all = [
-            format.format(*arg, enc_axis=enc)
-            for ax in self.motors
-            for enc in ax.enc_axes
-        ]
+        all = [format.format(*arg, enc_axis=enc) for enc in self.encoders]
         return separator.join(all)
 
     def callback(self, function: Callable, args: Dict[str, Any]) -> str:
@@ -373,7 +374,7 @@ class Group:
 
         if self.controller is ControllerType.pbrick:
             return self._all_axes(
-                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos) + {jdist})",
+                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos) + {jdist} - Motor[{axis}].HomeOffset",
                 separator="\n        ",
             )
         else:
@@ -448,7 +449,7 @@ class Group:
         """
 
         if self.controller == ControllerType.pbrick:
-            return self._all_axes("jog{axis}^*^{jdist}\n", " ")
+            return self._all_axes("jog{axis}^*^{jdist}", " ")
         else:
             return self._all_axes("#{axis}J^*^{jdist}", " ")
 
@@ -480,7 +481,11 @@ class Group:
         """
         Generate a command string for all group axes: restore original limit flags
         """
-        return self._all_axes("i{axis}24=P{lim_flags}", " ")
+
+        if self.controller == ControllerType.pbrick:
+            return self._all_axes("Motor[{axis}].pLimits=P{lim_flags}", " ")
+        else:
+            return self._all_axes("i{axis}24=P{lim_flags}", " ")
 
     def overwrite_inverse_flags(self):
         """
