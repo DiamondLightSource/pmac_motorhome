@@ -220,7 +220,7 @@ def home_hsw_hlim():
     jog_if_on_limit()
     drive_to_home(homing_direction=True, state="FastSearch", with_limits=True)
     store_position_diff()
-    drive_off_home(homing_direction=False, state="FastRetrace")
+    drive_off_home(homing_direction=True, state="FastRetrace")
     home()
     check_homed()
     post_home()
