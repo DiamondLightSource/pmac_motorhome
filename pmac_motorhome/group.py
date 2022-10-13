@@ -374,7 +374,7 @@ class Group:
 
         if self.controller is ControllerType.pbrick:
             return self._all_axes(
-                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos) + {jdist} - Motor[{axis}].HomeOffset",
+                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos)) + {jdist} - Motor[{axis}].HomeOffset",
                 separator="\n        ",
             )
         else:
@@ -495,8 +495,10 @@ class Group:
         # meow
         if self.controller == ControllerType.pmac:
             return self._all_axes("MSR{macro_station},i913,P{not_homed}", " ")
-        else:
-            return self._all_axes("P{not_homed}=i{inverse_flag}", " ")
+        if self.controller == ControllerType.pbrick:
+            return self._all_axes("P{not_homed}={pb_inverse_flag}", " ")
+
+        return self._all_axes("P{not_homed}=i{inverse_flag}", " ")
 
     def set_inpos_trigger(self, value: int):
         """

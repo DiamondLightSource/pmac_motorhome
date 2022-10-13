@@ -61,6 +61,7 @@ class Motor:
             "homed_flag": f"7{self.nx}2",
             "pb_homed_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptCtrl",
             "inverse_flag": f"7{self.nx}3",
+            "pb_inverse_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptFlagSel",
             "macro_station": self.macro_station,
         }
         for name, start in self.PVARS.items():
