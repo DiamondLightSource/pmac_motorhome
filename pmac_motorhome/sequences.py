@@ -7,7 +7,6 @@ perform the sequence on all axes in the group.
 """
 import sys
 
-from pmac_motorhome.snippets import zero_encoders
 
 if sys.version_info[0] > 2:
     from .commands import only_axes, post_home
