@@ -169,7 +169,7 @@ if ((PLC10_HomingBackupGroup == 1 || PLC10_HomingBackupGroup == 2) && (PLC10_Hom
     if (PLC10_HomingStatus == PLC10_StatusHoming || PLC10_HomingStatus == PLC10_StatusDebugHoming){
         PLC10_HomingState=PLC10_StateFastRetrace
         // Execute the move commands
-        Gate3[0].Chan[0].CaptCtrl=P1052 Motor[1].ProgJogPos=100000000*(Motor[1].HomeVel/ABS(Motor[1].HomeVel))
+        Gate3[0].Chan[0].CaptCtrl=P1052 Motor[1].ProgJogPos=100000000*(-Motor[1].HomeVel/ABS(Motor[1].HomeVel))
         jog1^*^50000
         // Wait for the move to complete
         CALL DelayTimer.msec(5)
