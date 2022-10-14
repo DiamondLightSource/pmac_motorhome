@@ -310,7 +310,7 @@ class Group:
         if self.controller is ControllerType.pbrick:
             return f'jog{sign}{self._all_axes("{axis}", ",")}'
         else:
-            return self._all_axes("{axis}J{0}", " ", sign)
+            return self._all_axes("#{axis}J{0}", " ", sign)
 
     def in_pos(self, operator="&", relOperator="==", value=0) -> str:
         """
