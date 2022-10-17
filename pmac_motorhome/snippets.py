@@ -244,11 +244,13 @@ def drive_relative(distance="123456", set_home=False, with_limits=True, **kwargs
         with_limits (bool): check for limits during the move
     """
 
+
 @_snippet_function()
 def zero_encoders():
     """
     Zero an associated encoders
     """
+
 
 @_snippet_function()
 def check_homed():

@@ -7,12 +7,10 @@ perform the sequence on all axes in the group.
 """
 import sys
 
-
 if sys.version_info[0] > 2:
     from .commands import only_axes, post_home
     from .group import Group
     from .snippets import (
-        zero_encoders,
         check_homed,
         disable_limits,
         drive_off_home,
@@ -24,6 +22,7 @@ if sys.version_info[0] > 2:
         post_home_action,
         restore_limits,
         store_position_diff,
+        zero_encoders,
     )
 
 

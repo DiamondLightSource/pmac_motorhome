@@ -221,8 +221,8 @@ class Group:
 
     def _all_encoders(self, format: str, separator: str, *arg) -> str:
         """
-        A helper function that generates a command line by applying each of every 
-        element in enc_axes of each Motor in the group as a parameter to the format 
+        A helper function that generates a command line by applying each of every
+        element in enc_axes of each Motor in the group as a parameter to the format
         string and the concatenating all of the results with a separator.
 
         Args:
@@ -291,7 +291,8 @@ class Group:
         if self.controller is ControllerType.pbrick:
             sign = "" if homing_direction else "-"
             return self._all_axes(
-                "Motor[{axis}].ProgJogPos=100000000*({0}Motor[{axis}].HomeVel/ABS(Motor[{axis}].HomeVel))",
+                "Motor[{axis}].ProgJogPos=100000000*({0}Motor[{axis}].HomeVel/"
+                + "ABS(Motor[{axis}].HomeVel))",
                 " ",
                 sign,
             )
@@ -374,7 +375,8 @@ class Group:
 
         if self.controller is ControllerType.pbrick:
             return self._all_axes(
-                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos)) + {jdist} - Motor[{axis}].HomeOffset",
+                "P{pos}=(P{pos} - (Motor[{axis}].Pos - Motor[{axis}].HomePos))"
+                + " + {jdist} - Motor[{axis}].HomeOffset",
                 separator="\n        ",
             )
         else:
