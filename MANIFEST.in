@@ -1,1 +1,1 @@
-include pmac_motorhome/snippets/*.jinja
+include pmac_motorhome/snippets/turbo/*.jinja
