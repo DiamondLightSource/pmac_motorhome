@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commands &mdash; pmac_motorhome 1.0+34.gcce0042 documentation</title>
+  <title>Commands &mdash; pmac_motorhome 1.0+51.gcde4afe documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -158,7 +158,7 @@ home sequence completes</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pmac_motorhome.commands.motor">
-<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.motor" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.commands.</span></span><span class="sig-name descname"><span class="pre">motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enc_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/commands.html#motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.commands.motor" title="Permalink to this definition"></a></dt>
 <dd><p>Declare a motor for use in the current group.</p>
 <p>Must be called in a group context.</p>
 <dl class="field-list simple">
@@ -170,6 +170,8 @@ to far enough to move off of the home mark.</p></li>
 <li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – for internal use in conversion of old scripts sets
 the index of this motor to a different value than the order of
 declaration. -1 means use the order that motors were added.</p></li>
+<li><p><strong>enc_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of additional encoders that need zeroing on homing
+completion</p></li>
 </ul>
 </dd>
 </dl>

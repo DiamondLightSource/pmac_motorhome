@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.snippets &mdash; pmac_motorhome 1.0+34.gcce0042 documentation</title>
+  <title>pmac_motorhome.snippets &mdash; pmac_motorhome 1.0+51.gcde4afe documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -114,7 +114,7 @@
 <span class="s2">    This will cause the jinja template </span><span class="si">{template}</span><span class="s2"> to be expanded and inserted</span>
 <span class="s2">    into the PLC code. The template is as follows:</span>
 
-<span class="s2">    .. include:: ../../pmac_motorhome/snippets/</span><span class="si">{template}</span><span class="s2"></span>
+<span class="s2">    .. include:: ../../pmac_motorhome/snippets/turbo/</span><span class="si">{template}</span><span class="s2"></span>
 <span class="s2">        :literal:</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
@@ -333,6 +333,13 @@
 <span class="sd">        distance (str): distance in counts</span>
 <span class="sd">        set_home (bool): set the home flag afterward if True</span>
 <span class="sd">        with_limits (bool): check for limits during the move</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="zero_encoders"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.zero_encoders">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">zero_encoders</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zero an associated encoders</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 

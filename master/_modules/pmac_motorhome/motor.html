@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.motor &mdash; pmac_motorhome 1.0+34.gcce0042 documentation</title>
+  <title>pmac_motorhome.motor &mdash; pmac_motorhome 1.0+51.gcde4afe documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -150,7 +150,9 @@
             <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
             <span class="s2">&quot;jdist&quot;</span><span class="p">:</span> <span class="n">jdist</span><span class="p">,</span>
             <span class="s2">&quot;homed_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;7</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="si">}</span><span class="s2">2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pb_homed_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Gate3[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gate</span><span class="si">}</span><span class="s2">].Chan[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chan</span><span class="si">}</span><span class="s2">].CaptCtrl&quot;</span><span class="p">,</span>
             <span class="s2">&quot;inverse_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;7</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="si">}</span><span class="s2">3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pb_inverse_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Gate3[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gate</span><span class="si">}</span><span class="s2">].Chan[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chan</span><span class="si">}</span><span class="s2">].CaptFlagSel&quot;</span><span class="p">,</span>
             <span class="s2">&quot;macro_station&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_station</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">start</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PVARS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -184,6 +186,16 @@
     <span class="k">def</span> <span class="nf">nx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">nx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:02}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
+
+    <span class="c1"># Determine the gate number if power pmac</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">gate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># Determine the channel number of the above gate</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">homed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

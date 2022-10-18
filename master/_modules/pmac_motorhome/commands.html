@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.commands &mdash; pmac_motorhome 1.0+34.gcce0042 documentation</title>
+  <title>pmac_motorhome.commands &mdash; pmac_motorhome 1.0+51.gcde4afe documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -167,7 +167,7 @@
     <span class="n">Group</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="n">htype</span><span class="p">,</span> <span class="n">post</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="motor"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.motor">[docs]</a><span class="k">def</span> <span class="nf">motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="motor"><a class="viewcode-back" href="../../reference/commands.html#pmac_motorhome.commands.motor">[docs]</a><span class="k">def</span> <span class="nf">motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">enc_axes</span><span class="o">=</span><span class="nb">list</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Declare a motor for use in the current group.</span>
 
@@ -180,8 +180,10 @@
 <span class="sd">        index (int): for internal use in conversion of old scripts sets</span>
 <span class="sd">            the index of this motor to a different value than the order of</span>
 <span class="sd">            declaration. -1 means use the order that motors were added.</span>
+<span class="sd">        enc_axes (list): List of additional encoders that need zeroing on homing</span>
+<span class="sd">            completion</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">motor</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">motor</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">enc_axes</span><span class="p">)</span>
     <span class="n">Plc</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span></div>
 
 

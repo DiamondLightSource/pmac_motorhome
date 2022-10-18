@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Snippet Functions &mdash; pmac_motorhome 1.0+34.gcce0042 documentation</title>
+  <title>Snippet Functions &mdash; pmac_motorhome 1.0+51.gcde4afe documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -511,6 +511,22 @@ has stopped instead of waiting for all motors</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.zero_encoders">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">zero_encoders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#zero_encoders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.zero_encoders" title="Permalink to this definition"></a></dt>
+<dd><p>Zero an associated encoders</p>
+<p>This will cause the jinja template zero_encoders.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">has_encoders</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">;</span><span class="o">----</span> <span class="n">Zero</span> <span class="n">encoder</span> <span class="n">channels</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.set_home(encoder=True) }}&quot;</span>
+    <span class="n">endif</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
