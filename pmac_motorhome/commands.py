@@ -76,7 +76,7 @@ def comment(htype, post="None"):
     Group.add_comment(htype, post)
 
 
-def motor(axis, jdist=0, index=-1):
+def motor(axis, jdist=0, index=-1, enc_axes=list()):
     """
     Declare a motor for use in the current group.
 
@@ -89,8 +89,10 @@ def motor(axis, jdist=0, index=-1):
         index (int): for internal use in conversion of old scripts sets
             the index of this motor to a different value than the order of
             declaration. -1 means use the order that motors were added.
+        enc_axes (list): List of additional encoders that need zeroing on homing
+            completion
     """
-    motor = Group.add_motor(axis, jdist, index)
+    motor = Group.add_motor(axis, jdist, index, enc_axes)
     Plc.add_motor(axis, motor)
 
 

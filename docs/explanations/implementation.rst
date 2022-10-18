@@ -91,7 +91,7 @@ Included snippet templates may in turn include other templates and in most
 cases will also include callback functions. The following typical example is the
 snippet which searches for the home mark.
 
-.. include:: ../../pmac_motorhome/snippets/drive_to_home.pmc.jinja
+.. include:: ../../pmac_motorhome/snippets/turbo/drive_to_home.pmc.jinja
    :literal:
 
 This jinja template follows these common patterns:

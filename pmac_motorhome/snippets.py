@@ -23,7 +23,7 @@ snippet_docstring = """
     This will cause the jinja template {template} to be expanded and inserted
     into the PLC code. The template is as follows:
 
-    .. include:: ../../pmac_motorhome/snippets/{template}
+    .. include:: ../../pmac_motorhome/snippets/turbo/{template}
         :literal:
 """
 
@@ -242,6 +242,13 @@ def drive_relative(distance="123456", set_home=False, with_limits=True, **kwargs
         distance (str): distance in counts
         set_home (bool): set the home flag afterward if True
         with_limits (bool): check for limits during the move
+    """
+
+
+@_snippet_function()
+def zero_encoders():
+    """
+    Zero an associated encoders
     """
 
 

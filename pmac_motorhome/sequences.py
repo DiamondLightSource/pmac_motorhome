@@ -22,6 +22,7 @@ if sys.version_info[0] > 2:
         post_home_action,
         restore_limits,
         store_position_diff,
+        zero_encoders,
     )
 
 
@@ -54,6 +55,7 @@ def home_rlim():
     store_position_diff()
     drive_off_home(with_limits=False)  # drive back onto limit switch
     home(with_limits=False)
+    zero_encoders()
     check_homed()
     post_home()
     post_home_action()
@@ -82,6 +84,7 @@ def home_hsw():
     store_position_diff()
     drive_off_home()
     home()
+    zero_encoders()
     check_homed()
     post_home()
     post_home_action()

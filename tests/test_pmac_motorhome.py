@@ -249,7 +249,8 @@ def test_post_jog_relative():
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
 
         with group(
-            group_num=4, post_home=PostHomeMove.relative_move,
+            group_num=4,
+            post_home=PostHomeMove.relative_move,
             post_distance=1000,
         ):
             motor(axis=3, jdist=1000)
@@ -266,7 +267,8 @@ def test_post_move_to_position():
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
 
         with group(
-            group_num=5, post_home=PostHomeMove.move_and_hmz,
+            group_num=5,
+            post_home=PostHomeMove.move_and_hmz,
             post_distance=1000,
         ):
             motor(axis=4, jdist=1000)
@@ -283,7 +285,8 @@ def test_post_distance():
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
 
         with group(
-            group_num=6, post_home=PostHomeMove.move_absolute,
+            group_num=6,
+            post_home=PostHomeMove.move_absolute,
             post_distance=32767,
         ):
             motor(axis=5, jdist=1000)
@@ -399,8 +402,65 @@ def test_pre_post():
     file_name = "pre_post.plc"
     tmp_file = Path("/tmp") / file_name
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
-        with group(group_num=2, pre="\n\n        >> before  <<\n",
-                   post="\nafter\n"):
+        with group(
+            group_num=2, pre="\n\n        >> before  <<\n", post="\nafter\n"
+        ):
             motor(axis=1)
             home_hsw()
+    verify(file_name)
+
+
+def test_pb_rlim_post_hard_high_limit():
+    file_name = "pb_rlim_post_hard_high_limit.plc10"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=10, controller=ControllerType.pbrick, filepath=tmp_file):
+        with group(
+            group_num=2, post_home=PostHomeMove.hard_hi_limit, post="P1099=1"
+        ):
+            motor(axis=1, enc_axes=[9])
+            home_rlim()
+    verify(file_name)
+
+
+def test_pb_rlim_post_jog_relative():
+    file_name = "pb_rlim_post_jog_relative.plc10"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=10, controller=ControllerType.pbrick, filepath=tmp_file):
+        with group(
+            group_num=2,
+            post_distance=200,
+            post_home=PostHomeMove.relative_move,
+        ):
+            motor(axis=1, enc_axes=[9])
+            home_rlim()
+    verify(file_name)
+
+
+def test_pb_rlim_post_high_limit():
+    file_name = "pb_rlim_post_high_limit.plc10"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=10, controller=ControllerType.pbrick, filepath=tmp_file):
+        with group(group_num=2, post_home=PostHomeMove.high_limit):
+            motor(axis=1, enc_axes=[9])
+            home_rlim()
+    verify(file_name)
+
+
+def test_pb_home_limit():
+    file_name = "pb_home_limit.plc10"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=10, controller=ControllerType.pbrick, filepath=tmp_file):
+        with group(group_num=2):
+            motor(axis=1, enc_axes=[9])
+            home_limit()
+    verify(file_name)
+
+
+def test_pb_home_hsw_hlim():
+    file_name = "pb_home_hsw_hlim.plc10"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=10, controller=ControllerType.pbrick, filepath=tmp_file):
+        with group(group_num=2):
+            motor(axis=1, jdist=50000, enc_axes=[9])
+            home_hsw_hlim()
     verify(file_name)

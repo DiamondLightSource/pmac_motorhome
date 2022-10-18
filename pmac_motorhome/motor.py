@@ -59,7 +59,9 @@ class Motor:
             "index": self.index,
             "jdist": jdist,
             "homed_flag": f"7{self.nx}2",
+            "pb_homed_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptCtrl",
             "inverse_flag": f"7{self.nx}3",
+            "pb_inverse_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptFlagSel",
             "macro_station": self.macro_station,
         }
         for name, start in self.PVARS.items():
@@ -93,6 +95,16 @@ class Motor:
     def nx(self) -> str:
         nx = int(int((self.axis - 1) / 4) * 10 + int((self.axis - 1) % 4 + 1))
         return "{:02}".format(nx)
+
+    # Determine the gate number if power pmac
+    @property
+    def gate(self) -> str:
+        return str(int((self.axis - 1) / 4))
+
+    # Determine the channel number of the above gate
+    @property
+    def chan(self) -> str:
+        return str(int((self.axis - 1) % 4))
 
     @property
     def homed(self):
