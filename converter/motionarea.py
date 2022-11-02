@@ -216,8 +216,7 @@ class MotionArea:
             # use the motorhoming 2.0 definition code created above to generate PLCs
             # no need for a loop - could be run only once with the same result
             # for plc_file in plc_files:
-            plc_file = plc_files[0]
-            self._execute_script(new_root_gen, self.new_motion, Path(), str(plc_file))
+            self._execute_script(new_root_gen, self.new_motion, Path(), "")
         else:
             # individual per brick generators
             generators = self.new_motion.glob("*/configure/generate_homing_plcs.py")
@@ -227,7 +226,7 @@ class MotionArea:
                 # a generator in each brick configure folder
                 brick_folder = gen.parent.parent
                 plc_files = self._parse_masters(brick_folder)
-                self.copy_new_gen.append(brick_folder / script_path)
+
                 self.copy_old_gen.append(
                     self.original_path / brick_folder.parts[-1] / script_path
                 )
@@ -237,10 +236,10 @@ class MotionArea:
                 fifo = os.open(
                     brick_folder / IPC_FIFO_NAME, os.O_RDONLY | os.O_NONBLOCK
                 )
-
                 # clear PLC instances in preparation for loading the next motorhome.py
                 PLC.instances = []
-                new_gen = brick_folder / "generate_homing_plcs2.py"
+                new_gen = brick_folder / "configure/generate_homing_plcs2.py"
+                self.copy_new_gen.append(new_gen)
                 for plc_file in plc_files:
 
                     # set up own shim using pypath
@@ -269,10 +268,8 @@ class MotionArea:
 
                 # close fifo pipe
                 os.close(fifo)
-
                 # use the motorhoming 2.0 definition code created above to generate PLCs
-                for plc_file in plc_files:
-                    self._execute_script(new_gen, brick_folder, Path(), str(plc_file))
+                self._execute_script(new_gen, brick_folder, Path(), "")
 
     def check_matches(self):
         count = 0
