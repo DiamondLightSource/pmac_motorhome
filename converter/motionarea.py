@@ -165,13 +165,15 @@ class MotionArea:
         self.copytree(self.original_path, self.new_motion)
         self._remove_homing_plcs(self.new_motion)
         script_path = "configure/generate_homing_plcs.py"
+        new_script_name = "motorhome.py"
+        new_script_path = f"configure/{new_script_name}"
 
         root_gen = self.new_motion / script_path
         if root_gen.exists():
             # single root generator
             plc_files = self._parse_masters(self.new_motion)
 
-            new_root_gen = self.new_motion / "generate_homing_plcs2.py"
+            new_root_gen = self.new_motion / new_script_name
             self.copy_new_gen = new_root_gen
             self.copy_old_gen = self.original_path / script_path
             # clear PLC instances in preparation for loading the next motorhome.py
@@ -219,7 +221,7 @@ class MotionArea:
             self._execute_script(new_root_gen, self.new_motion, Path(), "")
         else:
             # individual per brick generators
-            generators = self.new_motion.glob("*/configure/generate_homing_plcs.py")
+            generators = self.new_motion.glob(f"*/{script_path}")
             self.copy_new_gen = list()
             self.copy_old_gen = list()
             for gen in generators:
@@ -238,7 +240,7 @@ class MotionArea:
                 )
                 # clear PLC instances in preparation for loading the next motorhome.py
                 PLC.instances = []
-                new_gen = brick_folder / "configure/generate_homing_plcs2.py"
+                new_gen = brick_folder / new_script_path
                 self.copy_new_gen.append(new_gen)
                 for plc_file in plc_files:
 
@@ -316,7 +318,7 @@ class MotionArea:
             log.warning(
                 f"To copy the new generating script, use the following command:\n"
                 f"mv {self.copy_new_gen} {self.original_path}"
-                f"/configure/generate_homing_plcs.py\n"
+                f"/configure/motorhome.py\n"
             )
         assert mismatches == 0, (
             f"{mismatches} of {count} PLC files do not match for"
