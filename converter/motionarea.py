@@ -42,8 +42,6 @@ class MotionArea:
         r"^#include \"(PLCs\/PLC[\d]+_[^_]+_HM\.pmc)\"", flags=re.M
     )
     find_auto_home_plcs = "**/*/PLC*_HM.pmc"
-    post_relative_move = re.compile(r"^r(-?\d+)")
-    post_relative_hmz_move = re.compile(r"^z(-?\d+)")
     copy_new_gen = ""
     copy_old_gen = ""
 
@@ -175,7 +173,7 @@ class MotionArea:
 
             new_root_gen = self.new_motion / new_script_name
             self.copy_new_gen = new_root_gen
-            self.copy_old_gen = self.original_path / script_path
+            self.copy_old_gen = self.original_path / new_script_path
             # clear PLC instances in preparation for loading the next motorhome.py
             # TODO: this could be a function which creates a list of PLCS.
             # This list would be than passed to 'make_code'
@@ -230,7 +228,7 @@ class MotionArea:
                 plc_files = self._parse_masters(brick_folder)
 
                 self.copy_old_gen.append(
-                    self.original_path / brick_folder.parts[-1] / script_path
+                    self.original_path / brick_folder.parts[-1] / new_script_path
                 )
 
                 # open a FIFO pipe to collect pickled PLC instances
@@ -263,9 +261,10 @@ class MotionArea:
                     msg = get_message(fifo)
 
                     # unpickle objects
-                    for thing in pickle.loads(msg):
-                        # append objects to PLC.instances list
-                        PLC.instances.append(thing)
+                    if msg is not None:
+                        for thing in pickle.loads(msg):
+                            # append objects to PLC.instances list
+                            PLC.instances.append(thing)
                 self.make_code(new_gen)
 
                 # close fifo pipe
@@ -400,11 +399,12 @@ class MotionArea:
             for plc in plcs:
                 for group in plc.groups.values():
                     imports.add(group.sequence.name)
-            imps = ", ".join(sorted(imports))
-            text = indent_level0.format_text(
-                f"from pmac_motorhome.sequences import {imps}"
-            )
-            stream.write(text)
+            if len(imports) > 0:
+                imps = ", ".join(sorted(imports))
+                text = indent_level0.format_text(
+                    f"from pmac_motorhome.sequences import {imps}"
+                )
+                stream.write(text)
             stream.write(indent_level0.format_text(""))
             for plc in plcs:
                 stream.write(indent_level0.format_text("with plc("))
@@ -416,7 +416,7 @@ class MotionArea:
                 stream.write(indent_level0.format_text("):"))
                 for group_num in sorted(plc.groups.keys()):
                     group = plc.groups[group_num]
-                    post_code, extra_args, post_type = self.handle_post(group)
+                    post_code, extra_args, post_type = self.handle_post(group.post)
                     if group.pre:
                         # replace tab with space
                         pre = re.sub("\t", "    ", str(group.pre))
@@ -441,11 +441,13 @@ class MotionArea:
                         )
                     )
                     for motor in group.motors:
+                        post_code, extra_args, post_type = self.handle_post(motor.post)
                         stream.write(
                             indent_level2.format_text(
                                 f"motor(axis={motor.axis},"
                                 f" jdist={motor.jdist},"
-                                f" index={motor.index})"
+                                f" index={motor.index}"
+                                f"{extra_args})"
                             )
                         )
                     stream.write(
@@ -462,11 +464,13 @@ class MotionArea:
                                              "definitions")
             stream.write(text)
 
-    def handle_post(self, this_group: Group) -> Tuple[str, str, str]:
-        post = this_group.post
+    def handle_post(self, post) -> Tuple[str, str, str]:
+        post = post
         post_code = ""
         extra_args = ""
         post_type = str(post)
+        post_relative_move = re.compile(r"^r(-?\d+)")
+        post_relative_hmz_move = re.compile(r"^z(-?\d+)")
 
         # convert old school post string to new approach
         if post in (None, 0, "0"):
@@ -487,11 +491,11 @@ class MotionArea:
         elif post == "L":
             # go to low hard limit, don't check for limits
             extra_args = ", post_home=PostHomeMove.hard_lo_limit"
-        elif self.post_relative_move.match(post_type):
+        elif post_relative_move.match(post_type):
             # go to post[1:]
             extra_args = ", post_home=PostHomeMove.relative_move"
             extra_args += ", post_distance={dist}".format(dist=post_type[1:])
-        elif self.post_relative_hmz_move.match(post_type):
+        elif post_relative_hmz_move.match(post_type):
             # go to post[1:] and hmz
             extra_args = ", post_home=PostHomeMove.move_and_hmz"
             extra_args += ", post_distance={dist}".format(dist=post_type[1:])

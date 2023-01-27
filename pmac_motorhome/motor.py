@@ -29,6 +29,7 @@ class Motor:
         jdist: int,
         plc_num: int,
         post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
         index: int = -1,
     ) -> None:
         """
@@ -38,7 +39,7 @@ class Motor:
                 this should be enough distance to move clear of the home mark
             plc_num (int): the plc number of the enclosing Plc
             post_home (PostHomeMove): the action to perform on this motor when
-                hohing is complete
+                homing is complete
             index (int): for internal use in conversion of old scripts sets
                 the index of this motor to a different value than the order of
                 declaration.
@@ -51,7 +52,8 @@ class Motor:
             self.index = index
 
         self.instances[axis] = self
-        self.post_home = 0
+        self.post_home = post_home
+        self.post_distance = post_distance
 
         # dict is for terse string formatting code in _all_axes() functions
         self.dict = {
@@ -74,6 +76,7 @@ class Motor:
         jdist: int,
         plc_num: int,
         post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
         index: int = -1,
     ) -> "Motor":
         """
@@ -83,7 +86,7 @@ class Motor:
         """
         motor = cls.instances.get(axis)
         if motor is None:
-            motor = Motor(axis, jdist, plc_num, post_home, index)
+            motor = Motor(axis, jdist, plc_num, post_home, post_distance, index)
 
         return motor
 
@@ -118,3 +121,11 @@ class Motor:
     def macro_station(self) -> str:
         msr = int(4 * int(int(self.axis - 1) / 2) + int(self.axis - 1) % 2)
         return "{}".format(msr)
+    
+    @property
+    def post_home_with_distance(self) -> str:
+        if self.post_distance == 0:
+            return self.post_home.value
+        return  self.post_home.value + str(self.post_distance)
+        
+        

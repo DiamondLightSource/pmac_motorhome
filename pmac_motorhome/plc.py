@@ -99,9 +99,9 @@ class Plc:
         group_num: int,
         post_home: PostHomeMove,
         post_distance: int,
-        comment: str = None,
-        pre: str = None,
-        post: str = None,
+        comment: str = "",
+        pre: str = "",
+        post: str = "",
     ) -> Group:
         """
         Add a new group of axes to the current Plc
@@ -125,8 +125,8 @@ class Plc:
             pre,
             post,
         )
-        if group.post_home is None:
-            group.post_home = plc.post
+        #if group.post_home is None:
+        #    group.post_home = plc.post
         plc.groups.append(group)
         return group
 

@@ -1,6 +1,6 @@
 from typing import Any, Callable, Dict, List  # , Optional
 
-from pmac_motorhome.constants import ControllerType  # , PostHomeMove
+from pmac_motorhome.constants import ControllerType, PostHomeMove
 
 from .motor import Motor
 from .template import Template
@@ -21,8 +21,8 @@ class Group:
         group_num,
         plc_num,
         controller,
-        post_home,
-        post_distance,
+        post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
         comment=None,
         pre="",
         post="",
@@ -71,7 +71,7 @@ class Group:
         Group.the_group = None
 
     @classmethod
-    def add_motor(cls, axis: int, jdist: int, index: int, enc_axes: List) -> Motor:
+    def add_motor(cls, axis: int, jdist: int, index: int, post_home:PostHomeMove, post_distance:int, enc_axes: List) -> Motor:
         """
         Add a new motor to the current group
 
@@ -88,7 +88,12 @@ class Group:
         assert (
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
-        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index)
+        
+        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index, post_home=post_home, post_distance=post_distance)
+        if motor.post_home is PostHomeMove.none: # use the group post home if it exists 
+            motor.post_home=group.post_home
+        if motor.post_distance == 0:
+            motor.post_distance=group.post_distance
         group.motors.append(motor)
 
         group.encoders = group.encoders + enc_axes
@@ -121,7 +126,7 @@ class Group:
         group.comment = "\n".join(
             [
                 f";  Axis {ax.axis}: htype = {htype}, "
-                f"jdist = {ax.jdist}, post = {post}"
+                f"jdist = {ax.jdist}, post = {ax.post_home_with_distance}"
                 for ax in group.motors
             ]
         )
