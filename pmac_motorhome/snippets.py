@@ -323,3 +323,9 @@ def post_home_action():
     """
     Insert an extra block with the group's post home action in it
     """
+
+@_snippet_function()
+def pre_home_action():
+    """
+    Insert an extra block with the group's pre home action in it
+    """
