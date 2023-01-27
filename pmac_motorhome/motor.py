@@ -126,6 +126,8 @@ class Motor:
     def post_home_with_distance(self) -> str:
         if self.post_distance == 0:
             return self.post_home.value
+        elif self.post_home is PostHomeMove.none:
+            return str(self.post_distance)
         return  self.post_home.value + str(self.post_distance)
         
         
