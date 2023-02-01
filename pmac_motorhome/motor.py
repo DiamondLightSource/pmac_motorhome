@@ -65,6 +65,7 @@ class Motor:
             "inverse_flag": f"7{self.nx}3",
             "pb_inverse_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptFlagSel",
             "macro_station": self.macro_station,
+            "post_distance": post_distance,
         }
         for name, start in self.PVARS.items():
             self.dict[name] = plc_num * 100 + start + self.index
@@ -113,6 +114,7 @@ class Motor:
     def homed(self):
         return self.dict["homed"]
 
+    
     @property
     def not_homed(self):
         return self.dict["not_homed"]

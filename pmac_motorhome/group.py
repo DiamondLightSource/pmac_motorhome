@@ -416,16 +416,16 @@ class Group:
             else:
                 return self._all_axes("m{axis}72=P{lo_lim}", " ")
 
-    def jog_distance(self, distance="*"):
+    def jog_distance(self):
         """
         Generate a command string for all group axes: jog to prejog position.
         Useful if a program has been aborted in the middle of a move, because it
         will move the motor to the programmed move end position
         """
         if self.controller is ControllerType.pbrick:
-            return f'jog{self._all_axes("{axis}", ",")}={distance}'
+            return self._all_axes("jog{axis}={post_distance}", "") 
         else:
-            return self._all_axes("#{axis}J=%s" % (distance), " ")
+            return self._all_axes("#{axis}J=%s" % ("{post_distance}"), " ")
 
     def negate_home_flags(self):
         """
