@@ -49,7 +49,6 @@ def home_rlim():
     """
 
     # drive in opposite to homing direction until limit hit
-    pre_home_action()
     drive_to_limit(homing_direction=False)
     drive_to_home(
         with_limits=False, homing_direction=True, state="FastSearch"
@@ -79,7 +78,6 @@ def home_hsw():
     """
 
     # drive in opposite to homing direction until home flag or limit hit
-    pre_home_action()
     drive_to_home(homing_direction=False)
     drive_to_home(
         with_limits=True, homing_direction=True, state="FastSearch",
@@ -114,7 +112,6 @@ def home_hsw_hstop():
     """
 
     # drive in opposite to homing direction until home flag or following error
-    pre_home_action()
     drive_to_hstop()
     drive_to_home(with_limits=True, homing_direction=True, state="FastSearch")
     store_position_diff()
@@ -156,7 +153,6 @@ def home_hsw_dir():
         state="FastSearch",
         restore_homed_flags=True,
     )
-    pre_home_action()
     store_position_diff()
     drive_off_home(homing_direction=False, state="FastRetrace")
     home()
@@ -179,7 +175,6 @@ def home_limit():
 
     .. image:: images/LIMIT.png
     """
-    pre_home_action()
     drive_to_home(homing_direction=True, state="FastSearch")
     store_position_diff()
     drive_off_home(with_limits=False)
@@ -220,7 +215,6 @@ def home_hsw_hlim():
     .. image:: images/HSW_HLIM2.png
 
     """
-    pre_home_action()
     drive_to_home(homing_direction=True)
     jog_if_on_limit()
     drive_to_home(homing_direction=True, state="FastSearch", with_limits=True)
@@ -252,7 +246,6 @@ def home_nothing():
     """
     # TODO review why this reference to Group is required
     Group.the_group.htype = "NOTHING"
-    pre_home_action()
     post_home()
     post_home_action()
 
