@@ -65,7 +65,7 @@ class Motor:
             "inverse_flag": f"7{self.nx}3",
             "pb_inverse_flag": f"Gate3[{self.gate}].Chan[{self.chan}].CaptFlagSel",
             "macro_station": self.macro_station,
-            "post_distance": post_distance,
+            "post_distance": self.post_home_distance,
         }
         for name, start in self.PVARS.items():
             self.dict[name] = plc_num * 100 + start + self.index
@@ -123,6 +123,12 @@ class Motor:
     def macro_station(self) -> str:
         msr = int(4 * int(int(self.axis - 1) / 2) + int(self.axis - 1) % 2)
         return "{}".format(msr)
+    
+    @property
+    def post_home_distance(self):
+        if self.post_distance == 0:
+            return "*"
+        return str(self.post_distance)
     
     @property
     def post_home_with_distance(self) -> str:
