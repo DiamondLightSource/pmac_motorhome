@@ -83,3 +83,15 @@ def test_bl11i_convert():
     motionarea.make_old_motion()
     motionarea.make_new_motion()
     motionarea.check_matches()
+    
+def test_bl16b_convert():
+    """
+    Test conversion of an entire motion area
+    """
+    motion_dir = ROOT_DIR / "tests" / "converter" / "BL16B_Motion"
+
+    motionarea = MotionArea(motion_dir)
+
+    motionarea.make_old_motion()
+    motionarea.make_new_motion()
+    motionarea.check_matches()

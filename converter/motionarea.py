@@ -499,7 +499,7 @@ class MotionArea:
             # go to post[1:] and hmz
             extra_args = ", post_home=PostHomeMove.move_and_hmz"
             extra_args += ", post_distance={dist}".format(dist=post_type[1:])
-        elif type(post) == int:
+        elif type(post) in (int,float):
             # go to absolute position
             extra_args = ", post_home=PostHomeMove.move_absolute"
             extra_args += ", post_distance={dist}".format(dist=post)
