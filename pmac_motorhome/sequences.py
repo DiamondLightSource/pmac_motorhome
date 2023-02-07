@@ -164,6 +164,7 @@ def home_hsw_dir():
 def home_limit():
     """
     Home on a limit switch.
+    - (Pre Home action) - only added if group pre-home is defined 
     - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
     - (Fast Retrace) Jog in -hdir until limit switch deactivates
     - (Home) Disable limits and home
@@ -175,6 +176,7 @@ def home_limit():
 
     .. image:: images/LIMIT.png
     """
+    pre_home_action()
     drive_to_home(homing_direction=True, state="FastSearch")
     store_position_diff()
     drive_off_home(with_limits=False)
