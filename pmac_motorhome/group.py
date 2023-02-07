@@ -123,10 +123,16 @@ class Group:
             post (str): post home move action
         """
         group = Group.instance()
+        enc_axes = ""
+        if len(group.encoders)> 0:
+            enc_axes = ", enc_axes = {enc}".format(enc=group.encoders)
+
+            
         group.comment = "\n".join(
             [
                 f";  Axis {ax.axis}: htype = {htype}, "
-                f"jdist = {ax.jdist}, post = {ax.post_home_with_distance}"
+                f"jdist = {ax.jdist}, post = {ax.post_home_with_distance}" 
+                f"{enc_axes}"
                 for ax in group.motors
             ]
         )
