@@ -443,13 +443,15 @@ class MotionArea:
                     for motor in group.motors:
                         post_code, extra_args, post_type = self.handle_post(motor.post)
                         enc_axes = self.handle_enc_axes(motor.enc_axes)
+                        ms = self.handle_ms(motor.ms)
                         stream.write(
                             indent_level2.format_text(
                                 f"motor(axis={motor.axis},"
                                 f" jdist={motor.jdist},"
                                 f" index={motor.index}"
                                 f"{extra_args}"
-                                f"{enc_axes})"
+                                f"{enc_axes}"
+                                f"{ms})"
                             )
                         )
                     stream.write(
@@ -518,3 +520,8 @@ class MotionArea:
         if len(enc_axes) == 0:
             return ""
         return ", enc_axes={enc}".format(enc=enc_axes)
+        
+    def handle_ms(self, ms):
+        if ms in (-1, 0, None):
+            return ""
+        return ", ms={ms}".format(ms=ms)

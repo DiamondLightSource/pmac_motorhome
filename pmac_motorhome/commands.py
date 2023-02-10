@@ -76,7 +76,7 @@ def comment(htype, post="None"):
     Group.add_comment(htype, post)
 
 
-def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0, enc_axes=list()):
+def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0, enc_axes=list(), ms=-1):
     """
     Declare a motor for use in the current group.
 
@@ -94,7 +94,7 @@ def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0,
         enc_axes (list): List of additional encoders that need zeroing on homing
             completion
     """
-    motor = Group.add_motor(axis, jdist, index, post_home, post_distance, enc_axes)
+    motor = Group.add_motor(axis, jdist, index, post_home, post_distance, enc_axes, ms)
     Plc.add_motor(axis, motor)
 
 

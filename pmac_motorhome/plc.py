@@ -144,7 +144,7 @@ class Plc:
         if axis not in plc.motors:
             plc.motors[axis] = motor
 
-    def _all_axes(self, format: str, separator: str, *arg) -> str:
+    def _all_axes(self, format: str, separator: str, *arg, filter_function = None) -> str:
         """
         A helper function to generate code for all axes in a group when one
         of the callback functions below is called from a Jinja template.
@@ -161,6 +161,8 @@ class Plc:
 
         # PLC P variables etc must be sorted to match original motorhome.py
         motors = sorted(self.motors.values(), key=lambda x: x.index)
+        if filter_function is not None:
+            motors = filter(filter_function, motors)
         all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
 
@@ -215,6 +217,9 @@ class Plc:
             return self._all_axes("MSR{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("P{homed}={pb_homed_flag}", " ")
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = self.filter_motors_without_macro)
+        
         return self._all_axes("P{homed}=i{homed_flag}", " ")
 
     def save_not_homed(self):
@@ -234,6 +239,8 @@ class Plc:
             return self._all_axes("MSW{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ",filter_function = self.filter_motors_without_macro)
 
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
@@ -298,3 +305,17 @@ class Plc:
         Generate a command string for checking if all axes homed=0
         """
         return self._all_axes("P{homed}=0", " or ")
+    
+    def filter_motors_with_macro(self, motor) -> bool:
+        return motor.has_macro_station_brick()
+    
+    def filter_motors_without_macro(self, motor) -> bool:
+        return not (motor.has_macro_station_brick())
+    
+    # use filter to apply this only to the motors of a brick which have macro
+    def are_homed_flags_zero_brick(self):
+        return self._all_axes("P{homed}=0", " or ", filter_function = self.filter_motors_with_macro)
+
+    def has_motors_with_macro_brick(self):
+            motors = list(filter(self.filter_motors_with_macro, self.motors.values()))
+            return len(motors) > 0

@@ -71,7 +71,7 @@ class Group:
         Group.the_group = None
 
     @classmethod
-    def add_motor(cls, axis: int, jdist: int, index: int, post_home:PostHomeMove, post_distance:int, enc_axes: List) -> Motor:
+    def add_motor(cls, axis: int, jdist: int, index: int, post_home:PostHomeMove, post_distance:int, enc_axes: List, ms:int) -> Motor:
         """
         Add a new motor to the current group
 
@@ -89,7 +89,7 @@ class Group:
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
         
-        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index, post_home=post_home, post_distance=post_distance)
+        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index, post_home=post_home, post_distance=post_distance, ms=ms)
         if motor.post_home is PostHomeMove.none: # use the group post home if it exists 
             motor.post_home=group.post_home
         if motor.post_distance == 0:
@@ -208,7 +208,7 @@ class Group:
         """
         return cmd
 
-    def _all_axes(self, format: str, separator: str, *arg) -> str:
+    def _all_axes(self, format: str, separator: str, *arg, filter_function = None) -> str:
         """
         A helper function that generates a command line by applying each of Motor
         in the group as a parameter to the format string and the concatenating all of
@@ -227,7 +227,11 @@ class Group:
 
         # to the string format: pass any extra arguments first, then the dictionary
         # of the axis object so its elements can be addressed by name
-        all = [format.format(*arg, **ax.dict) for ax in self.motors]
+        motors = self.motors
+        if filter_function is not None:
+            motors = filter(filter_function, self.motors)
+        
+        all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
 
     def _all_encoders(self, format: str, separator: str, *arg) -> str:
@@ -442,6 +446,9 @@ class Group:
 
         if self.controller == ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{not_homed}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{not_homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{not_homed}", " ",filter_function = self.filter_motors_without_macro)
 
         return self._all_axes("i{homed_flag}=P{not_homed}", " ")
 
@@ -454,6 +461,10 @@ class Group:
 
         if self.controller == ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ", filter_function = self.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ", filter_function = self.filter_motors_without_macro)
+
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
     def jog_to_home_jdist(self):
@@ -510,6 +521,9 @@ class Group:
             return self._all_axes("MSR{macro_station},i913,P{not_homed}", " ")
         if self.controller == ControllerType.pbrick:
             return self._all_axes("P{not_homed}={pb_inverse_flag}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSR{macro_station_brick},i912,P{not_homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("P{not_homed}=i{inverse_flag}", " ",filter_function = self.filter_motors_without_macro)
 
         return self._all_axes("P{not_homed}=i{inverse_flag}", " ")
 
@@ -518,3 +532,18 @@ class Group:
         Generate a command string for all group axes: set the inpos trigger ixx97
         """
         return self._all_axes("I{axis}97 = {0}", " ", value)
+    
+    def filter_motors_with_macro(self, motor) -> bool:
+        return motor.has_macro_station_brick()
+    
+    def filter_motors_without_macro(self, motor) -> bool:
+        return not (motor.has_macro_station_brick())
+    
+    # use filter to apply this only to the motors of a brick which have macro
+    def are_homed_flags_zero_brick(self):
+        return self._all_axes("P{homed}=0", " or ", filter_function = self.filter_motors_with_macro)
+
+    def has_motors_with_macro_brick(self):
+            motors = list(filter(self.filter_motors_with_macro, self.motors))
+            return len(motors) > 0
+

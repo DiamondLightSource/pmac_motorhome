@@ -74,6 +74,12 @@ if ({{plc.are_homed_flags_zero()}})
     HomingStatus=StatusInvalid
 endif
 {% endif %}
+{% if plc.controller.value == "GeoBrick" and plc.has_motors_with_macro_brick()%}
+;If any are zero then there is probably a macro error
+if ({{plc.are_homed_flags_zero_brick() }})
+    HomingStatus=StatusInvalid
+endif
+{% endif %}
 ;Store 'not flag' to use in moving off a flag in P variables px52..x67
 {{ plc.save_not_homed() }}
 ;Save the limit flags to P variables px68..x83
