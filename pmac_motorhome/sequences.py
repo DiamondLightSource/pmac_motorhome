@@ -179,6 +179,7 @@ def home_limit():
     disable_limits()
     home()
     restore_limits()
+    zero_encoders()
     check_homed()
     post_home()
 
