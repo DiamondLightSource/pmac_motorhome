@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, List  # , Optional
+from typing import Any, Callable, Dict, List, Tuple
+from xmlrpc.client import Boolean  # , Optional
 
 from pmac_motorhome.constants import ControllerType, PostHomeMove
 
@@ -192,6 +193,15 @@ class Group:
             # callback functions must return a string since we call them with
             # {{- group.callback(template.function, template.args) -}} from jinja
         return ""
+    
+    def all_motors_have_same_post_move_type(self) -> Tuple[bool, PostHomeMove]:
+        """Check that all motors in the group have the same post move type
+        """
+        if len(self.all_motors) > 0:
+            first_motor_post_home = self.all_motors[0].post_home
+            return (all(motor.post_home == first_motor_post_home for motor in self.all_motors), first_motor_post_home)
+        return False, PostHomeMove.none
+            
 
     def command(self, cmd: str) -> str:
         """

@@ -7,5 +7,10 @@
         {{ group.stored_pos_to_jogdistance() }}
         cmd "{{ group.jog_distance() }}"
         {% include "wait_for_done.pmc.jinja" %}
+        {% if group.post and group.post != "" %}
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+        endif
+        {% endif %}
     endif
 

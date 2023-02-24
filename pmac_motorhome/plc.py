@@ -29,6 +29,8 @@ class Plc:
         filepath: Path,
         timeout: int,
         post,
+        post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
     ) -> None:
         """
         Args:
@@ -45,7 +47,8 @@ class Plc:
         self.controller: ControllerType = controller
         self.timeout: int = timeout
         self.post = post
-
+        self.post_home: PostHomeMove = post_home
+        self.post_distance: int = post_distance
         self.groups: List[Group] = []
         self.motors: "OrderedDict[int, Motor]" = OrderedDict()
         self.generator = PlcGenerator(self.controller)
@@ -125,8 +128,10 @@ class Plc:
             pre,
             post,
         )
-        #if group.post_home is None:
-        #    group.post_home = plc.post
+        if group.post_home is PostHomeMove.none: # use the plc post home if it exists 
+            group.post_home=plc.post_home
+        if group.post_distance == 0:
+            group.post_distance=plc.post_distance
         plc.groups.append(group)
         return group
 

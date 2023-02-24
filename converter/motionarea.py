@@ -410,9 +410,11 @@ class MotionArea:
                 stream.write(indent_level0.format_text("with plc("))
                 stream.write(indent_level1.format_text(f"plc_num={plc.plc},"))
                 stream.write(indent_level1.format_text(f"controller={plc.bricktype},"))
-                stream.write(indent_level1.format_text(f'filepath="{plc.filename}",'))
+                stream.write(indent_level1.format_text(f'filepath="{plc.filename}"'))
                 if plc.timeout != 600000:
-                    stream.write(indent_level1.format_text(f"timeout={plc.timeout}"))
+                    stream.write(indent_level1.format_text(f",timeout={plc.timeout}"))
+                plc_post_code, plc_extra_args, plc_post_type = self.handle_post(plc.post)
+                stream.write(indent_level1.format_text(f"{plc_extra_args}"))
                 stream.write(indent_level0.format_text("):"))
                 for group_num in sorted(plc.groups.keys()):
                     group = plc.groups[group_num]

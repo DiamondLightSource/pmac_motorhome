@@ -17,10 +17,11 @@ from .snippets import (
     drive_to_hard_limit,
     drive_to_initial_pos,
     drive_to_soft_limit,
+    post_home_action,
 )
 
 
-def plc(plc_num, controller, filepath, timeout=600000, post=None):
+def plc(plc_num, controller, filepath, timeout=600000, post=None, post_home=PostHomeMove.none, post_home_distance=0):
     """
     Define a new PLC. Use this to create a new Plc context using the 'with'
     keyword.
@@ -39,7 +40,7 @@ def plc(plc_num, controller, filepath, timeout=600000, post=None):
         Plc: the Plc object for use in the context
     """
 
-    return Plc(plc_num, ControllerType(controller), Path(filepath), timeout, post)
+    return Plc(plc_num, ControllerType(controller), Path(filepath), timeout, post, post_home, post_home_distance)
 
 
 def group(
@@ -129,24 +130,28 @@ def post_home(**args):
     functions
     """
     group = Group.instance()
+    are_same, post_homes_motors = group.all_motors_have_same_post_move_type()
+    if not (are_same):
+        raise ValueError("Mixed post move types within a group are not supported")
 
-    if group.post_home == PostHomeMove.none:
-        pass
-    elif group.post_home == PostHomeMove.initial_position:
+    if post_homes_motors == PostHomeMove.none:
+        if group.post is not "":
+            post_home_action()
+    elif post_homes_motors == PostHomeMove.initial_position:
         drive_to_initial_pos(**args)
-    elif group.post_home == PostHomeMove.high_limit:
+    elif post_homes_motors == PostHomeMove.high_limit:
         drive_to_soft_limit(homing_direction=True)
-    elif group.post_home == PostHomeMove.low_limit:
+    elif post_homes_motors == PostHomeMove.low_limit:
         drive_to_soft_limit(homing_direction=False)
-    elif group.post_home == PostHomeMove.hard_hi_limit:
+    elif post_homes_motors == PostHomeMove.hard_hi_limit:
         drive_to_hard_limit(homing_direction=True)
-    elif group.post_home == PostHomeMove.hard_lo_limit:
+    elif post_homes_motors == PostHomeMove.hard_lo_limit:
         drive_to_hard_limit(homing_direction=False)
-    elif group.post_home == PostHomeMove.relative_move:
+    elif post_homes_motors == PostHomeMove.relative_move:
         drive_relative(distance=group.post_distance)
-    elif group.post_home == PostHomeMove.move_and_hmz:
+    elif post_homes_motors == PostHomeMove.move_and_hmz:
         drive_relative(distance=group.post_distance, set_home=True)
-    elif group.post_home == PostHomeMove.move_absolute:
+    elif post_homes_motors == PostHomeMove.move_absolute:
         # TODO this is wrong - we need a jog absolute snippet
         drive_relative(distance=group.post_distance)
     else:
