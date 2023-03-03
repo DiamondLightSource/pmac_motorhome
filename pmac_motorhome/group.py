@@ -113,7 +113,7 @@ class Group:
         return cls.the_group
 
     @classmethod
-    def add_comment(cls, htype: str, post: str = "None") -> None:
+    def add_comment(cls, htype: str) -> None:
         """
         Add a group comment to the top of the Plc code in the style of the original
         motorhome.py module but note that you can use any descriptive text

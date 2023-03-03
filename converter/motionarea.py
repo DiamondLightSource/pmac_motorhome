@@ -458,8 +458,7 @@ class MotionArea:
                         )
                     stream.write(
                         indent_level2.format_text(
-                            f'comment("{group.sequence.old_name}",'
-                            f' "{post_type}")'
+                            f'comment("{group.sequence.old_name}")'
                         )
                     )
                     stream.write(
@@ -479,9 +478,11 @@ class MotionArea:
         post_relative_hmz_move = re.compile(r"^z(-?\d+)")
 
         # convert old school post string to new approach
-        if post in (None, 0, "0"):
+        if post is None:
             # no post action
             pass
+        elif post in (0, "0"):
+            extra_args = ", post_home=PostHomeMove.zero"
         elif post == "i":
             # go to initial pos
             extra_args = ", post_home=PostHomeMove.initial_position"

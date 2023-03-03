@@ -73,8 +73,8 @@ def group(
     )
 
 
-def comment(htype, post="None"):
-    Group.add_comment(htype, post)
+def comment(htype):
+    Group.add_comment(htype)
 
 
 def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0, enc_axes=list(), ms=-1):
@@ -132,9 +132,8 @@ def post_home(**args):
     group = Group.instance()
     are_same, post_homes_motors = group.all_motors_have_same_post_move_type()
     if not (are_same):
-        raise ValueError("Mixed post move types within a group are not supported")
-
-    if post_homes_motors == PostHomeMove.none:
+        pass # different types of post home move not supported in the current version 
+    elif post_homes_motors == PostHomeMove.none:
         if group.post is not "":
             post_home_action()
     elif post_homes_motors == PostHomeMove.initial_position:
