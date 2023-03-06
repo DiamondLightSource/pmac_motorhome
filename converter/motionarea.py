@@ -12,7 +12,6 @@ from typing import List, Optional, Tuple
 from converter.indent import Indenter
 
 from .pipemessage import IPC_FIFO_NAME, get_message
-from .shim.group import Group
 from .shim.plc import PLC
 
 log = logging.getLogger(__name__)
@@ -413,7 +412,8 @@ class MotionArea:
                 stream.write(indent_level1.format_text(f'filepath="{plc.filename}"'))
                 if plc.timeout != 600000:
                     stream.write(indent_level1.format_text(f",timeout={plc.timeout}"))
-                plc_post_code, plc_extra_args, plc_post_type = self.handle_post(plc.post)
+                plc_post_code, plc_extra_args, plc_post_type = \
+                    self.handle_post(plc.post)
                 stream.write(indent_level1.format_text(f"{plc_extra_args}"))
                 stream.write(indent_level0.format_text("):"))
                 for group_num in sorted(plc.groups.keys()):
@@ -506,7 +506,7 @@ class MotionArea:
             # go to post[1:] and hmz
             extra_args = ", post_home=PostHomeMove.move_and_hmz"
             extra_args += ", post_distance={dist}".format(dist=post_type[1:])
-        elif type(post) in (int,float):
+        elif type(post) in (int, float):
             # go to absolute position
             extra_args = ", post_home=PostHomeMove.move_absolute"
             extra_args += ", post_distance={dist}".format(dist=post)
@@ -518,12 +518,12 @@ class MotionArea:
             post_type = "None"
 
         return post_code, extra_args, post_type
-    
+
     def handle_enc_axes(self, enc_axes):
         if len(enc_axes) == 0:
             return ""
         return ", enc_axes={enc}".format(enc=enc_axes)
-        
+
     def handle_ms(self, ms):
         if ms in (-1, 0, None):
             return ""
