@@ -19,7 +19,6 @@ if sys.version_info[0] > 2:
         drive_to_limit,
         home,
         jog_if_on_limit,
-        post_home_action,
         pre_home_action,
         restore_limits,
         store_position_diff,

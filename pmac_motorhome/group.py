@@ -90,11 +90,11 @@ class Group:
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
         
+        if post_home is PostHomeMove.none: # use the group post home if it exists 
+            post_home=group.post_home
+        if post_distance == 0:
+            post_distance=group.post_distance
         motor = Motor.get_motor(axis, jdist, group.plc_num, index=index, post_home=post_home, post_distance=post_distance, ms=ms)
-        if motor.post_home is PostHomeMove.none: # use the group post home if it exists 
-            motor.post_home=group.post_home
-        if motor.post_distance == 0:
-            motor.post_distance=group.post_distance
         group.motors.append(motor)
 
         group.encoders = group.encoders + enc_axes

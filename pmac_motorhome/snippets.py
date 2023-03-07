@@ -234,12 +234,11 @@ def drive_to_soft_limit(homing_direction=False, with_limits=True, **kwargs):
 
 
 @_snippet_function(wait_for_done_args)
-def drive_relative(distance="123456", set_home=False, with_limits=True, **kwargs):
+def drive_relative(set_home=False, with_limits=True, **kwargs):
     """
     Drive all axes in the group a relative distance from current position
 
     Args:
-        distance (str): distance in counts
         set_home (bool): set the home flag afterward if True
         with_limits (bool): check for limits during the move
     """

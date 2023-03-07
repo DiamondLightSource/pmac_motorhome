@@ -147,11 +147,11 @@ def post_home(**args):
     elif post_homes_motors == PostHomeMove.hard_lo_limit:
         drive_to_hard_limit(homing_direction=False)
     elif post_homes_motors == PostHomeMove.relative_move:
-        drive_relative(distance=group.post_distance)
+        drive_relative()
     elif post_homes_motors == PostHomeMove.move_and_hmz:
-        drive_relative(distance=group.post_distance, set_home=True)
+        drive_relative(set_home=True)
     elif post_homes_motors == PostHomeMove.move_absolute:
         # TODO this is wrong - we need a jog absolute snippet
-        drive_relative(distance=group.post_distance)
+        drive_relative()
     else:
         pass

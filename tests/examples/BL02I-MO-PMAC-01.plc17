@@ -102,6 +102,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StatePreHomeMove
         ; Execute the move commands
+        
         m172=100000000*(i123/ABS(i123))
         cmd "#1J^*^-500"
         ; Wait for the move to complete
@@ -164,6 +165,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StateFastSearch
         ; Execute the move commands
+        
         m172=100000000*(i123/ABS(i123))
         cmd "#1J^*^-500"
         ; Wait for the move to complete
@@ -291,6 +293,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StatePreHomeMove
         ; Execute the move commands
+        
         m272=100000000*(i223/ABS(i223))
         cmd "#2J^*^-500"
         ; Wait for the move to complete
@@ -353,6 +356,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StateFastSearch
         ; Execute the move commands
+        
         m272=100000000*(i223/ABS(i223))
         cmd "#2J^*^-500"
         ; Wait for the move to complete
@@ -480,6 +484,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StatePreHomeMove
         ; Execute the move commands
+        
         m372=100000000*(i323/ABS(i323))
         cmd "#3J^*^-500"
         ; Wait for the move to complete
@@ -542,6 +547,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StateFastSearch
         ; Execute the move commands
+        
         m372=100000000*(i323/ABS(i323))
         cmd "#3J^*^-500"
         ; Wait for the move to complete
@@ -669,6 +675,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StatePreHomeMove
         ; Execute the move commands
+        
         m472=100000000*(i423/ABS(i423))
         cmd "#4J^*^-500"
         ; Wait for the move to complete
@@ -731,6 +738,7 @@ and (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
     if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
         HomingState=StateFastSearch
         ; Execute the move commands
+        
         m472=100000000*(i423/ABS(i423))
         cmd "#4J^*^-500"
         ; Wait for the move to complete
