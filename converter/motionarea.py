@@ -419,6 +419,10 @@ class MotionArea:
                 for group_num in sorted(plc.groups.keys()):
                     group = plc.groups[group_num]
                     post_code, extra_args, post_type = self.handle_post(group.post)
+                    if plc_extra_args == extra_args: 
+                    # no need to repeat the string 
+                    # post home move will be propagated down to the group and motors by the code anyway
+                        extra_args = ""
                     if group.pre:
                         # replace tab with space
                         pre = re.sub("\t", "    ", str(group.pre))
