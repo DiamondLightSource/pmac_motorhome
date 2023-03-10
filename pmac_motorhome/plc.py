@@ -27,16 +27,21 @@ class Plc:
         plc_num: int,
         controller: ControllerType,
         filepath: Path,
-        timeout: int,
-        post,
+        timeout: int = 600000,
+        post: str = "",
         post_home: PostHomeMove = PostHomeMove.none,
         post_distance: int = 0,
     ) -> None:
         """
         Args:
             plc_num (int): The PLC number to use in generated code
-            controller (ControllerType):  target controller type for the code
-            filepath (pathlib.Path): ouput file to receive the generated code
+            controller (ControllerType):  Target controller type for the code
+            filepath (pathlib.Path): Output file to receive the generated code
+            timeout (int): Timeout for the plc - default 600000ms (10min).
+            post(str): some raw PLC code to insert at the end of a group
+            post_home (PostHomeMove): action to perform on all axes after the
+            home sequence completes
+            post_distance (int): A distance to use in post_home if required
 
         Raises:
             ValueError: Invalid output file name
@@ -113,6 +118,9 @@ class Plc:
             group_num (int): A Unique group number (1 is reserved for 'All Groups')
             post_home (PostHomeMove): A post home action to perform on success
             post_distance (int): A distance for those post home actions which require it
+            comment (str):
+            pre (str):
+            post (str):
 
         Returns:
             Group: The newly created Group
@@ -312,15 +320,45 @@ class Plc:
         return self._all_axes("P{homed}=0", " or ")
     
     def filter_motors_with_macro(self, motor) -> bool:
+        """ 
+        Check if motor (on a brick) has macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor has macro (brick only)
+        """
         return motor.has_macro_station_brick()
     
     def filter_motors_without_macro(self, motor) -> bool:
+        """ 
+        Check if motor (on a brick) doesn't have a  macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor doesn't have macro (brick only)
+        """
         return not (motor.has_macro_station_brick())
     
     # use filter to apply this only to the motors of a brick which have macro
-    def are_homed_flags_zero_brick(self):
+    def are_homed_flags_zero_brick(self) -> str:
+        """
+        Generate a command string for all axes in the plc which have macros: zero the homed flag (brick specific)
+
+        Returns:
+            str: the resulting command string
+        """
         return self._all_axes("P{homed}=0", " or ", filter_function = self.filter_motors_with_macro)
 
-    def has_motors_with_macro_brick(self):
-            motors = list(filter(self.filter_motors_with_macro, self.motors.values()))
-            return len(motors) > 0
+    def has_motors_with_macro_brick(self) -> bool:
+        """
+        Check if any of the motors in the group has macros (brick specific)
+
+        Returns:
+            bool: returns true is any of the motors in the group have defined macro (brick specific)
+        """
+        motors = list(filter(self.filter_motors_with_macro, self.motors.values()))
+        return len(motors) > 0

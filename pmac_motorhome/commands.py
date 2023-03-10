@@ -35,6 +35,9 @@ def plc(plc_num, controller, filepath, timeout=600000, post=None, post_home=Post
         filepath (pathlib.Path): The output file where the PLC will be written
         pre (str): some raw PLC code to insert at the start of a group
         post(str): some raw PLC code to insert at the end of a group
+        post_home (PostHomeMove): action to perform on all axes after the
+            home sequence completes
+        post_distance (int): A distance to use in post_home
 
     Returns:
         Plc: the Plc object for use in the context
@@ -64,6 +67,7 @@ def group(
         axes (List[int]): a list of axis numbers to include in the group
         post_home (PostHomeMove): action to perform on all axes after the
             home sequence completes
+        post_distance (int): A distance to use in post_home
 
     Returns:
         Group: The Group object for use in the context

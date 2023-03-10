@@ -41,9 +41,11 @@ class Motor:
             plc_num (int): the plc number of the enclosing Plc
             post_home (PostHomeMove): the action to perform on this motor when
                 homing is complete
+            post_distance (int): A distance to use in post_home
             index (int): for internal use in conversion of old scripts sets
                 the index of this motor to a different value than the order of
                 declaration.
+            ms (int): macrostation number
         """
         self.axis = axis
         self.jdist = jdist
@@ -118,47 +120,86 @@ class Motor:
     def homed(self):
         return self.dict["homed"]
 
-    
     @property
     def not_homed(self):
         return self.dict["not_homed"]
 
     @property
     def macro_station(self) -> str:
+        """
+        Calculate macro and generate a command string for this motor: set ms 
+        Pmac specific command string
+
+        Returns:
+            str: pmac specific ms command string 
+        """
+        # this calculations are only correct for a pmac
         if self.ms != -1:
             return "{}".format(self.ms)
         msr = int(4 * int(int(self.axis - 1) / 2) + int(self.axis - 1) % 2)
         return "{}".format(msr)
-    
+
     @property
     def macro_station_brick_str(self) -> str:
+        """
+        Generate a command string for this motor: set ms 
+        Brick specific command string
+
+        Returns:
+            str: brick specific ms command string
+        """
         if self.macro_station_brick() == -1:
             return ""
         return "{}".format(self.macro_station_brick() )
-    
+
     def macro_station_brick(self) -> int:
+        """
+        Return or calculate macro station number.
+        Brick specific calculation
+
+        Returns:
+            int: brick specific macro station number
+        """
+
         if self.ms != -1:
             return self.ms
         if self.axis > 8:
             return int(4 * int(int(self.axis - 9) / 2) + int(self.axis - 9) % 2)
         return -1
-    
+
     @property
-    def post_home_distance(self):
+    def post_home_distance(self) -> str:
+        """
+        Generate a post distance string
+
+        Returns:
+            str: post distance string, "*" if post distance is 0
+        """
         if self.post_distance == 0:
             return "*"
         return str(int(self.post_distance))
-    
+
     @property
     def post_home_with_distance(self) -> str:
+        """
+        Generate one string which contains the post home move with distance (if applicable) for this motor.
+
+        Returns:
+            str:  one string describing the post home move for this motor.
+        """
         if self.post_distance == 0:
             return self.post_home.value
         elif self.post_home in (PostHomeMove.none, PostHomeMove.move_absolute):
             return str(self.post_distance)
         return  self.post_home.value + str(self.post_distance)
-    
-    
-    def has_macro_station_brick(self):
+
+    def has_macro_station_brick(self) -> bool:
+        """"
+        Check if the motor has macro station defined (brick only)
+
+        Returns:
+            bool: true if macro station defined for the motor
+        """
         if self.macro_station_brick() != -1:
             return True
         return False

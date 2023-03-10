@@ -35,11 +35,13 @@ class Group:
             axes (List[Motor]): A list of axis numbers that this group will control
             plc_num (int): The plc number of the enclosing Plc
             controller (ControllerType): Enum representing the type of motor controller
-            post_home (PostHomeMove): An action to perform on the group after homing
-                completes successfully
-            post_distance (int): a distance to use in post_home if required
+            post_home (PostHomeMove): action to perform on all axes after the
+            home sequence completes
+            post_distance (int): A distance to use in post_home if required
             comment (str): [description]. A comment to place in the output Plc code
                 at the beginning of this group's definition
+            pre (str): some raw PLC code to insert at the start of a group
+            post(str): some raw PLC code to insert at the end of a group
         """
         self.motors = []
         self.encoders = []
@@ -80,8 +82,12 @@ class Group:
             axis (int): Axis number
             jdist (int): distance to jog to move off of home mark
             index (int): internal use
+            post_home (PostHomeMove): action to perform on all axes after the
+            home sequence completes
+            post_distance (int): A distance to use in post_home if required
             enc_axes (list): List of additional encoders that need zeroing on homing
                 completion
+            ms (int): macrostation number
         Returns:
             Motor: The newly created Motor
         """
@@ -121,7 +127,6 @@ class Group:
 
         Args:
             htype (str): Homing sequence type e.g. RLIM HSW etc.
-            post (str): post home move action
         """
         group = Group.instance()
         enc_axes = ""
@@ -544,16 +549,46 @@ class Group:
         return self._all_axes("I{axis}97 = {0}", " ", value)
     
     def filter_motors_with_macro(self, motor) -> bool:
+        """ 
+        Check if motor (on a brick) has macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor has macro (brick only)
+        """
         return motor.has_macro_station_brick()
     
     def filter_motors_without_macro(self, motor) -> bool:
+        """ 
+        Check if motor (on a brick) doesn't have a  macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor doesn't have macro (brick only)
+        """
         return not (motor.has_macro_station_brick())
     
     # use filter to apply this only to the motors of a brick which have macro
-    def are_homed_flags_zero_brick(self):
+    def are_homed_flags_zero_brick(self) -> str:
+        """
+        Generate a command string for all axes in the group which have macros: zero the homed flag (brick specific)
+
+        Returns:
+            str: the resulting command string
+        """
         return self._all_axes("P{homed}=0", " or ", filter_function = self.filter_motors_with_macro)
 
-    def has_motors_with_macro_brick(self):
-            motors = list(filter(self.filter_motors_with_macro, self.motors))
-            return len(motors) > 0
+    def has_motors_with_macro_brick(self) -> bool:
+        """
+        Check if any of the motors in the group has macros (brick specific)
+
+        Returns:
+            bool: returns true is any of the motors in the group have defined macro (brick specific)
+        """
+        motors = list(filter(self.filter_motors_with_macro, self.motors))
+        return len(motors) > 0
 
