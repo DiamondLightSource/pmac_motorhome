@@ -230,7 +230,7 @@ class Plc:
         if self.controller is ControllerType.pbrick:
             return self._all_axes("P{homed}={pb_homed_flag}", " ")
         if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
-            return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = self.filter_motors_without_macro)
+            return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = Group.filter_motors_without_macro)
         
         return self._all_axes("P{homed}=i{homed_flag}", " ")
 
@@ -252,7 +252,7 @@ class Plc:
         if self.controller is ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
         if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
-            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ",filter_function = self.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ",filter_function = self.filter_motors_without_macro)
+            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ",filter_function = Group.filter_motors_without_macro)
 
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
@@ -317,31 +317,7 @@ class Plc:
         Generate a command string for checking if all axes homed=0
         """
         return self._all_axes("P{homed}=0", " or ")
-    
-    def filter_motors_with_macro(self, motor) -> bool:
-        """ 
-        Check if motor (on a brick) has macro.
 
-        Args:
-            motor (Motor): motor being checked
-
-        Returns:
-            bool: true if the motor has macro (brick only)
-        """
-        return motor.has_macro_station_brick()
-    
-    def filter_motors_without_macro(self, motor) -> bool:
-        """ 
-        Check if motor (on a brick) doesn't have a  macro.
-
-        Args:
-            motor (Motor): motor being checked
-
-        Returns:
-            bool: true if the motor doesn't have macro (brick only)
-        """
-        return not (motor.has_macro_station_brick())
-    
     # use filter to apply this only to the motors of a brick which have macro
     def are_homed_flags_zero_brick(self) -> str:
         """
@@ -350,14 +326,15 @@ class Plc:
         Returns:
             str: the resulting command string
         """
-        return self._all_axes("P{homed}=0", " or ", filter_function = self.filter_motors_with_macro)
-
+        return self._all_axes("P{homed}=0", " or ", filter_function = Group.filter_motors_with_macro)
+    
     def has_motors_with_macro_brick(self) -> bool:
         """
-        Check if any of the motors in the group has macros (brick specific)
+        Check if any of the motors in the plc has macros (brick specific)
 
         Returns:
-            bool: returns true is any of the motors in the group have defined macro (brick specific)
+            bool: returns true is any of the motors in the plc have defined macro (brick specific)
         """
-        motors = list(filter(self.filter_motors_with_macro, self.motors.values()))
+        motors = list(filter(Group.filter_motors_with_macro, self.motors.values()))
         return len(motors) > 0
+
