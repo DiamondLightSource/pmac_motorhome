@@ -39,8 +39,7 @@ class Plc:
             filepath (pathlib.Path): Output file to receive the generated code
             timeout (int): Timeout for the plc - default 600000ms (10min).
             post(str): some raw PLC code to insert at the end of a group
-            post_home (PostHomeMove): action to perform on all axes after the
-            home sequence completes
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
             post_distance (int): A distance to use in post_home if required
 
         Raises:
@@ -118,9 +117,9 @@ class Plc:
             group_num (int): A Unique group number (1 is reserved for 'All Groups')
             post_home (PostHomeMove): A post home action to perform on success
             post_distance (int): A distance for those post home actions which require it
-            comment (str):
-            pre (str):
-            post (str):
+            comment (str): Add a group comment to the top of the Plc code 
+            pre (str): some raw PLC code to insert at the start of a group
+            post (str): some raw PLC code to insert at the end of a group
 
         Returns:
             Group: The newly created Group

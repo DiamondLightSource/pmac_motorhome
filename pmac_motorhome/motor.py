@@ -127,7 +127,7 @@ class Motor:
     @property
     def macro_station(self) -> str:
         """
-        Calculate macro and generate a command string for this motor: set ms 
+        Calculate macro and generate a command string for this motor 
         Pmac specific command string
 
         Returns:
@@ -142,7 +142,7 @@ class Motor:
     @property
     def macro_station_brick_str(self) -> str:
         """
-        Generate a command string for this motor: set ms 
+        Generate a command string for this motor 
         Brick specific command string
 
         Returns:

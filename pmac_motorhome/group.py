@@ -35,8 +35,7 @@ class Group:
             axes (List[Motor]): A list of axis numbers that this group will control
             plc_num (int): The plc number of the enclosing Plc
             controller (ControllerType): Enum representing the type of motor controller
-            post_home (PostHomeMove): action to perform on all axes after the
-            home sequence completes
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
             post_distance (int): A distance to use in post_home if required
             comment (str): [description]. A comment to place in the output Plc code
                 at the beginning of this group's definition
@@ -82,8 +81,7 @@ class Group:
             axis (int): Axis number
             jdist (int): distance to jog to move off of home mark
             index (int): internal use
-            post_home (PostHomeMove): action to perform on all axes after the
-            home sequence completes
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
             post_distance (int): A distance to use in post_home if required
             enc_axes (list): List of additional encoders that need zeroing on homing
                 completion
@@ -123,7 +121,7 @@ class Group:
         """
         Add a group comment to the top of the Plc code in the style of the original
         motorhome.py module but note that you can use any descriptive text
-        for htype and post
+        for htype
 
         Args:
             htype (str): Homing sequence type e.g. RLIM HSW etc.
