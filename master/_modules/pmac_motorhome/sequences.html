@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.sequences &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>pmac_motorhome.sequences &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -110,7 +110,7 @@
         <span class="n">drive_to_limit</span><span class="p">,</span>
         <span class="n">home</span><span class="p">,</span>
         <span class="n">jog_if_on_limit</span><span class="p">,</span>
-        <span class="n">post_home_action</span><span class="p">,</span>
+        <span class="n">pre_home_action</span><span class="p">,</span>
         <span class="n">restore_limits</span><span class="p">,</span>
         <span class="n">store_position_diff</span><span class="p">,</span>
         <span class="n">zero_encoders</span><span class="p">,</span>
@@ -148,8 +148,7 @@
     <span class="n">home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">zero_encoders</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_hsw"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw">[docs]</a><span class="k">def</span> <span class="nf">home_hsw</span><span class="p">():</span>
@@ -177,8 +176,7 @@
     <span class="n">home</span><span class="p">()</span>
     <span class="n">zero_encoders</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_hsw_hstop"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_hstop">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_hstop</span><span class="p">():</span>
@@ -208,8 +206,7 @@
     <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_hsw_dir"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_dir">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_dir</span><span class="p">():</span>
@@ -247,13 +244,13 @@
     <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastRetrace&quot;</span><span class="p">)</span>
     <span class="n">home</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_limit"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_limit">[docs]</a><span class="k">def</span> <span class="nf">home_limit</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Home on a limit switch.</span>
+<span class="sd">    - (Pre Home action) - only added if group pre-home is defined </span>
 <span class="sd">    - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ</span>
 <span class="sd">    - (Fast Retrace) Jog in -hdir until limit switch deactivates</span>
 <span class="sd">    - (Home) Disable limits and home</span>
@@ -265,15 +262,16 @@
 
 <span class="sd">    .. image:: images/LIMIT.png</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pre_home_action</span><span class="p">()</span>
     <span class="n">drive_to_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">)</span>
     <span class="n">store_position_diff</span><span class="p">()</span>
     <span class="n">drive_off_home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">disable_limits</span><span class="p">()</span>
     <span class="n">home</span><span class="p">()</span>
     <span class="n">restore_limits</span><span class="p">()</span>
+    <span class="n">zero_encoders</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_hsw_hlim"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_hlim">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_hlim</span><span class="p">():</span>
@@ -312,8 +310,7 @@
     <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastRetrace&quot;</span><span class="p">)</span>
     <span class="n">home</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_home"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_home">[docs]</a><span class="k">def</span> <span class="nf">home_home</span><span class="p">():</span>
@@ -321,10 +318,10 @@
 <span class="sd">    Dumb home, shouldn&#39;t be needed - just executes HM command on all axes</span>
 <span class="sd">    in the group</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pre_home_action</span><span class="p">()</span>
     <span class="n">home</span><span class="p">()</span>
     <span class="n">check_homed</span><span class="p">()</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="home_nothing"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_nothing">[docs]</a><span class="k">def</span> <span class="nf">home_nothing</span><span class="p">():</span>
@@ -335,8 +332,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO review why this reference to Group is required</span>
     <span class="n">Group</span><span class="o">.</span><span class="n">the_group</span><span class="o">.</span><span class="n">htype</span> <span class="o">=</span> <span class="s2">&quot;NOTHING&quot;</span>
-    <span class="n">post_home</span><span class="p">()</span>
-    <span class="n">post_home_action</span><span class="p">()</span></div>
+    <span class="n">post_home</span><span class="p">()</span></div>
 
 
 <span class="c1">###############################################################################</span>

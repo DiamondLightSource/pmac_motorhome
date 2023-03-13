@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Converting to pmac_motorhome.py &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>Converting to pmac_motorhome.py &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -125,7 +125,7 @@ generator script with the new one.</p>
 <p>An example use of the homing_convert command is shown below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>xfz39520@ws306:motion$ homing_convert motion BL23I/Settings
 07-29-21 19:02:51 INFO     trying homing conversion for BL23I/Settings in /tmp/motorhome48265
-07-29-21 19:03:00 INFO     generating: /tmp/motorhome48265/new_motion/generate_homing_plcs2.py
+07-29-21 19:03:00 INFO     generating: /tmp/motorhome48265/new_motion/motorhome.py
 07-29-21 19:03:33 INFO     verifying matches ...
 07-29-21 19:03:33 WARNING  Failure: 1 of 20 PLC files do not match for /dls_sw/work/xfz39520/motion/BL23I/Settings
 review differences with:
@@ -135,7 +135,7 @@ meld /tmp/motorhome48265/old_motion /tmp/motorhome48265/new_motion
 /tmp/motorhome48265/old_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc /tmp/motorhome48265/new_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc
 
 07-29-21 19:03:33 WARNING  To copy the new generating script, use the following command:
-mv /tmp/motorhome48265/new_motion/generate_homing_plcs2.py /dls_sw/work/xfz39520/motion/BL23I/Settings/configure/generate_homing_plcs.py
+mv /tmp/motorhome48265/new_motion/motorhome.py /dls_sw/work/xfz39520/motion/BL23I/Settings/configure/motorhome.py
 
 1 of 20 PLC files do not match for/dls_sw/work/xfz39520/motion/BL23I/Settings
 </pre></div>

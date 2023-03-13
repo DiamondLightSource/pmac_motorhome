@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Predfined Homing Sequences &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>Predfined Homing Sequences &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -185,6 +185,7 @@ E.g. Pos = 20000 cts, Index = 0 cts</p>
 <dt class="sig sig-object py" id="pmac_motorhome.sequences.home_limit">
 <span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_limit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_limit" title="Permalink to this definition"></a></dt>
 <dd><p>Home on a limit switch.
+- (Pre Home action) - only added if group pre-home is defined
 - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
 - (Fast Retrace) Jog in -hdir until limit switch deactivates
 - (Home) Disable limits and home</p>

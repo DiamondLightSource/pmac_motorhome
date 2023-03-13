@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.snippets &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>pmac_motorhome.snippets &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -325,12 +325,11 @@
 
 
 <div class="viewcode-block" id="drive_relative"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.drive_relative">[docs]</a><span class="nd">@_snippet_function</span><span class="p">(</span><span class="n">wait_for_done_args</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">drive_relative</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="s2">&quot;123456&quot;</span><span class="p">,</span> <span class="n">set_home</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">drive_relative</span><span class="p">(</span><span class="n">set_home</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Drive all axes in the group a relative distance from current position</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        distance (str): distance in counts</span>
 <span class="sd">        set_home (bool): set the home flag afterward if True</span>
 <span class="sd">        with_limits (bool): check for limits during the move</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
@@ -413,6 +412,12 @@
 <span class="k">def</span> <span class="nf">post_home_action</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Insert an extra block with the group&#39;s post home action in it</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="pre_home_action"><a class="viewcode-back" href="../../reference/snippets.html#pmac_motorhome.snippets.pre_home_action">[docs]</a><span class="nd">@_snippet_function</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">pre_home_action</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insert an extra block with the group&#39;s pre home action in it</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.motor &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>pmac_motorhome.motor &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -120,7 +120,9 @@
         <span class="n">jdist</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">plc_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span> <span class="o">=</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+        <span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -129,10 +131,12 @@
 <span class="sd">                this should be enough distance to move clear of the home mark</span>
 <span class="sd">            plc_num (int): the plc number of the enclosing Plc</span>
 <span class="sd">            post_home (PostHomeMove): the action to perform on this motor when</span>
-<span class="sd">                hohing is complete</span>
+<span class="sd">                homing is complete</span>
+<span class="sd">            post_distance (int): A distance to use in post_home</span>
 <span class="sd">            index (int): for internal use in conversion of old scripts sets</span>
 <span class="sd">                the index of this motor to a different value than the order of</span>
 <span class="sd">                declaration.</span>
+<span class="sd">            ms (int): macrostation number</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">jdist</span> <span class="o">=</span> <span class="n">jdist</span>
@@ -142,7 +146,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span> <span class="o">=</span> <span class="n">post_home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span> <span class="o">=</span> <span class="n">post_distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">=</span> <span class="n">ms</span>
 
         <span class="c1"># dict is for terse string formatting code in _all_axes() functions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="p">{</span>
@@ -154,6 +160,8 @@
             <span class="s2">&quot;inverse_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;7</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="si">}</span><span class="s2">3&quot;</span><span class="p">,</span>
             <span class="s2">&quot;pb_inverse_flag&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Gate3[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gate</span><span class="si">}</span><span class="s2">].Chan[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chan</span><span class="si">}</span><span class="s2">].CaptFlagSel&quot;</span><span class="p">,</span>
             <span class="s2">&quot;macro_station&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_station</span><span class="p">,</span>
+            <span class="s2">&quot;post_distance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_home_distance</span><span class="p">,</span>
+            <span class="s2">&quot;macro_station_brick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_station_brick_str</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">start</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PVARS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">plc_num</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span>
@@ -165,7 +173,9 @@
         <span class="n">jdist</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">plc_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span> <span class="o">=</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+        <span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Motor&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A factory function to return a Motor object but ensure that there</span>
@@ -174,7 +184,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">motor</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">motor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">plc_num</span><span class="p">,</span> <span class="n">post_home</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+            <span class="n">motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">plc_num</span><span class="p">,</span> <span class="n">post_home</span><span class="p">,</span> <span class="n">post_distance</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">motor</span></div>
 
@@ -207,8 +217,84 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">macro_station</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate macro and generate a command string for this motor </span>
+<span class="sd">        Pmac specific command string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: pmac specific ms command string </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># this calculations are only correct for a pmac</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">)</span>
         <span class="n">msr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msr</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msr</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">macro_station_brick_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for this motor </span>
+<span class="sd">        Brick specific command string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: brick specific ms command string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_station_brick</span><span class="p">()</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">macro_station_brick</span><span class="p">()</span> <span class="p">)</span>
+
+<div class="viewcode-block" id="Motor.macro_station_brick"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.motor.Motor.macro_station_brick">[docs]</a>    <span class="k">def</span> <span class="nf">macro_station_brick</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return or calculate macro station number.</span>
+<span class="sd">        Brick specific calculation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: brick specific macro station number</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ms</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">9</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">9</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">post_home_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a post distance string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: post distance string, &quot;*&quot; if post distance is 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;*&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">post_home_with_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate one string which contains the post home move with distance (if applicable) for this motor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str:  one string describing the post home move for this motor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span> <span class="ow">in</span> <span class="p">(</span><span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">move_absolute</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span><span class="p">)</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Motor.has_macro_station_brick"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.motor.Motor.has_macro_station_brick">[docs]</a>    <span class="k">def</span> <span class="nf">has_macro_station_brick</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Check if the motor has macro station defined (brick only)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: true if macro station defined for the motor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_station_brick</span><span class="p">()</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div></div>
+
 </pre></div>
 
            </div>

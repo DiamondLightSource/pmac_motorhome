@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How it Works &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>How it Works &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -193,7 +193,7 @@ snippet which searches for the home mark.</p>
     <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
         <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
         <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
-        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
         <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">restore_homed_flags</span> <span class="o">%</span><span class="p">}</span>
         <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_home_flags</span><span class="p">()</span> <span class="p">}}</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
         <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>

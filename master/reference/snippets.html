@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Snippet Functions &mdash; pmac_motorhome 1.0+53.g3f6da11 documentation</title>
+  <title>Snippet Functions &mdash; pmac_motorhome 1.0+82.g38b4755 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -252,7 +252,7 @@ into the PLC code. The template is as follows:</p>
     <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
         <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
         <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
-        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
         <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">restore_homed_flags</span> <span class="o">%</span><span class="p">}</span>
         <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_home_flags</span><span class="p">()</span> <span class="p">}}</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
         <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
@@ -402,6 +402,11 @@ into the PLC code. The template is as follows:</p>
         <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">stored_pos_to_jogdistance</span><span class="p">()</span> <span class="p">}}</span>
         <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance() }}&quot;</span>
         <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="ow">and</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="p">}}</span>
+        <span class="n">endif</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
     <span class="n">endif</span>
 
 </pre></div>
@@ -436,19 +441,23 @@ each axis’ homing direction, defaults False: opposite to homing direction</p><
 </dl>
 <p>This will cause the jinja template drive_to_soft_limit.pmc.jinja to be expanded and inserted
 into the PLC code. The template is as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+<pre class="literal-block">    {% include &quot;debug_pause.pmc.jinja&quot; %}
 
-    <span class="p">;</span><span class="o">----</span> <span class="n">PostHomeMove</span> <span class="n">State</span> <span class="o">----</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
-        <span class="n">HomingState</span><span class="o">=</span><span class="n">StatePostHomeMove</span>
-        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
-        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">stored_limit_to_jogdistance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
-        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance() }}&quot;</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
-    <span class="n">endif</span>
+    ;---- PostHomeMove State ----
+    if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+        HomingState=StatePostHomeMove
+        ; Execute the move commands
+        {{ group.stored_limit_to_jogdistance(homing_direction=template.args.homing_direction) }}
+        cmd &quot;{{ group.jog_distance() }}&quot;
+        {% include &quot;wait_for_done.pmc.jinja&quot; %}
+        {% if group.post and group.post != &quot;&quot; %}
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+            endif
+        {% endif %}
+    endif
 
-</pre></div>
-</div>
+</pre>
 <p>The included template wait_for_done.pmc.jinja allows this function to take these
 additional parameters which all default to False:</p>
 <dl class="field-list simple">
@@ -466,12 +475,11 @@ has stopped instead of waiting for all motors</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_relative">
-<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'123456'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_relative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_relative" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_relative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_relative" title="Permalink to this definition"></a></dt>
 <dd><p>Drive all axes in the group a relative distance from current position</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – distance in counts</p></li>
 <li><p><strong>set_home</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – set the home flag afterward if True</p></li>
 <li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – check for limits during the move</p></li>
 </ul>
@@ -485,8 +493,13 @@ into the PLC code. The template is as follows:</p>
     <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
         <span class="n">HomingState</span><span class="o">=</span><span class="n">StatePostHomeMove</span>
         <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
-        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance(distance=template.args.distance) }}&quot;</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance() }}&quot;</span>
         <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="ow">and</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span><span class="p">}}</span>
+        <span class="n">endif</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
     <span class="n">endif</span>
 
 <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">set_home</span> <span class="o">%</span><span class="p">}</span>
@@ -626,18 +639,22 @@ each axis’ homing direction, defaults False: opposite to homing direction</p><
 </dl>
 <p>This will cause the jinja template drive_to_hard_limit.pmc.jinja to be expanded and inserted
 into the PLC code. The template is as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+<pre class="literal-block">    {% include &quot;debug_pause.pmc.jinja&quot; %}
 
-    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
-        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
-        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
-        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog(homing_direction=template.args.homing_direction) }}&quot;</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
-    <span class="n">endif</span>
+    ;---- {{template.args.state}} State ----
+    if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+        HomingState=State{{template.args.state}}
+        ; Execute the move commands
+        cmd &quot;{{ group.jog(homing_direction=template.args.homing_direction) }}&quot;
+        {% include &quot;wait_for_done.pmc.jinja&quot; %}
+        {% if group.post and group.post != &quot;&quot; %}
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+            endif
+        {% endif %}
+    endif
 
-</pre></div>
-</div>
+</pre>
 <p>The included template wait_for_done.pmc.jinja allows this function to take these
 additional parameters which all default to False:</p>
 <dl class="field-list simple">
@@ -792,6 +809,25 @@ into the PLC code. The template is as follows:</p>
         endif
 
     {% endif %}</pre>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.pre_home_action">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">pre_home_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#pre_home_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.pre_home_action" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an extra block with the group’s pre home action in it</p>
+<p>This will cause the jinja template pre_home_action.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<pre class="literal-block">    {% if group.pre and group.pre != &quot;&quot; %}
+    {% include &quot;debug_pause.pmc.jinja&quot; %}
+
+    ;---- PreHomeMove State ----
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+                HomingState=StatePreHomeMove
+                ; Execute the move commands
+        {{ group.pre }}
+        endif
+    {% endif %}
+</pre>
 </dd></dl>
 
 </section>
