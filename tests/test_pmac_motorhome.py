@@ -310,7 +310,28 @@ def test_HOME_two_axes_post_L():
             home_home()
 
     verify(file_name)
+    
+def test_two_axes_different_post_homes(): 
+    # not supported - will not add any additional post home text to the plc
+    file_name = "two_axes_different_post_homes.pmc"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
 
+        low_limit = PostHomeMove.hard_lo_limit
+
+        with group(group_num=2):
+            motor(axis=1, post_home=low_limit)
+            motor(axis=2, post_home=PostHomeMove.move_absolute, post_distance=32767)
+            comment("RLIM")
+            home_rlim()
+        
+        with group(group_num=3):
+            motor(axis=4)
+            motor(axis=5)
+            comment("RLIM")
+            home_rlim()
+
+    verify(file_name)
 
 def test_BL18B_STEP01_plc13_slits():
     # generate a similar plc as test_BL18B_STEP01_plc13 but use the shortcut
