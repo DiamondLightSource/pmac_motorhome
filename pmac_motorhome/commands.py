@@ -17,10 +17,11 @@ from .snippets import (
     drive_to_hard_limit,
     drive_to_initial_pos,
     drive_to_soft_limit,
+    post_home_action,
 )
 
 
-def plc(plc_num, controller, filepath, timeout=600000, post=None):
+def plc(plc_num, controller, filepath, timeout=600000, post=None, post_home=PostHomeMove.none, post_home_distance=0):
     """
     Define a new PLC. Use this to create a new Plc context using the 'with'
     keyword.
@@ -34,12 +35,15 @@ def plc(plc_num, controller, filepath, timeout=600000, post=None):
         filepath (pathlib.Path): The output file where the PLC will be written
         pre (str): some raw PLC code to insert at the start of a group
         post(str): some raw PLC code to insert at the end of a group
+        post_home (PostHomeMove): action to perform on all axes after the
+            home sequence completes
+        post_distance (int): A distance to use in post_home
 
     Returns:
         Plc: the Plc object for use in the context
     """
 
-    return Plc(plc_num, ControllerType(controller), Path(filepath), timeout, post)
+    return Plc(plc_num, ControllerType(controller), Path(filepath), timeout, post, post_home, post_home_distance)
 
 
 def group(
@@ -63,6 +67,7 @@ def group(
         axes (List[int]): a list of axis numbers to include in the group
         post_home (PostHomeMove): action to perform on all axes after the
             home sequence completes
+        post_distance (int): A distance to use in post_home
 
     Returns:
         Group: The Group object for use in the context
@@ -72,11 +77,11 @@ def group(
     )
 
 
-def comment(htype, post="None"):
-    Group.add_comment(htype, post)
+def comment(htype):
+    Group.add_comment(htype)
 
 
-def motor(axis, jdist=0, index=-1, enc_axes=list()):
+def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0, enc_axes=list(), ms=-1):
     """
     Declare a motor for use in the current group.
 
@@ -89,10 +94,12 @@ def motor(axis, jdist=0, index=-1, enc_axes=list()):
         index (int): for internal use in conversion of old scripts sets
             the index of this motor to a different value than the order of
             declaration. -1 means use the order that motors were added.
+        post_home(PostHomeMove):
+        post_distance:
         enc_axes (list): List of additional encoders that need zeroing on homing
             completion
     """
-    motor = Group.add_motor(axis, jdist, index, enc_axes)
+    motor = Group.add_motor(axis, jdist, index, post_home, post_distance, enc_axes, ms)
     Plc.add_motor(axis, motor)
 
 
@@ -127,25 +134,28 @@ def post_home(**args):
     functions
     """
     group = Group.instance()
-
-    if group.post_home == PostHomeMove.none:
-        pass
-    elif group.post_home == PostHomeMove.initial_position:
+    are_same, post_homes_motors = group.all_motors_have_same_post_move_type()
+    if not (are_same):
+        pass # different types of post home move not supported in the current version 
+    elif post_homes_motors == PostHomeMove.none:
+        if group.post is not "":
+            post_home_action()
+    elif post_homes_motors == PostHomeMove.initial_position:
         drive_to_initial_pos(**args)
-    elif group.post_home == PostHomeMove.high_limit:
+    elif post_homes_motors == PostHomeMove.high_limit:
         drive_to_soft_limit(homing_direction=True)
-    elif group.post_home == PostHomeMove.low_limit:
+    elif post_homes_motors == PostHomeMove.low_limit:
         drive_to_soft_limit(homing_direction=False)
-    elif group.post_home == PostHomeMove.hard_hi_limit:
+    elif post_homes_motors == PostHomeMove.hard_hi_limit:
         drive_to_hard_limit(homing_direction=True)
-    elif group.post_home == PostHomeMove.hard_lo_limit:
+    elif post_homes_motors == PostHomeMove.hard_lo_limit:
         drive_to_hard_limit(homing_direction=False)
-    elif group.post_home == PostHomeMove.relative_move:
-        drive_relative(distance=group.post_distance)
-    elif group.post_home == PostHomeMove.move_and_hmz:
-        drive_relative(distance=group.post_distance, set_home=True)
-    elif group.post_home == PostHomeMove.move_absolute:
+    elif post_homes_motors == PostHomeMove.relative_move:
+        drive_relative()
+    elif post_homes_motors == PostHomeMove.move_and_hmz:
+        drive_relative(set_home=True)
+    elif post_homes_motors == PostHomeMove.move_absolute:
         # TODO this is wrong - we need a jog absolute snippet
-        drive_relative(distance=group.post_distance)
+        drive_relative()
     else:
         pass

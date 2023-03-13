@@ -218,21 +218,6 @@ if ((PLC10_HomingBackupGroup == 1 || PLC10_HomingBackupGroup == 2) && (PLC10_Hom
         }
     }
 
-    // Wait for user to tell us to continue if in debug
-    if (PLC10_HomingStatus == PLC10_StatusDebugHoming){
-        PLC10_HomingStatus = PLC10_StatusPaused
-        while (PLC10_HomingStatus == PLC10_StatusPaused){}
-    }
-
-    //---- PostHomeMove State ----
-	if (PLC10_HomingStatus == PLC10_StatusHoming || PLC10_HomingStatus == PLC10_StatusDebugHoming){
-		PLC10_HomingState=PLC10_StatePostHomeMove
-		// Execute the move commands
-		if (PLC10_HomingStatus == PLC10_StatusHoming || PLC10_HomingStatus == PLC10_StatusDebugHoming){
-            P1099=1
-		}
-	}
-
 }
 
 //---- Done ----

@@ -182,6 +182,10 @@ if ((PLC10_HomingBackupGroup == 1 || PLC10_HomingBackupGroup == 2) && (PLC10_Hom
     //Restore the limit flags to P variables px68..x83
     Motor[1].pLimits=P1068
 
+    //---- Zero encoder channels ----
+    if ((PLC10_HomingStatus == PLC10_StatusHoming) || (PLC10_HomingStatus == PLC10_StatusDebugHoming)){
+        homez9
+    }
     //---- Check if all motors have homed ----
     if ((PLC10_HomingStatus == PLC10_StatusHoming || PLC10_HomingStatus == PLC10_StatusDebugHoming) &&(Motor[1].HomeComplete == 0 )){
         PLC10_HomingStatus=PLC10_StatusIncomplete

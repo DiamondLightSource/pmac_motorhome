@@ -39,7 +39,7 @@ An example use of the homing_convert command is shown below::
 
     xfz39520@ws306:motion$ homing_convert motion BL23I/Settings
     07-29-21 19:02:51 INFO     trying homing conversion for BL23I/Settings in /tmp/motorhome48265
-    07-29-21 19:03:00 INFO     generating: /tmp/motorhome48265/new_motion/generate_homing_plcs2.py
+    07-29-21 19:03:00 INFO     generating: /tmp/motorhome48265/new_motion/motorhome.py
     07-29-21 19:03:33 INFO     verifying matches ...
     07-29-21 19:03:33 WARNING  Failure: 1 of 20 PLC files do not match for /dls_sw/work/xfz39520/motion/BL23I/Settings
     review differences with:
@@ -49,6 +49,6 @@ An example use of the homing_convert command is shown below::
     /tmp/motorhome48265/old_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc /tmp/motorhome48265/new_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc
 
     07-29-21 19:03:33 WARNING  To copy the new generating script, use the following command:
-    mv /tmp/motorhome48265/new_motion/generate_homing_plcs2.py /dls_sw/work/xfz39520/motion/BL23I/Settings/configure/generate_homing_plcs.py
+    mv /tmp/motorhome48265/new_motion/motorhome.py /dls_sw/work/xfz39520/motion/BL23I/Settings/configure/motorhome.py
 
     1 of 20 PLC files do not match for/dls_sw/work/xfz39520/motion/BL23I/Settings

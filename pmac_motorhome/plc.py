@@ -27,14 +27,20 @@ class Plc:
         plc_num: int,
         controller: ControllerType,
         filepath: Path,
-        timeout: int,
-        post,
+        timeout: int = 600000,
+        post: str = "",
+        post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
     ) -> None:
         """
         Args:
             plc_num (int): The PLC number to use in generated code
-            controller (ControllerType):  target controller type for the code
-            filepath (pathlib.Path): ouput file to receive the generated code
+            controller (ControllerType):  Target controller type for the code
+            filepath (pathlib.Path): Output file to receive the generated code
+            timeout (int): Timeout for the plc - default 600000ms (10min).
+            post(str): some raw PLC code to insert at the end of a group
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
+            post_distance (int): A distance to use in post_home if required
 
         Raises:
             ValueError: Invalid output file name
@@ -45,7 +51,8 @@ class Plc:
         self.controller: ControllerType = controller
         self.timeout: int = timeout
         self.post = post
-
+        self.post_home: PostHomeMove = post_home
+        self.post_distance: int = post_distance
         self.groups: List[Group] = []
         self.motors: "OrderedDict[int, Motor]" = OrderedDict()
         self.generator = PlcGenerator(self.controller)
@@ -99,9 +106,9 @@ class Plc:
         group_num: int,
         post_home: PostHomeMove,
         post_distance: int,
-        comment: str = None,
-        pre: str = None,
-        post: str = None,
+        comment: str = "",
+        pre: str = "",
+        post: str = "",
     ) -> Group:
         """
         Add a new group of axes to the current Plc
@@ -110,6 +117,9 @@ class Plc:
             group_num (int): A Unique group number (1 is reserved for 'All Groups')
             post_home (PostHomeMove): A post home action to perform on success
             post_distance (int): A distance for those post home actions which require it
+            comment (str): Add a group comment to the top of the Plc code 
+            pre (str): some raw PLC code to insert at the start of a group
+            post (str): some raw PLC code to insert at the end of a group
 
         Returns:
             Group: The newly created Group
@@ -125,8 +135,10 @@ class Plc:
             pre,
             post,
         )
-        if group.post_home is None:
-            group.post_home = plc.post
+        if group.post_home is PostHomeMove.none: # use the plc post home if it exists 
+            group.post_home=plc.post_home
+        if group.post_distance == 0:
+            group.post_distance=plc.post_distance
         plc.groups.append(group)
         return group
 
@@ -144,7 +156,7 @@ class Plc:
         if axis not in plc.motors:
             plc.motors[axis] = motor
 
-    def _all_axes(self, format: str, separator: str, *arg) -> str:
+    def _all_axes(self, format: str, separator: str, *arg, filter_function = None) -> str:
         """
         A helper function to generate code for all axes in a group when one
         of the callback functions below is called from a Jinja template.
@@ -161,6 +173,8 @@ class Plc:
 
         # PLC P variables etc must be sorted to match original motorhome.py
         motors = sorted(self.motors.values(), key=lambda x: x.index)
+        if filter_function is not None:
+            motors = filter(filter_function, motors)
         all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
 
@@ -215,6 +229,9 @@ class Plc:
             return self._all_axes("MSR{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("P{homed}={pb_homed_flag}", " ")
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = Group.filter_motors_without_macro)
+        
         return self._all_axes("P{homed}=i{homed_flag}", " ")
 
     def save_not_homed(self):
@@ -234,6 +251,8 @@ class Plc:
             return self._all_axes("MSW{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ",filter_function = Group.filter_motors_without_macro)
 
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
@@ -298,3 +317,24 @@ class Plc:
         Generate a command string for checking if all axes homed=0
         """
         return self._all_axes("P{homed}=0", " or ")
+
+    # use filter to apply this only to the motors of a brick which have macro
+    def are_homed_flags_zero_brick(self) -> str:
+        """
+        Generate a command string for all axes in the plc which have macros: zero the homed flag (brick specific)
+
+        Returns:
+            str: the resulting command string
+        """
+        return self._all_axes("P{homed}=0", " or ", filter_function = Group.filter_motors_with_macro)
+    
+    def has_motors_with_macro_brick(self) -> bool:
+        """
+        Check if any of the motors in the plc has macros (brick specific)
+
+        Returns:
+            bool: returns true is any of the motors in the plc have defined macro (brick specific)
+        """
+        motors = list(filter(Group.filter_motors_with_macro, self.motors.values()))
+        return len(motors) > 0
+

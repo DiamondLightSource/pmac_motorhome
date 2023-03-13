@@ -1,6 +1,7 @@
-from typing import Any, Callable, Dict, List  # , Optional
+from typing import Any, Callable, Dict, List, Tuple
+from xmlrpc.client import Boolean  # , Optional
 
-from pmac_motorhome.constants import ControllerType  # , PostHomeMove
+from pmac_motorhome.constants import ControllerType, PostHomeMove
 
 from .motor import Motor
 from .template import Template
@@ -21,8 +22,8 @@ class Group:
         group_num,
         plc_num,
         controller,
-        post_home,
-        post_distance,
+        post_home: PostHomeMove = PostHomeMove.none,
+        post_distance: int = 0,
         comment=None,
         pre="",
         post="",
@@ -34,11 +35,12 @@ class Group:
             axes (List[Motor]): A list of axis numbers that this group will control
             plc_num (int): The plc number of the enclosing Plc
             controller (ControllerType): Enum representing the type of motor controller
-            post_home (PostHomeMove): An action to perform on the group after homing
-                completes successfully
-            post_distance (int): a distance to use in post_home if required
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
+            post_distance (int): A distance to use in post_home if required
             comment (str): [description]. A comment to place in the output Plc code
                 at the beginning of this group's definition
+            pre (str): some raw PLC code to insert at the start of a group
+            post(str): some raw PLC code to insert at the end of a group
         """
         self.motors = []
         self.encoders = []
@@ -71,7 +73,7 @@ class Group:
         Group.the_group = None
 
     @classmethod
-    def add_motor(cls, axis: int, jdist: int, index: int, enc_axes: List) -> Motor:
+    def add_motor(cls, axis: int, jdist: int, index: int, post_home:PostHomeMove, post_distance:int, enc_axes: List, ms:int) -> Motor:
         """
         Add a new motor to the current group
 
@@ -79,8 +81,11 @@ class Group:
             axis (int): Axis number
             jdist (int): distance to jog to move off of home mark
             index (int): internal use
+            post_home (PostHomeMove): action to perform on all axes after the home sequence completes
+            post_distance (int): A distance to use in post_home if required
             enc_axes (list): List of additional encoders that need zeroing on homing
                 completion
+            ms (int): macrostation number
         Returns:
             Motor: The newly created Motor
         """
@@ -88,7 +93,12 @@ class Group:
         assert (
             axis not in group.motors
         ), f"motor {axis} already defined in group {group.plc_num}"
-        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index)
+        
+        if post_home is PostHomeMove.none: # use the group post home if it exists 
+            post_home=group.post_home
+        if post_distance == 0:
+            post_distance=group.post_distance
+        motor = Motor.get_motor(axis, jdist, group.plc_num, index=index, post_home=post_home, post_distance=post_distance, ms=ms)
         group.motors.append(motor)
 
         group.encoders = group.encoders + enc_axes
@@ -107,21 +117,26 @@ class Group:
         return cls.the_group
 
     @classmethod
-    def add_comment(cls, htype: str, post: str = "None") -> None:
+    def add_comment(cls, htype: str) -> None:
         """
         Add a group comment to the top of the Plc code in the style of the original
         motorhome.py module but note that you can use any descriptive text
-        for htype and post
+        for htype
 
         Args:
             htype (str): Homing sequence type e.g. RLIM HSW etc.
-            post (str): post home move action
         """
         group = Group.instance()
+        enc_axes = ""
+        if len(group.encoders)> 0:
+            enc_axes = ", enc_axes = {enc}".format(enc=group.encoders)
+
+            
         group.comment = "\n".join(
             [
                 f";  Axis {ax.axis}: htype = {htype}, "
-                f"jdist = {ax.jdist}, post = {post}"
+                f"jdist = {ax.jdist}, post = {ax.post_home_with_distance}" 
+                f"{enc_axes}"
                 for ax in group.motors
             ]
         )
@@ -181,6 +196,15 @@ class Group:
             # callback functions must return a string since we call them with
             # {{- group.callback(template.function, template.args) -}} from jinja
         return ""
+    
+    def all_motors_have_same_post_move_type(self) -> Tuple[bool, PostHomeMove]:
+        """Check that all motors in the group have the same post move type
+        """
+        if len(self.all_motors) > 0:
+            first_motor_post_home = self.all_motors[0].post_home
+            return (all(motor.post_home == first_motor_post_home for motor in self.all_motors), first_motor_post_home)
+        return False, PostHomeMove.none
+            
 
     def command(self, cmd: str) -> str:
         """
@@ -197,7 +221,7 @@ class Group:
         """
         return cmd
 
-    def _all_axes(self, format: str, separator: str, *arg) -> str:
+    def _all_axes(self, format: str, separator: str, *arg, filter_function = None) -> str:
         """
         A helper function that generates a command line by applying each of Motor
         in the group as a parameter to the format string and the concatenating all of
@@ -216,7 +240,11 @@ class Group:
 
         # to the string format: pass any extra arguments first, then the dictionary
         # of the axis object so its elements can be addressed by name
-        all = [format.format(*arg, **ax.dict) for ax in self.motors]
+        motors = self.motors
+        if filter_function is not None:
+            motors = filter(filter_function, self.motors)
+        
+        all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
 
     def _all_encoders(self, format: str, separator: str, *arg) -> str:
@@ -411,16 +439,16 @@ class Group:
             else:
                 return self._all_axes("m{axis}72=P{lo_lim}", " ")
 
-    def jog_distance(self, distance="*"):
+    def jog_distance(self):
         """
         Generate a command string for all group axes: jog to prejog position.
         Useful if a program has been aborted in the middle of a move, because it
         will move the motor to the programmed move end position
         """
         if self.controller is ControllerType.pbrick:
-            return f'jog{self._all_axes("{axis}", ",")}={distance}'
+            return self._all_axes("jog{axis}={post_distance}", "") 
         else:
-            return self._all_axes("#{axis}J=%s" % (distance), " ")
+            return self._all_axes("#{axis}J=%s" % ("{post_distance}"), " ")
 
     def negate_home_flags(self):
         """
@@ -431,6 +459,9 @@ class Group:
 
         if self.controller == ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{not_homed}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{not_homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{not_homed}", " ",filter_function = Group.filter_motors_without_macro)
 
         return self._all_axes("i{homed_flag}=P{not_homed}", " ")
 
@@ -443,6 +474,10 @@ class Group:
 
         if self.controller == ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ", filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ", filter_function = Group.filter_motors_without_macro)
+
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
     def jog_to_home_jdist(self):
@@ -499,6 +534,9 @@ class Group:
             return self._all_axes("MSR{macro_station},i913,P{not_homed}", " ")
         if self.controller == ControllerType.pbrick:
             return self._all_axes("P{not_homed}={pb_inverse_flag}", " ")
+        
+        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
+            return self._all_axes("MSR{macro_station_brick},i912,P{not_homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("P{not_homed}=i{inverse_flag}", " ",filter_function = Group.filter_motors_without_macro)
 
         return self._all_axes("P{not_homed}=i{inverse_flag}", " ")
 
@@ -507,3 +545,40 @@ class Group:
         Generate a command string for all group axes: set the inpos trigger ixx97
         """
         return self._all_axes("I{axis}97 = {0}", " ", value)
+    
+    @staticmethod
+    def filter_motors_with_macro(motor) -> bool:
+        """ 
+        Check if motor (on a brick) has macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor has macro (brick only)
+        """
+        return motor.has_macro_station_brick()
+    
+    @staticmethod
+    def filter_motors_without_macro(motor) -> bool:
+        """ 
+        Check if motor (on a brick) doesn't have a  macro.
+
+        Args:
+            motor (Motor): motor being checked
+
+        Returns:
+            bool: true if the motor doesn't have macro (brick only)
+        """
+        return not (motor.has_macro_station_brick())
+
+    def has_motors_with_macro_brick(self) -> bool:
+        """
+        Check if any of the motors in the group has macros (brick specific)
+
+        Returns:
+            bool: returns true is any of the motors in the group have defined macro (brick specific)
+        """
+        motors = list(filter(Group.filter_motors_with_macro, self.motors))
+        return len(motors) > 0
+

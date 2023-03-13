@@ -19,7 +19,7 @@ if sys.version_info[0] > 2:
         drive_to_limit,
         home,
         jog_if_on_limit,
-        post_home_action,
+        pre_home_action,
         restore_limits,
         store_position_diff,
         zero_encoders,
@@ -58,7 +58,6 @@ def home_rlim():
     zero_encoders()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_hsw():
@@ -87,7 +86,6 @@ def home_hsw():
     zero_encoders()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_hsw_hstop():
@@ -118,7 +116,6 @@ def home_hsw_hstop():
     home(with_limits=True)
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_hsw_dir():
@@ -157,12 +154,12 @@ def home_hsw_dir():
     home()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_limit():
     """
     Home on a limit switch.
+    - (Pre Home action) - only added if group pre-home is defined 
     - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
     - (Fast Retrace) Jog in -hdir until limit switch deactivates
     - (Home) Disable limits and home
@@ -174,15 +171,16 @@ def home_limit():
 
     .. image:: images/LIMIT.png
     """
+    pre_home_action()
     drive_to_home(homing_direction=True, state="FastSearch")
     store_position_diff()
     drive_off_home(with_limits=False)
     disable_limits()
     home()
     restore_limits()
+    zero_encoders()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_hsw_hlim():
@@ -222,7 +220,6 @@ def home_hsw_hlim():
     home()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_home():
@@ -230,10 +227,10 @@ def home_home():
     Dumb home, shouldn't be needed - just executes HM command on all axes
     in the group
     """
+    pre_home_action()
     home()
     check_homed()
     post_home()
-    post_home_action()
 
 
 def home_nothing():
@@ -245,7 +242,6 @@ def home_nothing():
     # TODO review why this reference to Group is required
     Group.the_group.htype = "NOTHING"
     post_home()
-    post_home_action()
 
 
 ###############################################################################

@@ -47,13 +47,13 @@ def test_BL07I_STEP_04_plc11():
         with group(group_num=2):
             motor(axis=1)
             motor(axis=2)
-            comment("RLIM", "None")
+            comment("RLIM")
             home_rlim()
 
         with group(group_num=3):
             motor(axis=4)
             motor(axis=5)
-            comment("RLIM", "None")
+            comment("RLIM")
             home_rlim()
 
     verify(file_name)
@@ -65,18 +65,18 @@ def test_BL02I_STEP_13_plc11():
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
         with group(group_num=2):
             motor(axis=1, jdist=-10000)
-            comment("HSW_HSTOP", "None")
+            comment("HSW_HSTOP")
             home_hsw_hstop()
 
         with group(group_num=3):
             motor(axis=2, jdist=-10000)
-            comment("HSW_HSTOP", "None")
+            comment("HSW_HSTOP")
             home_hsw_hstop()
 
         with group(group_num=4):
             motor(axis=3, jdist=10000)
 
-            comment("HSW_HSTOP", "None")
+            comment("HSW_HSTOP")
             home_hsw_hstop()
 
     verify(file)
@@ -93,14 +93,14 @@ def test_BL18B_STEP01_plc13():
             motor(axis=1, jdist=-400)
             motor(axis=2, jdist=-400)
 
-            comment(htype="HSW", post="i")
+            comment(htype="HSW")
             home_hsw()
 
         with group(group_num=3, post_home=initial):
             motor(axis=3, jdist=-400)
             motor(axis=4, jdist=-400)
 
-            comment(htype="HSW", post="i")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -117,24 +117,24 @@ def test_BL20I_STEP02_plc11():
         with group(group_num=2, post_home=initial):
             motor(axis=3)
             motor(axis=4)
-            comment(htype="LIMIT", post="i")
+            comment(htype="LIMIT")
             home_limit()
 
         with group(group_num=3, post_home=initial):
             motor(axis=5)
             motor(axis=6)
-            comment(htype="LIMIT", post="i")
+            comment(htype="LIMIT")
             home_limit()
 
         with group(group_num=4, post_home=initial):
             motor(axis=1)
             motor(axis=2)
-            comment(htype="LIMIT", post="i")
+            comment(htype="LIMIT")
             home_limit()
 
         with group(group_num=5, post_home=initial):
             motor(axis=7)
-            comment(htype="LIMIT", post="i")
+            comment(htype="LIMIT")
             home_limit()
 
     verify(file_name)
@@ -150,7 +150,7 @@ def test_BL06I_STEP21_plc12():
 
         with group(group_num=1, post_home=initial):
             motor(axis=2)
-            comment(htype="HSW_DIR", post="i")
+            comment(htype="HSW_DIR")
             home_hsw_dir()
 
     verify(file_name)
@@ -164,22 +164,22 @@ def test_BL02I_PMAC01_plc17():
 
         with group(group_num=2):
             motor(axis=1, jdist=-500)
-            comment(htype="HSW_HLIM", post="None")
+            comment(htype="HSW_HLIM")
             home_hsw_hlim()
 
         with group(group_num=3):
             motor(axis=2, jdist=-500)
-            comment(htype="HSW_HLIM", post="None")
+            comment(htype="HSW_HLIM")
             home_hsw_hlim()
 
         with group(group_num=4):
             motor(axis=3, jdist=-500)
-            comment(htype="HSW_HLIM", post="None")
+            comment(htype="HSW_HLIM")
             home_hsw_hlim()
 
         with group(group_num=5):
             motor(axis=4, jdist=-500)
-            comment(htype="HSW_HLIM", post="None")
+            comment(htype="HSW_HLIM")
             home_hsw_hlim()
 
     verify(file_name)
@@ -199,12 +199,12 @@ def test_NOTHING_plc12() -> None:
 
         with group(group_num=2, post_home=hard_hi_limit):
             motor(axis=2, jdist=1000)
-            comment(htype="NOTHING", post="H")
+            comment(htype="NOTHING")
             home_nothing()
 
         with group(group_num=3, post_home=hard_hi_limit):
             motor(axis=2, jdist=1000)
-            comment(htype="HSW", post="H")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -220,7 +220,7 @@ def test_post_high_limit():
 
         with group(group_num=2, post_home=hi_limit):
             motor(axis=1, jdist=1000)
-            comment(htype="HSW", post="h")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -236,7 +236,7 @@ def test_post_low_limit():
 
         with group(group_num=3, post_home=low_limit):
             motor(axis=2, jdist=1000)
-            comment(htype="HSW", post="l")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -254,7 +254,7 @@ def test_post_jog_relative():
             post_distance=1000,
         ):
             motor(axis=3, jdist=1000)
-            comment(htype="HSW", post="r1000")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -272,7 +272,7 @@ def test_post_move_to_position():
             post_distance=1000,
         ):
             motor(axis=4, jdist=1000)
-            comment(htype="HSW", post="z1000")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -290,7 +290,7 @@ def test_post_distance():
             post_distance=32767,
         ):
             motor(axis=5, jdist=1000)
-            comment(htype="HSW", post="32767")
+            comment(htype="HSW")
             home_hsw()
 
     verify(file_name)
@@ -306,11 +306,32 @@ def test_HOME_two_axes_post_L():
         with group(group_num=2, post_home=low_limit):
             motor(axis=3, jdist=-500)
             motor(axis=4, jdist=-500)
-            comment(htype="HOME", post="L")
+            comment(htype="HOME")
             home_home()
 
     verify(file_name)
+    
+def test_two_axes_different_post_homes(): 
+    # not supported - will not add any additional post home text to the plc
+    file_name = "two_axes_different_post_homes.pmc"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
 
+        low_limit = PostHomeMove.hard_lo_limit
+
+        with group(group_num=2):
+            motor(axis=1, post_home=low_limit)
+            motor(axis=2, post_home=PostHomeMove.move_absolute, post_distance=32767)
+            comment("RLIM")
+            home_rlim()
+        
+        with group(group_num=3):
+            motor(axis=4)
+            motor(axis=5)
+            comment("RLIM")
+            home_rlim()
+
+    verify(file_name)
 
 def test_BL18B_STEP01_plc13_slits():
     # generate a similar plc as test_BL18B_STEP01_plc13 but use the shortcut
@@ -331,7 +352,7 @@ def test_BL18B_STEP01_plc13_slits():
             motor(axis=3, jdist=-400)
             motor(axis=4, jdist=-400)
 
-            comment(htype="HSW", post="i")
+            comment(htype="HSW")
             home_slits_hsw(posx=1, negx=2, posy=3, negy=4)
 
     verify(file_name)
@@ -371,6 +392,17 @@ def test_any_code():
 
             command("Any old string will do for this test")
             command(" - multiple commands can be on the same line\n")
+
+    verify(file_name)
+
+def test_ms_string_correct_for_brick():
+    # test the 'command' command which inserts arbitrary code
+    file_name = "ms_string_for_brick.pmc"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=13, controller=ControllerType.brick, filepath=tmp_file):
+        with group(group_num=2):
+            motor(axis=1)
+            motor(axis=2, ms = 8)
 
     verify(file_name)
 
