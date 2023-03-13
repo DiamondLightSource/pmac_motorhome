@@ -395,6 +395,17 @@ def test_any_code():
 
     verify(file_name)
 
+def test_ms_string_correct_for_brick():
+    # test the 'command' command which inserts arbitrary code
+    file_name = "ms_string_for_brick.pmc"
+    tmp_file = Path("/tmp") / file_name
+    with plc(plc_num=13, controller=ControllerType.brick, filepath=tmp_file):
+        with group(group_num=2):
+            motor(axis=1)
+            motor(axis=2, ms = 8)
+
+    verify(file_name)
+
 
 def test_two_plcs():
     # verfiy that you can create two plcs in a single definition file
