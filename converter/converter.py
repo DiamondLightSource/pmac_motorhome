@@ -22,7 +22,6 @@ global_logger.addHandler(stdout_handler)
 @click.group()
 @click.option("--debug/--no-debug", default=False)
 @click.option("--silent/--no-silent", default=False)
-@click.version_option()
 @click.pass_context
 def homing_convert(ctx, debug: bool, silent: bool):
     """Auto conversion of motorhome 1.0 scripts to motorhome 2.0"""
