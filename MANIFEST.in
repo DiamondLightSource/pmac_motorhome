@@ -1,1 +1,2 @@
-include pmac_motorhome/snippets/turbo/*.jinja
+graft pmac_motorhome/snippets/turbo
+graft pmac_motorhome/snippets/power
