@@ -10,6 +10,7 @@ from types import ModuleType
 from typing import List, Optional, Tuple
 
 from converter.indent import Indenter
+from pmac_motorhome._version_git import __version__
 
 from .pipemessage import IPC_FIFO_NAME, get_message
 from .shim.plc import PLC
@@ -353,8 +354,8 @@ class MotionArea:
 
     def get_shebang(self):
         # get the python path for shebang
-        python_path = subprocess.check_output("which python", shell=True).strip()
-        python_path = python_path.decode("utf-8")
+        module_path_elements = ['/dls_sw','prod','python3', 'RHEL7-x86_64','pmac_motorhome', __version__, 'lightweight-venv', 'bin','python3']
+        python_path = '/'.join(module_path_elements)
         text = f"#!/bin/env {python_path}"
         return text
 
