@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commands &mdash; pmac_motorhome 1.0+87.gc0024d3 documentation</title>
+  <title>Commands &mdash; pmac_motorhome 1.0+88.g5e3f073 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -113,15 +113,15 @@ keyword.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of the generated homing PLC</p></li>
+<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of the generated homing PLC</p></li>
 <li><p><strong>controller</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.ControllerType" title="pmac_motorhome.constants.ControllerType"><em>ControllerType</em></a>) – Determines the class of controller Pmac or
 Geobrick</p></li>
-<li><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><em>pathlib.Path</em></a>) – The output file where the PLC will be written</p></li>
-<li><p><strong>pre</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – some raw PLC code to insert at the start of a group</p></li>
-<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
+<li><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><em>pathlib.Path</em></a>) – The output file where the PLC will be written</p></li>
+<li><p><strong>pre</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – some raw PLC code to insert at the start of a group</p></li>
+<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
 <li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the
 home sequence completes</p></li>
-<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – A distance to use in post_home</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – A distance to use in post_home</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -143,12 +143,12 @@ context.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>group_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – an identifying number note that group 1 is reserved for
+<li><p><strong>group_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – an identifying number note that group 1 is reserved for
 homing all groups</p></li>
-<li><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – a list of axis numbers to include in the group</p></li>
+<li><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>]</em>) – a list of axis numbers to include in the group</p></li>
 <li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the
 home sequence completes</p></li>
-<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – A distance to use in post_home</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – A distance to use in post_home</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -168,15 +168,15 @@ home sequence completes</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – axis number</p></li>
-<li><p><strong>jdist</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – number of counts to jog after reaching a home mark. Required
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – axis number</p></li>
+<li><p><strong>jdist</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of counts to jog after reaching a home mark. Required
 to far enough to move off of the home mark.</p></li>
-<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – for internal use in conversion of old scripts sets
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – for internal use in conversion of old scripts sets
 the index of this motor to a different value than the order of
 declaration. -1 means use the order that motors were added.</p></li>
 <li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – </p></li>
 <li><p><strong>post_distance</strong> – </p></li>
-<li><p><strong>enc_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of additional encoders that need zeroing on homing
+<li><p><strong>enc_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of additional encoders that need zeroing on homing
 completion</p></li>
 </ul>
 </dd>
@@ -191,7 +191,7 @@ completion</p></li>
 <p>For an example of the use of this, see <a class="reference internal" href="../tutorials/custom.html"><span class="doc">Custom Homing PLC</span></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – List of axis numbers</p>
+<dd class="field-odd"><p><strong>axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – List of axis numbers</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>an OnlyAxes object for use in the context</p>
