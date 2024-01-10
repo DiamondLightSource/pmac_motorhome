@@ -56,12 +56,11 @@ class Plc:
         self.groups: List[Group] = []
         self.motors: "OrderedDict[int, Motor]" = OrderedDict()
         self.generator = PlcGenerator(self.controller)
-        if not self.filepath.parent.exists():
-            log.error(f"Cant find parent of {self.filepath} from dir {Path.cwd()}")
-            raise ValueError(
-                f"bad file path {self.filepath.parent}\
-                from dir {Path.cwd()}"
-            )
+        directory_name = self.filepath.parts[0]
+        other_parts = self.filepath.parts[1:]
+        if (any(directory_name in i for i in Path.cwd().parts)):
+            self.filepath = Path(other_parts[0], other_parts[1])
+            log.info(f"New file path {self.filepath} from dir {Path.cwd()}")
         if (
             self.plc_num < 8  # PLCs 1-8 are reserved
             or self.plc_num > 32  # highest PLC number possible
@@ -89,8 +88,11 @@ class Plc:
 
         # write out PLC
         plc_text = self.generator.render("plc.pmc.jinja", plc=self)
-        with self.filepath.open("w") as stream:
-            stream.write(plc_text)
+        try:
+            with self.filepath.open("w") as stream:
+                stream.write(plc_text)
+        except FileNotFoundError: # important when there is one motorhome.py for all controllers 
+            pass
 
     @classmethod
     def instance(cls) -> "Plc":
