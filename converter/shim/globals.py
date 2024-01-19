@@ -1,6 +1,6 @@
 # from typing import Callable, Optional
 
-from pmac_motorhome.constants import ControllerType
+from converter.shim.controllertype import ControllerType
 from pmac_motorhome.sequences import (
     home_home,
     home_hsw,
