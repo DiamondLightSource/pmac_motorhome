@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snippet Functions &mdash; pmac_motorhome 1.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Constants" href="constants.html" />
+    <link rel="prev" title="Predfined Homing Sequences" href="sequences.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="external.html">User API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequences.html">Predfined Homing Sequences</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="external.html">User API</a> &raquo;</li>
+      <li>Snippet Functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/snippets.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pmac_motorhome.snippets">
+<span id="id1"></span><span id="snippet-functions"></span><h1>Snippet Functions<a class="headerlink" href="#module-pmac_motorhome.snippets" title="Permalink to this headline"></a></h1>
+<p>All of these functions will insert a small snippet of PLC code into the
+generated PLC. Each snippet performs a specific action on all of the axes
+in a group simultaneously.</p>
+<p>These functions can all be called directly from
+<a class="reference internal" href="overview.html#plcdefinition"><span class="std std-ref">Homing PLC definition file</span></a>. They should be called in the context of a Group object.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.wait_for_done_args">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">wait_for_done_args</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'no_following_err':</span> <span class="pre">False,</span> <span class="pre">'wait_for_one_motor':</span> <span class="pre">False,</span> <span class="pre">'with_limits':</span> <span class="pre">False}</span></em><a class="headerlink" href="#pmac_motorhome.snippets.wait_for_done_args" title="Permalink to this definition"></a></dt>
+<dd><p>A set of arguments to pass to the wait_for_done function</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.F">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">F</span></span><a class="headerlink" href="#pmac_motorhome.snippets.F" title="Permalink to this definition"></a></dt>
+<dd><p>A type to represent a callable function</p>
+<p>alias of TypeVar(‘F’, bound=<code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code>)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PreHomeMove'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Jog all of the group’s axes until they have each hit a limit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Which homing state to report to EPICS for monitoring</p></li>
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+the axis’ homing direction, defaults False: opposite to homing direction</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_limit.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="o">-</span><span class="p">}}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_axes() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_off_home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_off_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FastRetrace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_off_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_off_home" title="Permalink to this definition"></a></dt>
+<dd><p>Jog all the group’s axes until the home flag is released</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Which homing state to report to EPICS for monitoring</p></li>
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+the axis’ homing direction, defaults False: opposite to homing direction</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_off_home.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="c1"># Invert the homing flags and the jog until the inverse of the home flag</span>
+       <span class="n">triggers</span><span class="o">.</span>
+
+       <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="k">for</span> <span class="n">an</span> <span class="n">axis</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">home</span> <span class="n">on</span> <span class="n">release</span> <span class="n">of</span> <span class="n">limit</span> <span class="n">this</span> <span class="n">would</span> <span class="n">drive</span>
+       <span class="n">onto</span> <span class="n">the</span> <span class="n">limit</span>  <span class="c1">#}</span>
+    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">negate_home_flags</span><span class="p">()</span> <span class="p">}}</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_to_home_jdist() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.store_position_diff">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">store_position_diff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#store_position_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.store_position_diff" title="Permalink to this definition"></a></dt>
+<dd><p>Save the current offset from the original position.</p>
+<p>This is only required in order to support driving back to initial position
+after the home operation is complete</p>
+<p>This will cause the jinja template store_position_diff.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">----</span> <span class="n">Store</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">current</span> <span class="n">pos</span> <span class="ow">and</span> <span class="n">start</span> <span class="n">pos</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">store_position_diff</span><span class="p">()</span> <span class="p">}}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PreHomeMove'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restore_homed_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_home" title="Permalink to this definition"></a></dt>
+<dd><p>Drive all axes in the group until they hit the home flag or a limit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Which homing state to report to EPICS for monitoring</p></li>
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p></li>
+<li><p><strong>restore_homed_flags</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – restore the home flags original state before
+starting. Required if a previous step changed the home flags</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_home.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">restore_homed_flags</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_home_flags</span><span class="p">()</span> <span class="p">}}</span> <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_to_home_jdist() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_hstop">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_hstop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PreHomeMove'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_following_err</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_hstop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_hstop" title="Permalink to this definition"></a></dt>
+<dd><p>Drive all axes in the group until they hit the hard stop (following error)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Which homing state to report to EPICS for monitoring</p></li>
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_hstop.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">State</span><span class="p">{{</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span><span class="p">}}</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_inpos_trigger</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">}};</span> <span class="ow">in</span><span class="o">-</span><span class="n">position</span> <span class="n">trigger</span> <span class="n">on</span> <span class="n">following</span> <span class="n">error</span>
+        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">pre</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;PreHomeMove&quot;</span> <span class="p">}}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_to_home_jdist() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_inpos_trigger</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">}};</span> <span class="ow">in</span><span class="o">-</span><span class="n">position</span> <span class="n">trigger</span> <span class="n">on</span> <span class="n">hardware</span> <span class="n">capture</span>
+
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.home" title="Permalink to this definition"></a></dt>
+<dd><p>Initiate the home command on all axes in the group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move</p>
+</dd>
+</dl>
+<p>This will cause the jinja template home.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="n">Homing</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">StateHoming</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_home_flags</span><span class="p">()</span> <span class="p">}}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.home() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.debug_pause">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">debug_pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#debug_pause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.debug_pause" title="Permalink to this definition"></a></dt>
+<dd><p>When running in debug mode, pause until the user indicates to continue</p>
+<p>This will cause the jinja template debug_pause.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">user</span> <span class="n">to</span> <span class="n">tell</span> <span class="n">us</span> <span class="n">to</span> <span class="k">continue</span> <span class="k">if</span> <span class="ow">in</span> <span class="n">debug</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusPaused</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusPaused</span><span class="p">)</span>
+        <span class="n">endw</span>
+    <span class="n">endif</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_initial_pos">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_initial_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_initial_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_initial_pos" title="Permalink to this definition"></a></dt>
+<dd><p>Return all axes in the group to their original positions before the homing
+sequence began. Requires that store_position_diff was called before home.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move</p>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_initial_pos.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="n">PostHomeMove</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">StatePostHomeMove</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">stored_pos_to_jogdistance</span><span class="p">()</span> <span class="p">}}</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="ow">and</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="p">}}</span>
+        <span class="n">endif</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_soft_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_soft_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_soft_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_soft_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Drive all axes in the group until they hit their soft limits</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_soft_limit.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<pre class="literal-block">    {% include &quot;debug_pause.pmc.jinja&quot; %}
+
+    ;---- PostHomeMove State ----
+    if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+        HomingState=StatePostHomeMove
+        ; Execute the move commands
+        {{ group.stored_limit_to_jogdistance(homing_direction=template.args.homing_direction) }}
+        cmd &quot;{{ group.jog_distance() }}&quot;
+        {% include &quot;wait_for_done.pmc.jinja&quot; %}
+        {% if group.post and group.post != &quot;&quot; %}
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+            endif
+        {% endif %}
+    endif
+
+</pre>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_relative">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set_home</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_relative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_relative" title="Permalink to this definition"></a></dt>
+<dd><p>Drive all axes in the group a relative distance from current position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>set_home</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – set the home flag afterward if True</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_relative.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;debug_pause.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="p">;</span><span class="o">----</span> <span class="n">PostHomeMove</span> <span class="n">State</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">StatePostHomeMove</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_distance() }}&quot;</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s2">&quot;wait_for_done.pmc.jinja&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="ow">and</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">post</span><span class="p">}}</span>
+        <span class="n">endif</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">set_home</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">;</span><span class="o">----</span> <span class="n">Make</span> <span class="n">current</span> <span class="n">position</span> <span class="n">zero</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.set_home() }}&quot;</span>
+    <span class="n">endif</span>
+
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.zero_encoders">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">zero_encoders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#zero_encoders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.zero_encoders" title="Permalink to this definition"></a></dt>
+<dd><p>Zero an associated encoders</p>
+<p>This will cause the jinja template zero_encoders.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">has_encoders</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">;</span><span class="o">----</span> <span class="n">Zero</span> <span class="n">encoder</span> <span class="n">channels</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="s2">&quot;{{ group.set_home(encoder=True) }}&quot;</span>
+    <span class="n">endif</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.check_homed">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">check_homed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#check_homed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.check_homed" title="Permalink to this definition"></a></dt>
+<dd><p>Verfiy that all axes in the group are homed. Set error condition if not.</p>
+<p>This will cause the jinja template check_homed.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">----</span> <span class="n">Check</span> <span class="k">if</span> <span class="nb">all</span> <span class="n">motors</span> <span class="n">have</span> <span class="n">homed</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+    <span class="ow">and</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">homed</span><span class="p">()</span> <span class="p">}}</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">HomingStatus</span><span class="o">=</span><span class="n">StatusIncomplete</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_home_if_on_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_home_if_on_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_home_if_on_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_home_if_on_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Drive axes to the home mark or switch. Only perform this action on
+axes that are currently on a limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_home_if_on_limit.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="c1"># TODO #}</span>
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.disable_limits">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">disable_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#disable_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.disable_limits" title="Permalink to this definition"></a></dt>
+<dd><p>Disable the soft limits on all axes in the group</p>
+<p>This will cause the jinja template disable_limits.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">----</span> <span class="n">Check</span> <span class="k">if</span> <span class="nb">any</span> <span class="n">limits</span> <span class="n">need</span> <span class="n">disabling</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="p">;</span><span class="n">Save</span> <span class="n">the</span> <span class="n">user</span> <span class="n">home</span> <span class="n">flags</span> <span class="n">to</span> <span class="n">P</span> <span class="n">variables</span> <span class="n">px52</span><span class="o">..</span><span class="n">x67</span>
+        <span class="p">;</span><span class="n">NOTE</span><span class="p">:</span> <span class="n">this</span> <span class="n">overwrites</span> <span class="n">inverse</span> <span class="n">flag</span> <span class="p">(</span><span class="n">ran</span> <span class="n">out</span> <span class="n">of</span> <span class="n">P</span> <span class="nb">vars</span><span class="p">),</span> <span class="n">so</span> <span class="n">can</span><span class="s1">&#39;t use inverse flag after this point</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">overwrite_inverse_flags</span><span class="p">()</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">motors</span> <span class="o">-%</span><span class="p">}</span>
+            <span class="p">{</span><span class="o">%</span> <span class="n">include</span> <span class="s1">&#39;disable_axis_limits.pmc.jinja&#39;</span> <span class="o">-%</span><span class="p">}</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.restore_limits">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">restore_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#restore_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.restore_limits" title="Permalink to this definition"></a></dt>
+<dd><p>Restore the saved soft limits on all axes on the group. By default the
+Plc will always record the soft limits of all axes at the start.</p>
+<p>This will cause the jinja template restore_limits.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">----</span> <span class="n">Restore</span> <span class="n">limits</span> <span class="k">if</span> <span class="n">needed</span> <span class="o">----</span>
+    <span class="p">;</span><span class="n">Restore</span> <span class="n">the</span> <span class="n">limit</span> <span class="n">flags</span> <span class="n">to</span> <span class="n">P</span> <span class="n">variables</span> <span class="n">px68</span><span class="o">..</span><span class="n">x83</span>
+    <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">restore_limit_flags</span><span class="p">()</span> <span class="p">}}</span>
+
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.drive_to_hard_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">drive_to_hard_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PostHomeMove'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#drive_to_hard_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.drive_to_hard_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Drive all axes until they hit a hard limit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Which homing state to report to EPICS for monitoring</p></li>
+<li><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p></li>
+</ul>
+</dd>
+</dl>
+<p>This will cause the jinja template drive_to_hard_limit.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<pre class="literal-block">    {% include &quot;debug_pause.pmc.jinja&quot; %}
+
+    ;---- {{template.args.state}} State ----
+    if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+        HomingState=State{{template.args.state}}
+        ; Execute the move commands
+        cmd &quot;{{ group.jog(homing_direction=template.args.homing_direction) }}&quot;
+        {% include &quot;wait_for_done.pmc.jinja&quot; %}
+        {% if group.post and group.post != &quot;&quot; %}
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+            endif
+        {% endif %}
+    endif
+
+</pre>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.jog_if_on_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">jog_if_on_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#jog_if_on_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.jog_if_on_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Jog all axes in the group that are currently on a limit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>homing_direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When True Jog in the same direction as
+each axis’ homing direction, defaults False: opposite to homing direction</p>
+</dd>
+</dl>
+<p>This will cause the jinja template jog_if_on_limit.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">----</span> <span class="n">Check</span> <span class="k">if</span> <span class="n">HSW_HLIM</span> <span class="n">missed</span> <span class="n">home</span> <span class="n">mark</span> <span class="ow">and</span> <span class="n">hit</span> <span class="n">a</span> <span class="n">limit</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="p">;</span> <span class="n">Execute</span> <span class="n">the</span> <span class="n">move</span> <span class="n">commands</span> <span class="k">if</span> <span class="n">on</span> <span class="n">a</span> <span class="n">limit</span>
+    <span class="p">{</span><span class="o">%-</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">motors</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">set_axis_filter</span><span class="p">([</span><span class="n">motor</span><span class="o">.</span><span class="n">axis</span><span class="p">])</span> <span class="p">}}</span>
+        <span class="k">if</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">limits</span><span class="p">()</span> <span class="p">}}</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+            <span class="n">cmd</span> <span class="s2">&quot;{{ group.jog_to_home_jdist() }}&quot;</span>
+        <span class="n">endif</span>
+    <span class="p">{</span><span class="o">%-</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span><span class="o">-</span> <span class="n">group</span><span class="o">.</span><span class="n">set_axis_filter</span><span class="p">([])</span> <span class="p">}}</span>
+        <span class="p">{</span><span class="c1"># a unique variant of wait for done #}</span>
+        <span class="p">;</span> <span class="n">Wait</span> <span class="k">for</span> <span class="n">the</span> <span class="n">move</span> <span class="n">to</span> <span class="n">complete</span>
+        <span class="n">timer</span> <span class="o">=</span> <span class="mi">20</span> <span class="n">MilliSeconds</span> <span class="p">;</span> <span class="n">Small</span> <span class="n">delay</span> <span class="n">to</span> <span class="n">start</span> <span class="n">moving</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">timer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">endw</span>
+        <span class="n">timer</span> <span class="o">=</span> <span class="p">{{</span> <span class="n">plc</span><span class="o">.</span><span class="n">timeout</span> <span class="p">}}</span> <span class="n">MilliSeconds</span> <span class="p">;</span> <span class="n">Now</span> <span class="n">start</span> <span class="n">checking</span> <span class="n">the</span> <span class="n">conditions</span>
+        <span class="k">while</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">in_pos</span><span class="p">()</span> <span class="p">}}</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">At</span> <span class="n">least</span> <span class="n">one</span> <span class="n">motor</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">In</span> <span class="n">Position</span>
+        <span class="ow">and</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">following_err</span><span class="p">()</span> <span class="p">}}</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Following</span> <span class="n">error</span> <span class="n">check</span>
+        <span class="ow">and</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">limits</span><span class="p">()</span> <span class="p">}}</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Should</span> <span class="ow">not</span> <span class="n">stop</span> <span class="n">on</span> <span class="n">position</span> <span class="n">limit</span> <span class="k">for</span> <span class="n">selected</span> <span class="n">motors</span>
+        <span class="ow">and</span> <span class="p">(</span><span class="n">timer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Check</span> <span class="k">for</span> <span class="n">timeout</span>
+        <span class="ow">and</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span> <span class="p">;</span> <span class="n">Check</span> <span class="n">that</span> <span class="n">we</span> <span class="n">didn</span><span class="s1">&#39;t abort</span>
+        <span class="n">endw</span>
+        <span class="p">;</span> <span class="n">Check</span> <span class="n">why</span> <span class="n">we</span> <span class="n">left</span> <span class="n">the</span> <span class="k">while</span> <span class="n">loop</span>
+        <span class="k">if</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">following_err</span><span class="p">()</span> <span class="p">}}</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Following</span> <span class="n">error</span> <span class="n">check</span> <span class="n">failed</span>
+            <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusFFErr</span>
+        <span class="n">endif</span>
+        <span class="k">if</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">limits</span><span class="p">()</span> <span class="p">}}</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="p">;</span> <span class="n">If</span> <span class="n">a</span> <span class="n">motor</span> <span class="n">hit</span> <span class="n">a</span> <span class="n">limit</span>
+            <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusLimit</span>
+        <span class="n">endif</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">timer</span><span class="o">&lt;</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">timer</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">If</span> <span class="n">we</span> <span class="n">timed</span> <span class="n">out</span>
+            <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusTimeout</span>
+        <span class="n">endif</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.continue_home_maintain_axes_offset">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">continue_home_maintain_axes_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#continue_home_maintain_axes_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.continue_home_maintain_axes_offset" title="Permalink to this definition"></a></dt>
+<dd><p>Monitor axes that are homing and when one achieves home jog it in the
+same direction as home. This is to avoid tilt on pairs of axes that have
+misaligned home marks.</p>
+<p>This will cause the jinja template continue_home_maintain_axes_offset.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="p">;</span><span class="o">---</span> <span class="n">Homing</span> <span class="n">State</span> <span class="mi">2</span> <span class="o">----</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusHoming</span> <span class="ow">or</span> <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusDebugHoming</span><span class="p">)</span>
+        <span class="n">HomingState</span><span class="o">=</span><span class="n">StateHoming</span>
+        <span class="p">;</span> <span class="n">This</span> <span class="n">block</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="n">after</span> <span class="n">a</span> <span class="n">home</span> <span class="n">block</span> <span class="k">with</span> <span class="n">wait_for_one_motor</span><span class="o">=</span><span class="kc">True</span><span class="o">.</span>
+        <span class="p">;</span> <span class="n">It</span> <span class="n">allows</span> <span class="n">motors</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">home</span> <span class="n">but</span> <span class="n">restarts</span> <span class="n">those</span> <span class="n">that</span> <span class="n">have</span> <span class="n">already</span>
+        <span class="p">;</span> <span class="n">reached</span> <span class="n">home</span><span class="o">.</span> <span class="n">For</span> <span class="n">use</span> <span class="k">with</span> <span class="n">axes</span> <span class="n">that</span> <span class="n">are</span> <span class="n">sensitve</span> <span class="n">to</span> <span class="n">tilt</span> <span class="n">but</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">have</span>
+        <span class="p">;</span> <span class="n">aligned</span> <span class="n">home</span> <span class="n">marks</span>
+
+        <span class="p">;</span> <span class="n">make</span> <span class="n">sure</span> <span class="nb">all</span> <span class="n">jogs</span> <span class="n">will</span> <span class="n">be</span> <span class="n">a</span> <span class="n">long</span> <span class="n">distance</span>
+        <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">set_large_jog_distance</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="n">template</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">homing_direction</span><span class="p">)</span> <span class="p">}}</span>
+
+        <span class="p">;</span> <span class="k">continue</span> <span class="n">processing</span> <span class="n">until</span> <span class="nb">all</span> <span class="n">motors</span> <span class="n">are</span> <span class="n">homed</span> <span class="ow">or</span> <span class="n">something</span> <span class="n">goes</span> <span class="n">wrong</span>
+        <span class="n">timer</span> <span class="o">=</span> <span class="p">{{</span> <span class="n">plc</span><span class="o">.</span><span class="n">timeout</span> <span class="p">}}</span> <span class="n">MilliSeconds</span>
+        <span class="k">while</span> <span class="p">({{</span><span class="n">group</span><span class="o">.</span><span class="n">homed</span><span class="p">()}}</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">homed</span>
+        <span class="ow">and</span> <span class="p">({{</span><span class="n">group</span><span class="o">.</span><span class="n">following_err</span><span class="p">()}}</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">there</span> <span class="n">are</span> <span class="n">no</span> <span class="n">following</span> <span class="n">errors</span>
+        <span class="ow">and</span> <span class="p">({{</span><span class="n">group</span><span class="o">.</span><span class="n">in_pos</span><span class="p">()}}</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">postion</span>
+        <span class="ow">and</span> <span class="p">(</span><span class="n">timer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Check</span> <span class="k">for</span> <span class="n">timeout</span>
+            <span class="p">;</span> <span class="n">jog</span> <span class="nb">any</span> <span class="n">motors</span> <span class="n">that</span> <span class="n">have</span> <span class="n">stopped</span> <span class="n">on</span> <span class="n">home</span>
+            <span class="p">{</span><span class="o">%</span> <span class="nb">filter</span> <span class="n">indent</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+            <span class="p">{{</span> <span class="n">group</span><span class="o">.</span><span class="n">jog_stopped</span><span class="p">()</span> <span class="p">}}</span>
+            <span class="p">{</span><span class="o">%</span> <span class="n">endfilter</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">endw</span>
+        <span class="p">;</span> <span class="n">Check</span> <span class="n">why</span> <span class="n">we</span> <span class="n">left</span> <span class="n">the</span> <span class="k">while</span> <span class="n">loop</span>
+        <span class="k">if</span> <span class="p">({{</span> <span class="n">group</span><span class="o">.</span><span class="n">following_err</span><span class="p">()</span> <span class="p">}}</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">Following</span> <span class="n">error</span> <span class="n">check</span> <span class="n">failed</span>
+            <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusFFErr</span>
+        <span class="n">endif</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">timer</span><span class="o">&lt;</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">timer</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">;</span> <span class="n">If</span> <span class="n">we</span> <span class="n">timed</span> <span class="n">out</span>
+            <span class="n">HomingStatus</span> <span class="o">=</span> <span class="n">StatusTimeout</span>
+        <span class="n">endif</span>
+    <span class="n">endif</span>
+
+</pre></div>
+</div>
+<p>The included template wait_for_done.pmc.jinja allows this function to take these
+additional parameters which all default to False:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no_following_err</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – don’t check for following error during moves</p></li>
+<li><p><strong>with_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – check for limits during the move. When False we continue
+waiting even if a subset of the axes have stopped on a limit</p></li>
+<li><p><strong>wait_for_one_motor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – stop wating as soon as one of the motors
+has stopped instead of waiting for all motors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.post_home_action">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">post_home_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#post_home_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.post_home_action" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an extra block with the group’s post home action in it</p>
+<p>This will cause the jinja template post_home_action.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<pre class="literal-block">    {% if group.post and group.post != &quot;&quot; %}
+    {% include &quot;debug_pause.pmc.jinja&quot; %}
+
+    ;---- PostHomeMove State ----
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+                HomingState=StatePostHomeMove
+                ; Execute the move commands
+                if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+            {{ group.post }}
+                endif
+        endif
+
+    {% endif %}</pre>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.snippets.pre_home_action">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.snippets.</span></span><span class="sig-name descname"><span class="pre">pre_home_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/snippets.html#pre_home_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.snippets.pre_home_action" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an extra block with the group’s pre home action in it</p>
+<p>This will cause the jinja template pre_home_action.pmc.jinja to be expanded and inserted
+into the PLC code. The template is as follows:</p>
+<pre class="literal-block">    {% if group.pre and group.pre != &quot;&quot; %}
+    {% include &quot;debug_pause.pmc.jinja&quot; %}
+
+    ;---- PreHomeMove State ----
+        if (HomingStatus = StatusHoming or HomingStatus = StatusDebugHoming)
+                HomingState=StatePreHomeMove
+                ; Execute the move commands
+        {{ group.pre }}
+        endif
+    {% endif %}
+</pre>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sequences.html" class="btn btn-neutral float-left" title="Predfined Homing Sequences" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-right" title="Constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>

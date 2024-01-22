@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview &mdash; pmac_motorhome 1.5 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Commands" href="commands.html" />
+    <link rel="prev" title="User API" href="external.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="external.html">User API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#homing-plc-definition-file">Homing PLC definition file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequences.html">Predfined Homing Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="external.html">User API</a> &raquo;</li>
+      <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview">
+<span id="api-overview"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
+<p>To create a homing PLC the user must write a definition file which is a simple
+python script.</p>
+<p>For example the following code will output a PLC 12 that defines a group of
+axes including axis 1 and axis 2. It will provide a standard home switch
+(or home mark) homing sequence. The PLC will be written to
+/tmp/PLC12_SLITS1_HM.pmc</p>
+<section id="homing-plc-definition-file">
+<span id="plcdefinition"></span><h2>Homing PLC definition file<a class="headerlink" href="#homing-plc-definition-file" title="Permalink to this headline"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pmac_motorhome.commands</span> <span class="kn">import</span> <span class="n">group</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="n">plc</span>
+<span class="kn">from</span> <span class="nn">pmac_motorhome.sequences</span> <span class="kn">import</span> <span class="n">home_hsw</span>
+
+<span class="k">with</span> <span class="n">plc</span><span class="p">(</span>
+    <span class="n">plc_num</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="s2">&quot;GeoBrick&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;/tmp/PLC12_SLITS1_HM.pmc&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">with</span> <span class="n">group</span><span class="p">(</span><span class="n">group_num</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">home_hsw</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All the code that goes into the definition file will use global functions
+and contexts (<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#with" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">with</span> <span class="pre">statement</span></code></a>). The functions can be broken into 3 categories
+which are documented in the following sections.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="commands.html"><span class="doc">Commands</span></a>: functions to declare PLCs, Motors and Groups</p></li>
+<li><p><a class="reference internal" href="sequences.html"><span class="doc">Predfined Homing Sequences</span></a>: a set of commonly used predefined homing sequences</p></li>
+<li><p><a class="reference internal" href="snippets.html"><span class="doc">Snippet Functions</span></a>: a set of blocks of PLC code combined by predfined above</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="external.html" class="btn btn-neutral float-left" title="User API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="commands.html" class="btn btn-neutral float-right" title="Commands" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>
