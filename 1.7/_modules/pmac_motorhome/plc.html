@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.plc &mdash; pmac_motorhome 1.7 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.plc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.plc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">ControllerType</span><span class="p">,</span> <span class="n">PostHomeMove</span>
+<span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">.motor</span> <span class="kn">import</span> <span class="n">Motor</span>
+<span class="kn">from</span> <span class="nn">.plcgenerator</span> <span class="kn">import</span> <span class="n">PlcGenerator</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Plc"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc">[docs]</a><span class="k">class</span> <span class="nc">Plc</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used in a PLC definition to declare that a PLC is to</span>
+<span class="sd">    be generated.</span>
+
+<span class="sd">    Should always be instantiated using `pmac_motorhome.commands.plc`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># this class variable holds the instance in the current context</span>
+    <span class="n">the_plc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Plc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">plc_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">controller</span><span class="p">:</span> <span class="n">ControllerType</span><span class="p">,</span>
+        <span class="n">filepath</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">600000</span><span class="p">,</span>
+        <span class="n">post</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span> <span class="o">=</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+        <span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            plc_num (int): The PLC number to use in generated code</span>
+<span class="sd">            controller (ControllerType):  Target controller type for the code</span>
+<span class="sd">            filepath (pathlib.Path): Output file to receive the generated code</span>
+<span class="sd">            timeout (int): Timeout for the plc - default 600000ms (10min).</span>
+<span class="sd">            post(str): some raw PLC code to insert at the end of a group</span>
+<span class="sd">            post_home (PostHomeMove): action to perform on all axes after the home sequence completes</span>
+<span class="sd">            post_distance (int): A distance to use in post_home if required</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Invalid output file name</span>
+<span class="sd">            ValueError: Invalid PLC number supplied</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plc_num</span> <span class="o">=</span> <span class="n">plc_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">:</span> <span class="n">ControllerType</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="n">post</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span> <span class="o">=</span> <span class="n">post_home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">post_distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="p">:</span> <span class="s2">&quot;OrderedDict[int, Motor]&quot;</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generator</span> <span class="o">=</span> <span class="n">PlcGenerator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cant find parent of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="si">}</span><span class="s2"> from dir </span><span class="si">{</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;bad file path </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">parent</span><span class="si">}</span><span class="se">\</span>
+<span class="s2">                from dir </span><span class="si">{</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plc_num</span> <span class="o">&lt;</span> <span class="mi">8</span>  <span class="c1"># PLCs 1-8 are reserved</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">plc_num</span> <span class="o">&gt;</span> <span class="mi">32</span>  <span class="c1"># highest PLC number possible</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plc_num</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;plc_number should be integer between 9 and 32&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enter context: store the in-scope Plc object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">Plc</span><span class="o">.</span><span class="n">the_plc</span><span class="p">,</span> <span class="s2">&quot;cannot create a new Plc within a Plc context&quot;</span>
+        <span class="n">Plc</span><span class="o">.</span><span class="n">the_plc</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="n">Plc</span><span class="o">.</span><span class="n">the_plc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Leaving the context. Use the in scope Plc object to generate the</span>
+<span class="sd">        PLC output code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># need to do this for the case where 2 PLCs are defined in one file</span>
+        <span class="c1"># (including in the unit tests)</span>
+        <span class="n">Motor</span><span class="o">.</span><span class="n">instances</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># write out PLC</span>
+        <span class="n">plc_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;plc.pmc.jinja&quot;</span><span class="p">,</span> <span class="n">plc</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plc_text</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Plc.instance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.instance">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instance</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Plc&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the current in-scope PLC.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">cls</span><span class="o">.</span><span class="n">the_plc</span><span class="p">,</span> <span class="s2">&quot;There is no group context currently defined&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">the_plc</span></div>
+
+<div class="viewcode-block" id="Plc.add_group"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.add_group">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">group_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span><span class="p">,</span>
+        <span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">pre</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">post</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Group</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new group of axes to the current Plc</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group_num (int): A Unique group number (1 is reserved for &#39;All Groups&#39;)</span>
+<span class="sd">            post_home (PostHomeMove): A post home action to perform on success</span>
+<span class="sd">            post_distance (int): A distance for those post home actions which require it</span>
+<span class="sd">            comment (str): Add a group comment to the top of the Plc code </span>
+<span class="sd">            pre (str): some raw PLC code to insert at the start of a group</span>
+<span class="sd">            post (str): some raw PLC code to insert at the end of a group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Group: The newly created Group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plc</span> <span class="o">=</span> <span class="n">Plc</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span>
+            <span class="n">group_num</span><span class="p">,</span>
+            <span class="n">plc</span><span class="o">.</span><span class="n">plc_num</span><span class="p">,</span>
+            <span class="n">plc</span><span class="o">.</span><span class="n">controller</span><span class="p">,</span>
+            <span class="n">post_home</span><span class="p">,</span>
+            <span class="n">post_distance</span><span class="p">,</span>
+            <span class="n">comment</span><span class="p">,</span>
+            <span class="n">pre</span><span class="p">,</span>
+            <span class="n">post</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post_home</span> <span class="ow">is</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">:</span> <span class="c1"># use the plc post home if it exists </span>
+            <span class="n">group</span><span class="o">.</span><span class="n">post_home</span><span class="o">=</span><span class="n">plc</span><span class="o">.</span><span class="n">post_home</span>
+        <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">post_distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">post_distance</span><span class="o">=</span><span class="n">plc</span><span class="o">.</span><span class="n">post_distance</span>
+        <span class="n">plc</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group</span></div>
+
+<div class="viewcode-block" id="Plc.add_motor"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.add_motor">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">motor</span><span class="p">:</span> <span class="n">Motor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a motor to the PLC. The Plc object collects all the motors in all</span>
+<span class="sd">        of its groups for use in the Plc callback functions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axis (int): axis number</span>
+<span class="sd">            motor (Motor): motor details</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plc</span> <span class="o">=</span> <span class="n">Plc</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plc</span><span class="o">.</span><span class="n">motors</span><span class="p">:</span>
+            <span class="n">plc</span><span class="o">.</span><span class="n">motors</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">motor</span></div>
+
+    <span class="k">def</span> <span class="nf">_all_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="n">filter_function</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A helper function to generate code for all axes in a group when one</span>
+<span class="sd">        of the callback functions below is called from a Jinja template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            format (str): A format string to apply to each motor in the Plc</span>
+<span class="sd">            separator (str): The separator between each formatted string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: [description]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># to the string format: pass any extra arguments first, then the dictionary</span>
+        <span class="c1"># of the axis object so its elements can be addressed by name</span>
+
+        <span class="c1"># PLC P variables etc must be sorted to match original motorhome.py</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filter_function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">motors</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">filter_function</span><span class="p">,</span> <span class="n">motors</span><span class="p">)</span>
+        <span class="nb">all</span> <span class="o">=</span> <span class="p">[</span><span class="nb">format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">ax</span><span class="o">.</span><span class="n">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">all</span><span class="p">)</span>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># the following functions are callled from Jinja templates to generate</span>
+    <span class="c1"># snippets of PLC code that act on all motors in a plc</span>
+    <span class="c1">#</span>
+    <span class="c1"># We call these Plc Axis Snippet functions</span>
+    <span class="c1">############################################################################</span>
+
+<div class="viewcode-block" id="Plc.save_hi_limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_hi_limits">[docs]</a>    <span class="k">def</span> <span class="nf">save_hi_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving all axes high limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{hi_lim}</span><span class="s2">=Motor[</span><span class="si">{axis}</span><span class="s2">].MaxPos&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{hi_lim}</span><span class="s2">=i</span><span class="si">{axis}</span><span class="s2">13&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.restore_hi_limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.restore_hi_limits">[docs]</a>    <span class="k">def</span> <span class="nf">restore_hi_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for restoring all axes high limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].MaxPos=P</span><span class="si">{hi_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">13=P</span><span class="si">{hi_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.save_lo_limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_lo_limits">[docs]</a>    <span class="k">def</span> <span class="nf">save_lo_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving all axes low limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{lo_lim}</span><span class="s2">=Motor[</span><span class="si">{axis}</span><span class="s2">].MinPos&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{lo_lim}</span><span class="s2">=i</span><span class="si">{axis}</span><span class="s2">14&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.restore_lo_limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.restore_lo_limits">[docs]</a>    <span class="k">def</span> <span class="nf">restore_lo_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for restoring all axes low limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].MinPos=P</span><span class="si">{lo_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">14=P</span><span class="si">{lo_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.save_homed"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_homed">[docs]</a>    <span class="k">def</span> <span class="nf">save_homed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving all axes homed state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pmac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSR</span><span class="si">{macro_station}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{homed}</span><span class="s2">=</span><span class="si">{pb_homed_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">brick</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_motors_with_macro_brick</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSR</span><span class="si">{macro_station_brick}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{homed}</span><span class="s2">=i</span><span class="si">{homed_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_without_macro</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{homed}</span><span class="s2">=i</span><span class="si">{homed_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.save_not_homed"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_not_homed">[docs]</a>    <span class="k">def</span> <span class="nf">save_not_homed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving the inverse of all axes homed state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{not_homed}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">^12&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{not_homed}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">^$C&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.restore_homed"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.restore_homed">[docs]</a>    <span class="k">def</span> <span class="nf">restore_homed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for restoring all axes homed state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pmac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{pb_homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">brick</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_motors_with_macro_brick</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station_brick}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_without_macro</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.save_limit_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_limit_flags">[docs]</a>    <span class="k">def</span> <span class="nf">save_limit_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving all axes limit flags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{lim_flags}</span><span class="s2">=Motor[</span><span class="si">{axis}</span><span class="s2">].pLimits&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{lim_flags}</span><span class="s2">=i</span><span class="si">{axis}</span><span class="s2">24&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.restore_limit_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.restore_limit_flags">[docs]</a>    <span class="k">def</span> <span class="nf">restore_limit_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for restoring all axes limit flags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].pLimits=P</span><span class="si">{lim_flags}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">24=P</span><span class="si">{lim_flags}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.save_position"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.save_position">[docs]</a>    <span class="k">def</span> <span class="nf">save_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for saving all axes positions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;P</span><span class="si">{pos}</span><span class="s2">=Motor[</span><span class="si">{axis}</span><span class="s2">].Pos - Motor[</span><span class="si">{axis}</span><span class="s2">].HomePos&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{pos}</span><span class="s2">=M</span><span class="si">{axis}</span><span class="s2">62&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.clear_limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.clear_limits">[docs]</a>    <span class="k">def</span> <span class="nf">clear_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for clearing all axes limits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].MaxPos=0&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].MinPos=0&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">13=0&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">14=0&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span></div>
+
+<div class="viewcode-block" id="Plc.stop_motors"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.stop_motors">[docs]</a>    <span class="k">def</span> <span class="nf">stop_motors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for stopping all axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;if (Motor[</span><span class="si">{axis}</span><span class="s2">].FeFatal == 0){{</span><span class="se">\n</span><span class="s2">    jog/</span><span class="si">{axis}</span><span class="se">\n</span><span class="s2">}}&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s1">&#39;if (m</span><span class="si">{axis}</span><span class="s1">42=0)</span><span class="se">\n</span><span class="s1">    cmd &quot;#</span><span class="si">{axis}</span><span class="s1">J/&quot;</span><span class="se">\n</span><span class="s1">endif&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plc.are_homed_flags_zero"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.are_homed_flags_zero">[docs]</a>    <span class="k">def</span> <span class="nf">are_homed_flags_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for checking if all axes homed=0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{homed}</span><span class="s2">=0&quot;</span><span class="p">,</span> <span class="s2">&quot; or &quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># use filter to apply this only to the motors of a brick which have macro</span>
+<div class="viewcode-block" id="Plc.are_homed_flags_zero_brick"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.are_homed_flags_zero_brick">[docs]</a>    <span class="k">def</span> <span class="nf">are_homed_flags_zero_brick</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all axes in the plc which have macros: zero the homed flag (brick specific)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: the resulting command string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{homed}</span><span class="s2">=0&quot;</span><span class="p">,</span> <span class="s2">&quot; or &quot;</span><span class="p">,</span> <span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Plc.has_motors_with_macro_brick"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.plc.Plc.has_motors_with_macro_brick">[docs]</a>    <span class="k">def</span> <span class="nf">has_motors_with_macro_brick</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if any of the motors in the plc has macros (brick specific)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: returns true is any of the motors in the plc have defined macro (brick specific)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.7
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>

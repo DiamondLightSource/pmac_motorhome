@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Homing PLC &mdash; pmac_motorhome 1.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Converting to pmac_motorhome.py" href="converting.html" />
+    <link rel="prev" title="Simple Homing PLC" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Custom Homing PLC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/custom.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="custom-homing-plc">
+<h1>Custom Homing PLC<a class="headerlink" href="#custom-homing-plc" title="Permalink to this headline"></a></h1>
+<p>A custom homing PLC can be created by calling snippets defined in
+<a class="reference internal" href="../reference/snippets.html#module-pmac_motorhome.snippets" title="pmac_motorhome.snippets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">snippets()</span></code></a> in the order required in the context
+of a PLC.</p>
+<p>An example is the already defined
+<a class="reference internal" href="../reference/sequences.html#pmac_motorhome.sequences.home_slits_hsw" title="pmac_motorhome.sequences.home_slits_hsw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">home_slits_hsw()</span></code></a> function.</p>
+<p>It takes four motors for its arguments, and drives them all to their limit
+away from the homing direction of the motor.
+Separately, the pair of positive axes are homed using the home switch/mark
+and the then moved out of the way; followed by the pair of negative axes.</p>
+<p>If the home_slits_hsw was not defined already, it could be defined in the
+generate_homing_plcs.py in the following way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pmac_motorhome.commands</span> <span class="kn">import</span> <span class="n">PostHomeMove</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="n">only_axes</span><span class="p">,</span> <span class="n">plc</span>
+<span class="kn">from</span> <span class="nn">pmac_motorhome.sequences</span> <span class="kn">import</span> <span class="n">home_hsw</span>
+<span class="kn">from</span> <span class="nn">pmac_motorhome.snippets</span> <span class="kn">import</span> <span class="n">drive_to_limit</span>
+
+
+<span class="k">def</span> <span class="nf">custom_slits_hsw</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">negx</span><span class="p">,</span> <span class="n">posy</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>
+    <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># drive all slits to limit away from home</span>
+
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">posy</span><span class="p">):</span>  <span class="c1"># home and return to limit only positive slits</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">negx</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>  <span class="c1"># home and return to limit only negative slits</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">plc</span><span class="p">(</span>
+    <span class="n">plc_num</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="s2">&quot;GeoBrick&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;/tmp/PLC12_CUSTOM_SLITS_HM.pmc&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">initial_position</span>
+    <span class="k">with</span> <span class="n">group</span><span class="p">(</span><span class="n">group_num</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">post_home</span><span class="o">=</span><span class="n">initial</span><span class="p">):</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=-</span><span class="mi">400</span><span class="p">)</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=-</span><span class="mi">400</span><span class="p">)</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=-</span><span class="mi">400</span><span class="p">)</span>
+        <span class="n">motor</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">jdist</span><span class="o">=-</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">custom_slits_hsw</span><span class="p">(</span><span class="n">posx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">negx</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">posy</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">negy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example.html" class="btn btn-neutral float-left" title="Simple Homing PLC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="converting.html" class="btn btn-neutral float-right" title="Converting to pmac_motorhome.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.7
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>

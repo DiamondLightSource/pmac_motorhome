@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.sequences &mdash; pmac_motorhome 1.7 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.sequences</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.sequences</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Predefined homing sequences. These functions can all be called directly from</span>
+<span class="sd">`PlcDefinition`</span>
+
+<span class="sd">Call these functions in a group context to</span>
+<span class="sd">perform the sequence on all axes in the group.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.commands</span> <span class="kn">import</span> <span class="n">only_axes</span><span class="p">,</span> <span class="n">post_home</span>
+    <span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">Group</span>
+    <span class="kn">from</span> <span class="nn">.snippets</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">check_homed</span><span class="p">,</span>
+        <span class="n">disable_limits</span><span class="p">,</span>
+        <span class="n">drive_off_home</span><span class="p">,</span>
+        <span class="n">drive_to_home</span><span class="p">,</span>
+        <span class="n">drive_to_hstop</span><span class="p">,</span>
+        <span class="n">drive_to_limit</span><span class="p">,</span>
+        <span class="n">home</span><span class="p">,</span>
+        <span class="n">jog_if_on_limit</span><span class="p">,</span>
+        <span class="n">pre_home_action</span><span class="p">,</span>
+        <span class="n">restore_limits</span><span class="p">,</span>
+        <span class="n">store_position_diff</span><span class="p">,</span>
+        <span class="n">zero_encoders</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="home_rlim"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_rlim">[docs]</a><span class="k">def</span> <span class="nf">home_rlim</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Home on release of a limit</span>
+
+<span class="sd">    This can also be used for homing on a rotary encoder (back of motor)</span>
+<span class="sd">    with an index mark on the rotation: Drive to limit and then home away</span>
+<span class="sd">    from limit to the first index mark.</span>
+
+<span class="sd">    - (Prehome Move) Jog in -hdir until the limit switch is hit</span>
+<span class="sd">    - (Fast Search) Jog in hdir until the limit switch is released</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until the limit switch is hit</span>
+<span class="sd">    - (Home) Home</span>
+
+<span class="sd">    Finally do post home move if any.</span>
+
+<span class="sd">    This example shows homing off the -ve limit with +ve hdir.</span>
+<span class="sd">    E.g. ixx23 = 1, msyy,i912 = 10, msyy,i913 = 2.</span>
+
+<span class="sd">    .. image:: images/RLIM.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># drive in opposite to homing direction until limit hit</span>
+    <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">drive_to_home</span><span class="p">(</span>
+        <span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span>
+    <span class="p">)</span>  <span class="c1"># drive away from limit until it releases</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># drive back onto limit switch</span>
+    <span class="n">home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">zero_encoders</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_hsw"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw">[docs]</a><span class="k">def</span> <span class="nf">home_hsw</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Home on a home switch or index mark.</span>
+
+<span class="sd">    - (Prehome Move) Jog in -hdir until either index/home switch (Figure 1) or</span>
+<span class="sd">      limit switch (Figure 2)</span>
+<span class="sd">    - (Fast Search) Jog in hdir until index/home switch</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until off the index/home switch</span>
+<span class="sd">    - (Home) Home</span>
+
+<span class="sd">    Finally do post home move if any.</span>
+
+<span class="sd">    .. image:: images/HSW.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># drive in opposite to homing direction until home flag or limit hit</span>
+    <span class="n">drive_to_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">drive_to_home</span><span class="p">(</span>
+        <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">()</span>
+    <span class="n">home</span><span class="p">()</span>
+    <span class="n">zero_encoders</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_hsw_hstop"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_hstop">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_hstop</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Home on a home switch or index mark on a stage that has no limit switches.</span>
+
+<span class="sd">    Detection of following error due to hitting the hard stop is taken as the</span>
+<span class="sd">    limit indication.</span>
+
+<span class="sd">    - (Prehome Move) Jog in -hdir until following error - Ixx97 (in-position</span>
+<span class="sd">      trigger mode) set to 3 for this phase.</span>
+<span class="sd">    - (Fast Search) Jog in hdir until index/home switch</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until off the index/home switch</span>
+<span class="sd">    - (Home) Home</span>
+
+<span class="sd">    Finally do post home move if any.</span>
+
+<span class="sd">    The axis must be configured to trigger on home index or home flag</span>
+<span class="sd">    this is used when there are hard stops instead of limit switches</span>
+<span class="sd">    e.g. piezo walker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># drive in opposite to homing direction until home flag or following error</span>
+    <span class="n">drive_to_hstop</span><span class="p">()</span>
+    <span class="n">drive_to_home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">)</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_hsw_dir"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_dir">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_dir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Home on a directional home switch (newport style)</span>
+
+<span class="sd">    - (Prehome Move) Jog in -hdir until off the home switch</span>
+<span class="sd">    - (Fast Search) Jog in hdir until the home switch is hit</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until off the home switch</span>
+<span class="sd">    - (Home) Home</span>
+
+<span class="sd">    Finally do post home move if any.</span>
+
+<span class="sd">    This example shows homing on a directional home switch with -ve hdir.</span>
+<span class="sd">    E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 0.</span>
+
+<span class="sd">    The first figure shows what happens when the axis starts on the home switch.</span>
+<span class="sd">    E.g. Pos = -20000 cts, Index = 0 cts</span>
+
+<span class="sd">    .. image:: images/HSW_DIR.png</span>
+
+<span class="sd">    The second figure shows what happens when the axis starts off the home switch.</span>
+<span class="sd">    E.g. Pos = 20000 cts, Index = 0 cts</span>
+
+<span class="sd">    .. image:: images/HSW_DIR2.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;PreHomeMove&quot;</span><span class="p">)</span>
+    <span class="n">drive_to_home</span><span class="p">(</span>
+        <span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">,</span>
+        <span class="n">restore_homed_flags</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastRetrace&quot;</span><span class="p">)</span>
+    <span class="n">home</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_limit"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_limit">[docs]</a><span class="k">def</span> <span class="nf">home_limit</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Home on a limit switch.</span>
+<span class="sd">    - (Pre Home action) - only added if group pre-home is defined </span>
+<span class="sd">    - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until limit switch deactivates</span>
+<span class="sd">    - (Home) Disable limits and home</span>
+
+<span class="sd">    Finally re-enable limits and do post home move if any.</span>
+
+<span class="sd">    This example shows homing on -ve limit with -ve hdir.</span>
+<span class="sd">    E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 2.</span>
+
+<span class="sd">    .. image:: images/LIMIT.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pre_home_action</span><span class="p">()</span>
+    <span class="n">drive_to_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">)</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">with_limits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">disable_limits</span><span class="p">()</span>
+    <span class="n">home</span><span class="p">()</span>
+    <span class="n">restore_limits</span><span class="p">()</span>
+    <span class="n">zero_encoders</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_hsw_hlim"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_hsw_hlim">[docs]</a><span class="k">def</span> <span class="nf">home_hsw_hlim</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Home on a home switch or index mark near the limit switch in hdir.</span>
+
+<span class="sd">    - (Prehome Move) Jog in hdir until either index/home switch (Figure 1) or</span>
+<span class="sd">      limit switch (Figure 2)</span>
+<span class="sd">    - If limit switch hit, jog in -hdir until index/home switch</span>
+<span class="sd">    - (Fast Search) Jog in hdir until index/home switch</span>
+<span class="sd">    - (Fast Retrace) Jog in -hdir until off the index/home switch</span>
+<span class="sd">    - (Home) Home</span>
+
+<span class="sd">    Finally do post home move if any.</span>
+
+<span class="sd">    **NOTE:** if using a reference mark, set jdist as described under</span>
+<span class="sd">    :py:meth:`~pmac_motorhome.commands.group`</span>
+
+<span class="sd">    This example shows homing on an index with -ve hdir and +ve jdist.</span>
+<span class="sd">    E.g. ixx23 = -1, msyy,i912 = 1, jdist = 1000.</span>
+
+<span class="sd">    The first figure shows what happens when the index is in hdir of the</span>
+<span class="sd">    starting position. E.g. Pos = 20000 cts, Index = 0 cts</span>
+
+<span class="sd">    .. image:: images/HSW_HLIM.png</span>
+
+<span class="sd">    The second figure shows what happens when the index is in -hdir of the</span>
+
+<span class="sd">    .. image:: images/HSW_HLIM2.png</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">drive_to_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">jog_if_on_limit</span><span class="p">()</span>
+    <span class="n">drive_to_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastSearch&quot;</span><span class="p">,</span> <span class="n">with_limits</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">store_position_diff</span><span class="p">()</span>
+    <span class="n">drive_off_home</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;FastRetrace&quot;</span><span class="p">)</span>
+    <span class="n">home</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_home"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_home">[docs]</a><span class="k">def</span> <span class="nf">home_home</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dumb home, shouldn&#39;t be needed - just executes HM command on all axes</span>
+<span class="sd">    in the group</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pre_home_action</span><span class="p">()</span>
+    <span class="n">home</span><span class="p">()</span>
+    <span class="n">check_homed</span><span class="p">()</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="home_nothing"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_nothing">[docs]</a><span class="k">def</span> <span class="nf">home_nothing</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NOTHING</span>
+
+<span class="sd">    Simply goes through to post home move without homing or changing home status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO review why this reference to Group is required</span>
+    <span class="n">Group</span><span class="o">.</span><span class="n">the_group</span><span class="o">.</span><span class="n">htype</span> <span class="o">=</span> <span class="s2">&quot;NOTHING&quot;</span>
+    <span class="n">post_home</span><span class="p">()</span></div>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># functions for some common motor combinations</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="home_slits_hsw"><a class="viewcode-back" href="../../reference/sequences.html#pmac_motorhome.sequences.home_slits_hsw">[docs]</a><span class="k">def</span> <span class="nf">home_slits_hsw</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">negx</span><span class="p">,</span> <span class="n">posy</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A special seqence for two pairs of slits in which the vertical and horizontal</span>
+<span class="sd">    pairs may collide with each other at the extreme of their homing direction.</span>
+
+<span class="sd">    - move all axes to the limit away from their homing direction</span>
+<span class="sd">    - home both positive axes using home switch or mark</span>
+<span class="sd">    - move the positive axes out of the way</span>
+<span class="sd">    - home both negative axes using home switch or mark</span>
+<span class="sd">    - move the negative axes out of the way</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        posx (int): axis number of the positive horizontal motor</span>
+<span class="sd">        negx (int): axis number of the negative horizontal motor</span>
+<span class="sd">        posy (int): axis number of the positive vertical motor</span>
+<span class="sd">        negy (int): axis number of the negative vertical motor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">posx</span><span class="p">,</span> <span class="n">posy</span><span class="p">):</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">only_axes</span><span class="p">(</span><span class="n">negx</span><span class="p">,</span> <span class="n">negy</span><span class="p">):</span>
+        <span class="n">home_hsw</span><span class="p">()</span>
+        <span class="n">drive_to_limit</span><span class="p">(</span><span class="n">homing_direction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.7
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>
