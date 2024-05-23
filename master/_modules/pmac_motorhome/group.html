@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmac_motorhome.group &mdash; pmac_motorhome 1.0+95.ga004052 documentation</title>
+  <title>pmac_motorhome.group &mdash; pmac_motorhome 1.5+3.g9042c58 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -219,13 +219,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
         <span class="n">enc_axes</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="s2">&quot;//&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">encoders</span><span class="p">)</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">enc_axes</span> <span class="o">=</span> <span class="s2">&quot;, enc_axes = </span><span class="si">{enc}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enc</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">encoders</span><span class="p">)</span>
 
             
         <span class="n">group</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="sa">f</span><span class="s2">&quot;;  Axis </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="si">}</span><span class="s2">: htype = </span><span class="si">{</span><span class="n">htype</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line_start</span><span class="si">}</span><span class="s2">  Axis </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="si">}</span><span class="s2">: htype = </span><span class="si">{</span><span class="n">htype</span><span class="si">}</span><span class="s2">, &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;jdist = </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">jdist</span><span class="si">}</span><span class="s2">, post = </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">post_home_with_distance</span><span class="si">}</span><span class="s2">&quot;</span> 
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">enc_axes</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">motors</span>
@@ -441,7 +445,7 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
             <span class="n">pbrickVar</span> <span class="o">=</span> <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].InPos&quot;</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">relOperator</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">operator</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">relOperator</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;|| &quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">40&quot;</span><span class="p">,</span> <span class="n">operator</span><span class="p">)</span></div>
 
