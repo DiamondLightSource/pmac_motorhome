@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Converting to pmac_motorhome.py &mdash; pmac_motorhome 1.6 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Adding Functionality" href="../how-to/modifying.html" />
+    <link rel="prev" title="Custom Homing PLC" href="custom.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Converting to pmac_motorhome.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conversion">Conversion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Converting to pmac_motorhome.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/converting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="converting-to-pmac-motorhome-py">
+<h1>Converting to pmac_motorhome.py<a class="headerlink" href="#converting-to-pmac-motorhome-py" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>This section gives details for converting from the old DLS homing PLC
+generator that came in the support module pmacUtil which provided
+additional features to the turbo pmac support in tpmac.</p>
+<p>Users of pmac support module only can ignore this section</p>
+</section>
+<section id="conversion">
+<h2>Conversion<a class="headerlink" href="#conversion" title="Permalink to this headline"></a></h2>
+<p>To convert the plc generating python script (typically named
+generate_homing_plcs.py) from using the motorhome.py module to using the
+pmac_motorhome.py module, a conversion tool is available.</p>
+<p>The command homing_convert can be used to convert either a single v1.0 homing
+PLC generator script, or scan a DLS motion area for homing PLC generator scripts
+to convert. Using the ‘motion’ command is encouraged, especially for the case
+of generator scripts for individual motion controllers.</p>
+<p>The process will create two copies of the motion area given as one of the ARGS,
+in the /tmp directory of your machine; an old_motion and a new_motion.
+The old_motion directory will contain generated PLCs from the original generator
+script, and the new_motion directory from the converted generator script.</p>
+<p>A comparison between the generated PLCs is performed, and any discrepancies
+are summarised and a meld command is provided to inspect the differences.</p>
+<p>At this point, no changes are made to the original motion area.
+To complete the conversion step, use the provided command to replace the old
+generator script with the new one.</p>
+<p>An example use of the homing_convert command is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>xfz39520@ws306:motion$ homing_convert motion BL23I/Settings
+07-29-21 19:02:51 INFO     trying homing conversion for BL23I/Settings in /tmp/motorhome48265
+07-29-21 19:03:00 INFO     generating: /tmp/motorhome48265/new_motion/motorhome.py
+07-29-21 19:03:33 INFO     verifying matches ...
+07-29-21 19:03:33 WARNING  Failure: 1 of 20 PLC files do not match for /dls_sw/work/xfz39520/motion/BL23I/Settings
+review differences with:
+meld /tmp/motorhome48265/old_motion /tmp/motorhome48265/new_motion
+
+07-29-21 19:03:33 INFO     The following PLCs did not match the originals:
+/tmp/motorhome48265/old_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc /tmp/motorhome48265/new_motion/BL23I-MO-STEP-99/PLCs/PLC10_ARVINDER_HM.pmc
+
+07-29-21 19:03:33 WARNING  To copy the new generating script, use the following command:
+mv /tmp/motorhome48265/new_motion/motorhome.py /dls_sw/work/xfz39520/motion/BL23I/Settings/configure/motorhome.py
+
+1 of 20 PLC files do not match for/dls_sw/work/xfz39520/motion/BL23I/Settings
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="custom.html" class="btn btn-neutral float-left" title="Custom Homing PLC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../how-to/modifying.html" class="btn btn-neutral float-right" title="Adding Functionality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.6
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>

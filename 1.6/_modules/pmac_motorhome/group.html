@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pmac_motorhome.group &mdash; pmac_motorhome 1.6 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/dls-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: rgb(7, 43, 93)" >
+            <a href="../../index.html" class="icon icon-home"> pmac_motorhome
+            <img src="../../_static/dls-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/example.html">Simple Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/custom.html">Custom Homing PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/converting.html">Converting to pmac_motorhome.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How-to Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how-to/modifying.html">Adding Functionality</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Explanations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/implementation.html">How it Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/epics.html">Control System Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/history.html">History of motor home</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/external.html">User API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/internal.html">Internal Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: rgb(7, 43, 93)" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pmac_motorhome</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>pmac_motorhome.group</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pmac_motorhome.group</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">xmlrpc.client</span> <span class="kn">import</span> <span class="n">Boolean</span>  <span class="c1"># , Optional</span>
+
+<span class="kn">from</span> <span class="nn">pmac_motorhome.constants</span> <span class="kn">import</span> <span class="n">ControllerType</span><span class="p">,</span> <span class="n">PostHomeMove</span>
+
+<span class="kn">from</span> <span class="nn">.motor</span> <span class="kn">import</span> <span class="n">Motor</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">Template</span>
+
+
+<div class="viewcode-block" id="Group"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group">[docs]</a><span class="k">class</span> <span class="nc">Group</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines a group of axes to be homed as a unit</span>
+
+<span class="sd">    Should always be instantiated using `pmac_motorhome.commands.group`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># this class variable holds the instance in the current context</span>
+    <span class="n">the_group</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group_num</span><span class="p">,</span>
+        <span class="n">plc_num</span><span class="p">,</span>
+        <span class="n">controller</span><span class="p">,</span>
+        <span class="n">post_home</span><span class="p">:</span> <span class="n">PostHomeMove</span> <span class="o">=</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">,</span>
+        <span class="n">post_distance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">pre</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">post</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            group_num (int): A unique number to represent this group within its</span>
+<span class="sd">                Plc. group 1 is reservered for &#39;all groups&#39;</span>
+<span class="sd">            axes (List[Motor]): A list of axis numbers that this group will control</span>
+<span class="sd">            plc_num (int): The plc number of the enclosing Plc</span>
+<span class="sd">            controller (ControllerType): Enum representing the type of motor controller</span>
+<span class="sd">            post_home (PostHomeMove): action to perform on all axes after the home sequence completes</span>
+<span class="sd">            post_distance (int): A distance to use in post_home if required</span>
+<span class="sd">            comment (str): [description]. A comment to place in the output Plc code</span>
+<span class="sd">                at the beginning of this group&#39;s definition</span>
+<span class="sd">            pre (str): some raw PLC code to insert at the start of a group</span>
+<span class="sd">            post(str): some raw PLC code to insert at the end of a group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">motors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_encoders</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_home</span> <span class="o">=</span> <span class="n">post_home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_distance</span> <span class="o">=</span> <span class="n">post_distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plc_num</span> <span class="o">=</span> <span class="n">plc_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">=</span> <span class="n">group_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">templates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">htype</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="n">pre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="n">post</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Entering a context. Store the Group object for use in the scope of</span>
+<span class="sd">        this context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">Group</span><span class="o">.</span><span class="n">the_group</span><span class="p">,</span> <span class="s2">&quot;cannot create a new Group within a Group context&quot;</span>
+        <span class="n">Group</span><span class="o">.</span><span class="n">the_group</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exiting the context. Clear the Group object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Group</span><span class="o">.</span><span class="n">the_group</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Group.add_motor"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.add_motor">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">jdist</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">post_home</span><span class="p">:</span><span class="n">PostHomeMove</span><span class="p">,</span> <span class="n">post_distance</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">enc_axes</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">ms</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Motor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a new motor to the current group</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axis (int): Axis number</span>
+<span class="sd">            jdist (int): distance to jog to move off of home mark</span>
+<span class="sd">            index (int): internal use</span>
+<span class="sd">            post_home (PostHomeMove): action to perform on all axes after the home sequence completes</span>
+<span class="sd">            post_distance (int): A distance to use in post_home if required</span>
+<span class="sd">            enc_axes (list): List of additional encoders that need zeroing on homing</span>
+<span class="sd">                completion</span>
+<span class="sd">            ms (int): macrostation number</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Motor: The newly created Motor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">axis</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">motors</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;motor </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> already defined in group </span><span class="si">{</span><span class="n">group</span><span class="o">.</span><span class="n">plc_num</span><span class="si">}</span><span class="s2">&quot;</span>
+        
+        <span class="k">if</span> <span class="n">post_home</span> <span class="ow">is</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span><span class="p">:</span> <span class="c1"># use the group post home if it exists </span>
+            <span class="n">post_home</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">post_home</span>
+        <span class="k">if</span> <span class="n">post_distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">post_distance</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">post_distance</span>
+        <span class="n">motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="o">.</span><span class="n">get_motor</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">jdist</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">plc_num</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">post_home</span><span class="o">=</span><span class="n">post_home</span><span class="p">,</span> <span class="n">post_distance</span><span class="o">=</span><span class="n">post_distance</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">motors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span>
+
+        <span class="n">group</span><span class="o">.</span><span class="n">encoders</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">encoders</span> <span class="o">+</span> <span class="n">enc_axes</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">encoders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">has_encoders</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">group</span><span class="o">.</span><span class="n">all_motors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">motor</span></div>
+
+<div class="viewcode-block" id="Group.instance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.instance">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instance</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Group&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the current in-scope Group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">cls</span><span class="o">.</span><span class="n">the_group</span><span class="p">,</span> <span class="s2">&quot;There is no group context currently defined&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">the_group</span></div>
+
+<div class="viewcode-block" id="Group.add_comment"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.add_comment">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">htype</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a group comment to the top of the Plc code in the style of the original</span>
+<span class="sd">        motorhome.py module but note that you can use any descriptive text</span>
+<span class="sd">        for htype</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            htype (str): Homing sequence type e.g. RLIM HSW etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">enc_axes</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="s2">&quot;//&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">encoders</span><span class="p">)</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">enc_axes</span> <span class="o">=</span> <span class="s2">&quot;, enc_axes = </span><span class="si">{enc}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enc</span><span class="o">=</span><span class="n">group</span><span class="o">.</span><span class="n">encoders</span><span class="p">)</span>
+
+            
+        <span class="n">group</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line_start</span><span class="si">}</span><span class="s2">  Axis </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="si">}</span><span class="s2">: htype = </span><span class="si">{</span><span class="n">htype</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;jdist = </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">jdist</span><span class="si">}</span><span class="s2">, post = </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">post_home_with_distance</span><span class="si">}</span><span class="s2">&quot;</span> 
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">enc_axes</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">motors</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.add_snippet"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.add_snippet">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_snippet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">template_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a jinja snippet to the list of snippets to be rendered</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template_name (str): prefix of the jinja template&#39;s filename</span>
+<span class="sd">                &#39;.pmc.jinja&#39; is added to this name and the template file</span>
+<span class="sd">                should be in pmac_motorhome/snippets</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">templates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">Template</span><span class="p">(</span><span class="n">jinja_file</span><span class="o">=</span><span class="n">template_name</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.add_action"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.add_action">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_action</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a callback to the list of &#39;snippets&#39; to be rendered The callback</span>
+<span class="sd">        function should return an string to be inserted into the rendered</span>
+<span class="sd">        template</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            func (Callable): the function to call</span>
+<span class="sd">            args (dict): arguments to pass to func</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">templates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Template</span><span class="p">(</span><span class="n">jinja_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">))</span></div>
+
+    <span class="c1"># TODO maybe use *axes here for clarity in calls from Jinja</span>
+<div class="viewcode-block" id="Group.set_axis_filter"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.set_axis_filter">[docs]</a>    <span class="k">def</span> <span class="nf">set_axis_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A callback function to set group actions to only act on a subset of the</span>
+<span class="sd">        group&#39;s axes.</span>
+
+<span class="sd">        Will be called back during the rendering of plc.pmc.jinja, and is inserted</span>
+<span class="sd">        using Group.add_action()</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axes (List[int]): List of axis numbers to be controlled in this context</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Blank string. Required because this function is used as a callback</span>
+<span class="sd">                from a jinja template and thus must return some string to insert into</span>
+<span class="sd">                the template</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">axes</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="c1"># reset the axis filter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">motors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">motors</span> <span class="o">=</span> <span class="p">[</span><span class="n">motor</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span> <span class="k">if</span> <span class="n">motor</span><span class="o">.</span><span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">),</span> <span class="s2">&quot;set_axis_filter: invalid axis number&quot;</span>
+            <span class="c1"># callback functions must return a string since we call them with</span>
+            <span class="c1"># {{- group.callback(template.function, template.args) -}} from jinja</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+    
+<div class="viewcode-block" id="Group.all_motors_have_same_post_move_type"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.all_motors_have_same_post_move_type">[docs]</a>    <span class="k">def</span> <span class="nf">all_motors_have_same_post_move_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">PostHomeMove</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Check that all motors in the group have the same post move type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">first_motor_post_home</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">post_home</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">motor</span><span class="o">.</span><span class="n">post_home</span> <span class="o">==</span> <span class="n">first_motor_post_home</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_motors</span><span class="p">),</span> <span class="n">first_motor_post_home</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">PostHomeMove</span><span class="o">.</span><span class="n">none</span></div>
+            
+
+<div class="viewcode-block" id="Group.command"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.command">[docs]</a>    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A callback function to insert arbitrarty text into the ouput Plc code.</span>
+
+<span class="sd">        Will be called back during the rendering of plc.pmc.jinja, and is inserted</span>
+<span class="sd">        using Group.add_action()</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cmd (str): Any string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: the passed string (for jinja rendering)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cmd</span></div>
+
+    <span class="k">def</span> <span class="nf">_all_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="n">filter_function</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A helper function that generates a command line by applying each of Motor</span>
+<span class="sd">        in the group as a parameter to the format string and the concatenating all of</span>
+<span class="sd">        the results with a separator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            format (str): The format string to apply, passing each Motor in the group</span>
+<span class="sd">                as its arguments</span>
+<span class="sd">            separator (str): Separator that goes between the formatted string for each</span>
+<span class="sd">                axis</span>
+<span class="sd">            arg ([Any]): additional arguments to pass to the format string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The resulting command string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># to the string format: pass any extra arguments first, then the dictionary</span>
+        <span class="c1"># of the axis object so its elements can be addressed by name</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">motors</span>
+        <span class="k">if</span> <span class="n">filter_function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">motors</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">filter_function</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="p">)</span>
+        
+        <span class="nb">all</span> <span class="o">=</span> <span class="p">[</span><span class="nb">format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">ax</span><span class="o">.</span><span class="n">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">all</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_all_encoders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A helper function that generates a command line by applying each of every</span>
+<span class="sd">        element in enc_axes of each Motor in the group as a parameter to the format</span>
+<span class="sd">        string and the concatenating all of the results with a separator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            format (str): The format string to apply, passing each Motor in the group</span>
+<span class="sd">                as its arguments</span>
+<span class="sd">            separator (str): Separator that goes between the formatted string for each</span>
+<span class="sd">                axis</span>
+<span class="sd">            arg ([Any]): additional arguments to pass to the format string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The resulting command string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># to the string format: pass any extra arguments first, then the dictionary</span>
+        <span class="c1"># of the axis object so its elements can be addressed by name</span>
+
+        <span class="nb">all</span> <span class="o">=</span> <span class="p">[</span><span class="nb">format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="n">enc_axis</span><span class="o">=</span><span class="n">enc</span><span class="p">)</span> <span class="k">for</span> <span class="n">enc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoders</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">all</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Group.callback"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.callback">[docs]</a>    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback from plc.pmc.jinja to a function that was added into the group</span>
+<span class="sd">        using :func:`~Group.add_action`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            function (Callable): the function to call</span>
+<span class="sd">            args (Dict[str, Any]): arguments to pass to function</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The string to insert into the PLC output file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span></div>
+
+    <span class="c1">########################################################################</span>
+    <span class="c1"># The following functions are callbacks from the jinja templates they</span>
+    <span class="c1"># are called with {{- group.function_name(template.args) -}} from jinja</span>
+    <span class="c1">#</span>
+    <span class="c1"># The are presently Turbo PMAC specific</span>
+    <span class="c1">########################################################################</span>
+
+<div class="viewcode-block" id="Group.jog_stopped"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog_stopped">[docs]</a>    <span class="k">def</span> <span class="nf">jog_stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string that will jog any stopped axes in the group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;if (Motor[</span><span class="si">{axis}</span><span class="s2">].InPos == 1){</span><span class="se">\n</span><span class="s2">    jog</span><span class="si">{axis}</span><span class="s2">^*</span><span class="se">\n</span><span class="s2">}&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;if (m</span><span class="si">{axis}</span><span class="s1">40=1)</span><span class="se">\n</span><span class="s1">    cmd &quot;#</span><span class="si">{axis}</span><span class="s1">J^*&quot;</span><span class="se">\n</span><span class="s1">endif&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.jog_axes"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog_axes">[docs]</a>    <span class="k">def</span> <span class="nf">jog_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: jog a set distance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;jog</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{axis}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">^*&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">J^*&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.set_large_jog_distance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.set_large_jog_distance">[docs]</a>    <span class="k">def</span> <span class="nf">set_large_jog_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">homing_direction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: set large jog distance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">sign</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">homing_direction</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].ProgJogPos=100000000*(</span><span class="si">{0}</span><span class="s2">Motor[</span><span class="si">{axis}</span><span class="s2">].HomeVel/&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;ABS(Motor[</span><span class="si">{axis}</span><span class="s2">].HomeVel))&quot;</span><span class="p">,</span>
+                <span class="s2">&quot; &quot;</span><span class="p">,</span>
+                <span class="n">sign</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sign</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">homing_direction</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">72=100000000*(</span><span class="si">{0}</span><span class="s2">i</span><span class="si">{axis}</span><span class="s2">23/ABS(i</span><span class="si">{axis}</span><span class="s2">23))&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sign</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.jog"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog">[docs]</a>    <span class="k">def</span> <span class="nf">jog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">homing_direction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: jog indefinitely</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span> <span class="k">if</span> <span class="n">homing_direction</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;jog</span><span class="si">{</span><span class="n">sign</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{axis}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">J</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sign</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.in_pos"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.in_pos">[docs]</a>    <span class="k">def</span> <span class="nf">in_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="n">relOperator</span><span class="o">=</span><span class="s2">&quot;==&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: check in postiion</span>
+<span class="sd">        relOperator (relationalOperator) is required for power pmac based</span>
+<span class="sd">        controllers as each variable needs to be evaluated separately</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">pbrickVar</span> <span class="o">=</span> <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].InPos&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">relOperator</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;|| &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">40&quot;</span><span class="p">,</span> <span class="n">operator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.limits"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.limits">[docs]</a>    <span class="k">def</span> <span class="nf">limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relOperator</span><span class="o">=</span><span class="s2">&quot;!=&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: check limits</span>
+<span class="sd">        relOperator (relationalOperator) is required for power pmac based</span>
+<span class="sd">        controllers as each variable needs to be evaluated separately</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">pbrickVar</span> <span class="o">=</span> <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].LimitStop&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">relOperator</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;|| &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">30&quot;</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.following_err"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.following_err">[docs]</a>    <span class="k">def</span> <span class="nf">following_err</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relOperator</span><span class="o">=</span><span class="s2">&quot;==&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: check following error</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">pbrickVar</span> <span class="o">=</span> <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].FeFatal&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">relOperator</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;|| &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">42&quot;</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.homed"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.homed">[docs]</a>    <span class="k">def</span> <span class="nf">homed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: check homed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="n">pbrickVar</span> <span class="o">=</span> <span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].HomeComplete == &quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pbrickVar</span><span class="si">}{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;&amp; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">45&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.clear_home"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.clear_home">[docs]</a>    <span class="k">def</span> <span class="nf">clear_home</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: clear home flag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;// Can&#39;t clear home on PBRICK&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">45=0&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.store_position_diff"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.store_position_diff">[docs]</a>    <span class="k">def</span> <span class="nf">store_position_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: save position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;P</span><span class="si">{pos}</span><span class="s2">=(P</span><span class="si">{pos}</span><span class="s2"> - (Motor[</span><span class="si">{axis}</span><span class="s2">].Pos - Motor[</span><span class="si">{axis}</span><span class="s2">].HomePos))&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot; + </span><span class="si">{jdist}</span><span class="s2"> - Motor[</span><span class="si">{axis}</span><span class="s2">].HomeOffset&quot;</span><span class="p">,</span>
+                <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">        &quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;P</span><span class="si">{pos}</span><span class="s2">=(P</span><span class="si">{pos}</span><span class="s2">-M</span><span class="si">{axis}</span><span class="s2">62)/(I</span><span class="si">{axis}</span><span class="s2">08*32)+</span><span class="si">{jdist}</span><span class="s2">-(i</span><span class="si">{axis}</span><span class="s2">26/16)&quot;</span><span class="p">,</span>
+                <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">        &quot;</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.stored_pos_to_jogdistance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.stored_pos_to_jogdistance">[docs]</a>    <span class="k">def</span> <span class="nf">stored_pos_to_jogdistance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: calculate jog distance</span>
+<span class="sd">        to return to pre homed position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].ProgJogPos=P</span><span class="si">{pos}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">72=P</span><span class="si">{pos}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.stored_limit_to_jogdistance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.stored_limit_to_jogdistance">[docs]</a>    <span class="k">def</span> <span class="nf">stored_limit_to_jogdistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">homing_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: save distance to limit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">homing_direction</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].ProgJogPos=P</span><span class="si">{hi_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].ProgJogPos=P</span><span class="si">{lo_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">homing_direction</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">72=P</span><span class="si">{hi_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;m</span><span class="si">{axis}</span><span class="s2">72=P</span><span class="si">{lo_lim}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.jog_distance"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog_distance">[docs]</a>    <span class="k">def</span> <span class="nf">jog_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: jog to prejog position.</span>
+<span class="sd">        Useful if a program has been aborted in the middle of a move, because it</span>
+<span class="sd">        will move the motor to the programmed move end position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;jog</span><span class="si">{axis}</span><span class="s2">=</span><span class="si">{post_distance}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">J=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{post_distance}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.negate_home_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.negate_home_flags">[docs]</a>    <span class="k">def</span> <span class="nf">negate_home_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: invert homing flags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pmac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station}</span><span class="s2">,i912,P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{pb_homed_flag}</span><span class="s2">=P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">brick</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_motors_with_macro_brick</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station_brick}</span><span class="s2">,i912,P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_without_macro</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.restore_home_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.restore_home_flags">[docs]</a>    <span class="k">def</span> <span class="nf">restore_home_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: restore original homing flags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pmac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{pb_homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">brick</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_motors_with_macro_brick</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSW</span><span class="si">{macro_station_brick}</span><span class="s2">,i912,P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_without_macro</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{homed_flag}</span><span class="s2">=P</span><span class="si">{homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.jog_to_home_jdist"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.jog_to_home_jdist">[docs]</a>    <span class="k">def</span> <span class="nf">jog_to_home_jdist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: jog to home and then move jdist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;jog</span><span class="si">{axis}</span><span class="s2">^*^</span><span class="si">{jdist}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">J^*^</span><span class="si">{jdist}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.home"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.home">[docs]</a>    <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: home command</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;home</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{axis}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">hm&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.set_home"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.set_home">[docs]</a>    <span class="k">def</span> <span class="nf">set_home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoder</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: set current position as home</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">encoder</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;homez</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_encoders</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{enc_axis}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_encoders</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{enc_axis}</span><span class="s2">hmz&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;homez</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{axis}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">{axis}</span><span class="s2">hmz&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.restore_limit_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.restore_limit_flags">[docs]</a>    <span class="k">def</span> <span class="nf">restore_limit_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: restore original limit flags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;Motor[</span><span class="si">{axis}</span><span class="s2">].pLimits=P</span><span class="si">{lim_flags}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;i</span><span class="si">{axis}</span><span class="s2">24=P</span><span class="si">{lim_flags}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.overwrite_inverse_flags"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.overwrite_inverse_flags">[docs]</a>    <span class="k">def</span> <span class="nf">overwrite_inverse_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: reuse the not homed store to</span>
+<span class="sd">        store ?? (TODO what is this doing ?)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># meow</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pmac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSR</span><span class="si">{macro_station}</span><span class="s2">,i913,P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">==</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{not_homed}</span><span class="s2">=</span><span class="si">{pb_inverse_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">brick</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_motors_with_macro_brick</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;MSR</span><span class="si">{macro_station_brick}</span><span class="s2">,i912,P</span><span class="si">{not_homed}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{not_homed}</span><span class="s2">=i</span><span class="si">{inverse_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span><span class="n">filter_function</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_without_macro</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;P</span><span class="si">{not_homed}</span><span class="s2">=i</span><span class="si">{inverse_flag}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Group.set_inpos_trigger"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.set_inpos_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">set_inpos_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a command string for all group axes: set the inpos trigger ixx97</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;I</span><span class="si">{axis}</span><span class="s2">97 = </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Group.filter_motors_with_macro"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.filter_motors_with_macro">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">filter_motors_with_macro</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Check if motor (on a brick) has macro.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            motor (Motor): motor being checked</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: true if the motor has macro (brick only)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">motor</span><span class="o">.</span><span class="n">has_macro_station_brick</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="Group.filter_motors_without_macro"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.filter_motors_without_macro">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">filter_motors_without_macro</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Check if motor (on a brick) doesn&#39;t have a  macro.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            motor (Motor): motor being checked</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: true if the motor doesn&#39;t have macro (brick only)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">motor</span><span class="o">.</span><span class="n">has_macro_station_brick</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Group.has_motors_with_macro_brick"><a class="viewcode-back" href="../../reference/internal.html#pmac_motorhome.group.Group.has_motors_with_macro_brick">[docs]</a>    <span class="k">def</span> <span class="nf">has_motors_with_macro_brick</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if any of the motors in the group has macros (brick specific)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: returns true is any of the motors in the group have defined macro (brick specific)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">filter_motors_with_macro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">motors</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+   
+  <div id="other-versions-div" class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions" style="visibility: hidden">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Other Versions</span>
+      1.6
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl id="other-versions-dl"/>
+    </div>
+  </div>
+  <script>
+    function addVersion(name) {
+      var dd = document.createElement("dd");
+      var a = document.createElement("a");
+      a.href = "../../../" + name;
+      a.innerText = name;
+      dd.appendChild(a);
+      document.getElementById('other-versions-dl').appendChild(dd);
+    }
+    // Get versions.txt and add a version for each line
+    fetch("../../../versions.txt").then(response => {
+      if (response.ok) {
+        document.getElementById('other-versions-div').style.visibility = "visible";
+        return response.text().then(text => text.split(/\r?\n/).forEach(addVersion))
+      }
+    });
+  </script>
+
+
+</body>
+</html>
