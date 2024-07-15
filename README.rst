@@ -8,8 +8,8 @@ script
 
 ============== ==============================================================
 PyPI           ``pip install pmac_motorhome``
-Source code    https://github.com/dls-controls/pmac_motorhome
-Documentation  https://dls-controls.github.io/pmac_motorhome
+Source code    https://github.com/DiamondLightSource/pmac_motorhome
+Documentation  https://DiamondLightSource.github.io/pmac_motorhome
 ============== ==============================================================
 
 This is where you should put some images or code snippets that illustrate
@@ -28,16 +28,16 @@ Or if it is a commandline tool then you might put some example commands here::
     pmac_motorhome person --times=2
 
 
-.. |code_ci| image:: https://github.com/dls-controls/pmac_motorhome/workflows/Code%20CI/badge.svg?branch=master
-    :target: https://github.com/dls-controls/pmac_motorhome/actions?query=workflow%3A%22Code+CI%22
+.. |code_ci| image:: https://github.com/DiamondLightSource/pmac_motorhome/workflows/Code%20CI/badge.svg?branch=master
+    :target: https://github.com/DiamondLightSource/pmac_motorhome/actions?query=workflow%3A%22Code+CI%22
     :alt: Code CI
 
-.. |docs_ci| image:: https://github.com/dls-controls/pmac_motorhome/workflows/Docs%20CI/badge.svg?branch=master
-    :target: https://github.com/dls-controls/pmac_motorhome/actions?query=workflow%3A%22Docs+CI%22
+.. |docs_ci| image:: https://github.com/DiamondLightSource/pmac_motorhome/workflows/Docs%20CI/badge.svg?branch=master
+    :target: https://github.com/DiamondLightSource/pmac_motorhome/actions?query=workflow%3A%22Docs+CI%22
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/dls-controls/pmac_motorhome/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/dls-controls/pmac_motorhome
+.. |coverage| image:: https://codecov.io/gh/DiamondLightSource/pmac_motorhome/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/DiamondLightSource/pmac_motorhome
     :alt: Test Coverage
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/pmac_motorhome.svg
@@ -52,4 +52,4 @@ Or if it is a commandline tool then you might put some example commands here::
     Anything below this line is used when viewing README.rst and will be replaced
     when included in index.rst
 
-See https://dls-controls.github.io/pmac_motorhome for more detailed documentation.
+See https://DiamondLightSource.github.io/pmac_motorhome for more detailed documentation.
