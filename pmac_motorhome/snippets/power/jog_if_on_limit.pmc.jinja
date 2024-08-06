@@ -13,7 +13,7 @@
         // Wait for the move to complete
         CALL DelayTimer.msec(20)
         Sys.CdTimer[{{plc.plc_num}}]={{ plc.timeout}} // Now start checking the conditions
-        while (({{ group.in_pos(operator="&& ", relOperator="==", value=0) }}) && ({{ group.following_err(relOperator="==", value=0) }}) && ({{ group.limits(relOperator="==", value=0) }}) && (Sys.CdTimer[{{plc.plc_num}}] > 0) && (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming || PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming)){ 
+        while (({{ group.in_pos(operator="&& ", relOperator="==", value=0) }}) && ({{ group.following_err(relOperator="==", value=0) }}) && ({{ group.limits(relOperator="==", value=0) }}) && (Sys.CdTimer[{{plc.plc_num}}] > 0) && (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming || PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming)){
         }
         // Check why we left the while loop
         if ({{ group.following_err(relOperator="!=", value=0) }}){ // Following error check failed

@@ -56,7 +56,7 @@ PLC{{plc.plc_num}}_HomingGroup = 0
 #define PLC{{plc.plc_num}}_HomingBackupGroup P{{plc.plc_num}}03
 PLC{{plc.plc_num}}_HomingBackupGroup = 0
 
-open plc {{ plc.plc_num }} 
+open plc {{ plc.plc_num }}
 
 if (PLC{{plc.plc_num}}_HomingStatus != PLC{{plc.plc_num}}_StatusHoming && PLC{{plc.plc_num}}_HomingStatus != PLC{{plc.plc_num}}_StatusDebugHoming){
     PLC{{plc.plc_num}}_HomingStatus = PLC{{plc.plc_num}}_StatusHoming
