@@ -11,7 +11,7 @@
 
         // continue processing until all motors are homed or something goes wrong
         Sys.CdTimer[{{plc.plc_num}}]={{ plc.timeout}}
-        while ({{group.homed(value=0)}}) && ({{group.following_err(relOperator="==", value=0)}}) && ({{group.in_pos(operator="&& ", relOperator="==", value=0)}}) && (Sys.CdTimer[{{plc.plc_num}}] > 0){ 
+        while (({{group.homed()}}) == 0) && ({{group.following_err(relOperator="==", value=0)}}) && ({{group.in_pos(operator="&& ", relOperator="==", value=0)}}) && (Sys.CdTimer[{{plc.plc_num}}] > 0){ 
             // jog any motors that have stopped on home
             {% filter indent(width=12) %}
             {{ group.jog_stopped() }}

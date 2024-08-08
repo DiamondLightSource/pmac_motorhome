@@ -392,15 +392,15 @@ class Group:
         else:
             return self._all_axes("m{axis}42", "|")
 
-    def homed(self, value=0) -> str:
+    def homed(self, operator="&") -> str:
         """
         Generate a command string for all group axes: check homed
         """
         if self.controller is ControllerType.pbrick:
-            pbrickVar = "Motor[{axis}].HomeComplete == "
-            return self._all_axes(f"{pbrickVar}{value} ", "&& ")
+            pbrickVar = "Motor[{axis}].HomeComplete"
+            return self._all_axes(f"{pbrickVar}", operator)
         else:
-            return self._all_axes("m{axis}45", "&")
+            return self._all_axes("m{axis}45", operator)
 
     def clear_home(self) -> str:
         """
