@@ -358,7 +358,7 @@ class Group:
         else:
             return self._all_axes("m{axis}40", operator)
 
-    def desired_velocity_zero(self, operator="&", relOperator="==", value=0) -> str:
+    def desired_velocity_zero(self, operator="&") -> str:
         """
         Generate a command string for all group axes: check desired velocity is zero
         relOperator (relationalOperator) is required for power pmac based
@@ -366,7 +366,7 @@ class Group:
         """
         if self.controller is ControllerType.pbrick:
             pbrickVar = "Motor[{axis}].DesVelZero"
-            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+            return self._all_axes(f"{pbrickVar}", operator)
         else:
             return self._all_axes("m{axis}33", operator)
 
