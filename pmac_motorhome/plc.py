@@ -62,12 +62,15 @@ class Plc:
                 f"bad file path {self.filepath.parent}\
                 from dir {Path.cwd()}"
             )
-        if (
-            self.plc_num < 8  # PLCs 1-8 are reserved
-            or self.plc_num > 32  # highest PLC number possible
-            or not isinstance(self.plc_num, int)
-        ):
-            raise ValueError("plc_number should be integer between 9 and 32")
+        if not isinstance(self.plc_num, int):
+            raise ValueError("plc_number should be an integer")
+
+        if self.controller == ControllerType.pbrick:
+            if self.plc_num < 11 or self.plc_num > 15: # PLC 11-15 are reserved for homing PLCs
+                raise ValueError("For pbrick, plc_number should be integer between 11 and 15")
+        else:
+            if self.plc_num < 8 or self.plc_num > 31: # PLCs 1-8 are reserved | 31 is the highest PLC number possible
+                raise ValueError("For non-pbrick, plc_number should be integer between 8 and 31")
 
     def __enter__(self):
         """
@@ -117,7 +120,7 @@ class Plc:
             group_num (int): A Unique group number (1 is reserved for 'All Groups')
             post_home (PostHomeMove): A post home action to perform on success
             post_distance (int): A distance for those post home actions which require it
-            comment (str): Add a group comment to the top of the Plc code 
+            comment (str): Add a group comment to the top of the Plc code
             pre (str): some raw PLC code to insert at the start of a group
             post (str): some raw PLC code to insert at the end of a group
 
@@ -135,7 +138,7 @@ class Plc:
             pre,
             post,
         )
-        if group.post_home is PostHomeMove.none: # use the plc post home if it exists 
+        if group.post_home is PostHomeMove.none: # use the plc post home if it exists
             group.post_home=plc.post_home
         if group.post_distance == 0:
             group.post_distance=plc.post_distance
@@ -231,7 +234,7 @@ class Plc:
             return self._all_axes("P{homed}={pb_homed_flag}", " ")
         if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
             return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = Group.filter_motors_without_macro)
-        
+
         return self._all_axes("P{homed}=i{homed_flag}", " ")
 
     def save_not_homed(self):
@@ -327,7 +330,7 @@ class Plc:
             str: the resulting command string
         """
         return self._all_axes("P{homed}=0", " or ", filter_function = Group.filter_motors_with_macro)
-    
+
     def has_motors_with_macro_brick(self) -> bool:
         """
         Check if any of the motors in the plc has macros (brick specific)
