@@ -354,7 +354,7 @@ class Group:
 
         if self.controller is ControllerType.pbrick:
             pbrickVar = "Motor[{axis}].InPos"
-            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", f"{operator} ")
         else:
             return self._all_axes("m{axis}40", operator)
 
