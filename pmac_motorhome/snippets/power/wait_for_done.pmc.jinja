@@ -3,15 +3,12 @@
         Sys.CdTimer[{{plc.plc_num}}]={{ plc.timeout}}
 {% if template.args.wait_for_one_motor %}
         // wait until one motor stops
-        while (({{ group.desired_velocity_zero(operator="||") }})==0) 
-{% else %}
+        while ((({{ group.desired_velocity_zero(operator="||") }})==0) {% else %}
         // wait until all motors stop
-        while ((({{ group.desired_velocity_zero() }})==0) 
-{% endif %}
-        {%+ if not template.args.no_following_err %}&& ({{ group.following_err(relOperator="==", value=0) }}){% endif -%}
-        {% if template.args.with_limits %}&& ({{ group.limits(relOperator="==", value=0) }}) {% endif -%}
-        && (Sys.CdTimer[{{plc.plc_num}}] > 0)
-        && (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming || PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming) ){
+        while ((({{ group.desired_velocity_zero() }})==0) {% endif %}
+{% if not template.args.no_following_err -%} && ({{ group.following_err(relOperator="==", value=0) }}){% endif %}
+{% if template.args.with_limits -%} && ({{ group.limits(relOperator="==", value=0) }}) {% endif %}
+ && (Sys.CdTimer[{{plc.plc_num}}] > 0) && (PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusHoming || PLC{{plc.plc_num}}_HomingStatus == PLC{{plc.plc_num}}_StatusDebugHoming) ){
         }
         // Check why we left the while loop
 {% if not template.args.no_following_err %}
