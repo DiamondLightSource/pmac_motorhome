@@ -80,7 +80,38 @@ def test_BL02I_STEP_13_plc11():
             home_hsw_hstop()
 
     verify(file)
+    
+def test_BL13J_STEP_25_plc11():
+    file = "BL13J-MO-STEP-25.plc11"
+    tmp_file = Path("/tmp") / file
+    with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file, timeout=900000):
+        pre2 = """i122=5 """
 
+        with group(group_num=2, pre=pre2):
+            motor(axis=1, jdist=-2000, index=0)
+            comment("HSW_HSTOP")
+            home_hsw_hstop()
+
+        pre3 = """i322=5 """
+
+        with group(group_num=3, pre=pre3):
+            motor(axis=3, jdist=-2000, index=1)
+            comment("HSW_HSTOP")
+            home_hsw_hstop()
+
+        pre4 = """i222=5 """
+
+        with group(group_num=4, pre=pre4):
+            motor(axis=2, jdist=-2000, index=2)
+            comment("HSW_HSTOP")
+            home_hsw_hstop()
+
+        with group(group_num=5):
+            motor(axis=8, jdist=-4000, index=3)
+            comment("HSW")
+            home_hsw()
+        
+    verify(file)
 
 def test_BL18B_STEP01_plc13():
     file_name = "BL18B-MO-STEP-01.plc13"
