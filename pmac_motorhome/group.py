@@ -382,15 +382,15 @@ class Group:
         else:
             return self._all_axes("m{axis}30", "|")
 
-    def following_err(self, relOperator="==", value=0) -> str:
+    def following_err(self, operator="|") -> str:
         """
         Generate a command string for all group axes: check following error
         """
         if self.controller is ControllerType.pbrick:
             pbrickVar = "Motor[{axis}].FeFatal"
-            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+            return self._all_axes(f"{pbrickVar}", operator)
         else:
-            return self._all_axes("m{axis}42", "|")
+            return self._all_axes("m{axis}42", operator)
 
     def homed(self, operator="&") -> str:
         """
