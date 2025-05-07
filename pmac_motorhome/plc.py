@@ -338,3 +338,10 @@ class Plc:
         motors = list(filter(Group.filter_motors_with_macro, self.motors.values()))
         return len(motors) > 0
 
+    def in_pos_latch_init(self) -> str:
+        """
+        Generate a command string for initialising all latched in-position local vars
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("local inPosLatch{axis} = 0", separator="\n")
+        raise NotImplementedError("latched inPos implemented for power brick only")

@@ -58,6 +58,8 @@ PLC{{plc.plc_num}}_HomingBackupGroup = 0
 
 open plc {{ plc.plc_num }} 
 
+{{ plc.in_pos_latch_init() }}
+
 if (PLC{{plc.plc_num}}_HomingStatus != PLC{{plc.plc_num}}_StatusHoming && PLC{{plc.plc_num}}_HomingStatus != PLC{{plc.plc_num}}_StatusDebugHoming){
     PLC{{plc.plc_num}}_HomingStatus = PLC{{plc.plc_num}}_StatusHoming
 }

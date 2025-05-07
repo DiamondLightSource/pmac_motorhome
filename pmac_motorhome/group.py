@@ -358,17 +358,29 @@ class Group:
         else:
             return self._all_axes("m{axis}40", operator)
 
-    def desired_velocity_zero(self, operator="&") -> str:
+    def in_pos_latch(self, operator="&") -> str:
         """
-        Generate a command string for all group axes: check desired velocity is zero
-        relOperator (relationalOperator) is required for power pmac based
-        controllers as each variable needs to be evaluated separately
+        Generate a command string for all group axes: check in position latch
         """
         if self.controller is ControllerType.pbrick:
-            pbrickVar = "Motor[{axis}].DesVelZero"
-            return self._all_axes(f"{pbrickVar}", operator)
-        else:
-            return self._all_axes("m{axis}33", operator)
+            return self._all_axes("inPosLatch{axis}", operator)
+        raise NotImplementedError("latched inPos implemented for power brick only")
+
+    def in_pos_variable_latch(self, operator="&") -> str:
+        """
+        Generate a command string for all group axes: OR the current inPos state with local var
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("inPosLatch{axis} |= motor[{axis}].InPos", separator="\n            ")
+        raise NotImplementedError("latched inPos implemented for power brick only")
+
+    def in_pos_latch_reset(self, operator="&") -> str:
+        """
+        Generate a command string for all group axes: reset the latched inPos state
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("inPosLatch{axis} = 0", separator="\n        ")
+        raise NotImplementedError("latched inPos implemented for power brick only")
 
     def limits(self, relOperator="!=", value=0) -> str:
         """
