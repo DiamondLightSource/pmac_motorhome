@@ -10,13 +10,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest"]  # can add windows-latest, macos-latest
+        os: ["ubuntu-22.04"]  # can add windows-latest, macos-latest
         python: ["3.7", "3.8", "3.9"]
         pipenv: ["skip-lock"]  # --${flag} will be passed to pipenv command
 
         include:
           # Add an extra Python3.7 runner to publish wheels and use the lockfile
-          - os: "ubuntu-latest"
+          - os: "ubuntu-22.04"
             python: "3.7"
             pipenv: "deploy"
             publish: true
@@ -69,7 +69,7 @@ jobs:
 
   release:
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     # upload to PyPI and make a release on every tag
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     steps:
