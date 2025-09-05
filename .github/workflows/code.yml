@@ -26,13 +26,13 @@ jobs:
 
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # require history to get back to last tag for version number of branches
           fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
 
@@ -55,14 +55,14 @@ jobs:
         run: pipenv run tests
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           name: ${{ matrix.python }}/${{ matrix.os }}/${{ matrix.pipenv }}
           files: cov.xml
 
       - name: Upload Wheel and Sdist as artifacts
         if: matrix.publish
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist/*
@@ -73,7 +73,7 @@ jobs:
     # upload to PyPI and make a release on every tag
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist
