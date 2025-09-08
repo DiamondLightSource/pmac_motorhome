@@ -127,9 +127,7 @@ result = re.search(r"PLC(\d+)_([^_]*)_HM\.pmc", filename)
 if result is not None:
     num, name = result.groups()
 else:
-    sys.stderr.write(
-        f"***Error: Incorrectly formed homing plc filename: {filename}\n"
-    )
+    sys.stderr.write(f"***Error: Incorrectly formed homing plc filename: {filename}\n")
     sys.exit(1)
 
 plc = PLC(int(num), post=None, ctype=PMAC)

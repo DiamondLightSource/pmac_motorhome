@@ -740,9 +740,7 @@ class PLC:
                 f.write("\t\tendif\n")
             if ems:
                 lstr = "|".join("m%d30" % m.ax for m in ems)
-                self.checks += (
-                    f"\t\tand ({lstr}=0) ; Should not stop on position limit for selected motors\n"
-                )
+                self.checks += f"\t\tand ({lstr}=0) ; Should not stop on position limit for selected motors\n"
                 self.results += f"\t\tif ({lstr}=1) ; If a motor hit a limit\n"
                 self.results += "\t\t\tHomingStatus = StatusLimit\n"
                 self.results += "\t\tendif\n"
@@ -880,7 +878,9 @@ class PLC:
             if ems:
                 f.write("\t;---- Check if all motors have homed ----\n")
                 self.__check_not_aborted(f)
-                f.write("\tand ({}=0)\n".format("&".join(["m%d45" % m.ax for m in ems])))
+                f.write(
+                    "\tand ({}=0)\n".format("&".join(["m%d45" % m.ax for m in ems]))
+                )
                 f.write("\t\tHomingStatus=StatusIncomplete\n")
                 f.write("\tendif\n\n")
 

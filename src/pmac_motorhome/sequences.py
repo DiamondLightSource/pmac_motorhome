@@ -6,7 +6,6 @@ Call these functions in a group context to
 perform the sequence on all axes in the group.
 """
 
-
 from .commands import only_axes, post_home
 from .group import Group
 from .snippets import (
