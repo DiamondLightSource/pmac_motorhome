@@ -92,7 +92,7 @@ class MotionArea:
         pypath: Path,
         params: str,
         python2: bool = False,
-        modules: list = None,
+        modules: list = None,  # type: ignore
     ):
         """
         Execute a python script

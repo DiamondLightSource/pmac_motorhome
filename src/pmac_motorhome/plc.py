@@ -185,7 +185,7 @@ class Plc:
         # PLC P variables etc must be sorted to match original motorhome.py
         motors = sorted(self.motors.values(), key=lambda x: x.index)
         if filter_function is not None:
-            motors = filter(filter_function, motors)
+            motors = filter(filter_function, motors)  # type: ignore
         all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
 

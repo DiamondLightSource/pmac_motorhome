@@ -42,16 +42,16 @@ class Group:
             pre (str): some raw PLC code to insert at the start of a group
             post(str): some raw PLC code to insert at the end of a group
         """
-        self.motors = []
-        self.encoders = []
-        self.all_motors = []
+        self.motors: list[Motor] = []
+        self.encoders = []  # type: ignore
+        self.all_motors = []  # type: ignore
         self.has_encoders = False
         self.post_home = post_home
         self.post_distance = post_distance
         self.comment = comment
         self.plc_num = plc_num
         self.group_num = group_num
-        self.templates = []
+        self.templates = []  # type: ignore
         self.htype = "unknown"
         self.controller = controller
         self.pre = pre
@@ -266,7 +266,7 @@ class Group:
         # of the axis object so its elements can be addressed by name
         motors = self.motors
         if filter_function is not None:
-            motors = filter(filter_function, self.motors)
+            motors = filter(filter_function, self.motors)  # type: ignore
 
         all = [format.format(*arg, **ax.dict) for ax in motors]
         return separator.join(all)
