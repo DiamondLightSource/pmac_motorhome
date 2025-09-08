@@ -69,7 +69,7 @@ jobs:
 
   release:
     needs: [build]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     # upload to PyPI and make a release on every tag
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     steps:
