@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Optional
+from typing import Any
 
 
 @dataclass
@@ -21,7 +22,7 @@ class Template:
         custom_text: str = ""
     """
 
-    jinja_file: Optional[str]
-    args: Dict[str, Any]
-    function: Optional[Callable]
+    jinja_file: str | None
+    args: dict[str, Any]
+    function: Callable | None
     custom_text: str = ""

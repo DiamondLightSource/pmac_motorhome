@@ -10,7 +10,6 @@ jinja_path = this_path / "snippets"
 
 class PlcGenerator:
     def __init__(self, controller: ControllerType) -> None:
-
         if controller == ControllerType.pbrick:
             jinja_path = this_path / "snippets/power"
         else:

@@ -56,5 +56,3 @@ I908,3,100 = 1 ;position-loop scale factor
 I909,3,100 = 1 ;velocity-loop scale factor
 
 I967,3,100 = 8388607 ;position error limit
-
-

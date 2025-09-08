@@ -1,5 +1,5 @@
 try:
-    from typing import OrderedDict
+    from collections import OrderedDict
 except Exception:
     from collections import OrderedDict  # type: ignore
 
@@ -94,9 +94,11 @@ class PLC:
         jdist=None,
         jdist_overrides=None,
         post=None,
-        enc_axes=[],
+        enc_axes=None,
         ms=None,
     ):
+        if enc_axes is None:
+            enc_axes = []
         if axis not in self.motor_nums:
             self.motor_nums.append(axis)
         motor_index = self.motor_nums.index(axis)

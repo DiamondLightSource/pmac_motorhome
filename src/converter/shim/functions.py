@@ -13,7 +13,7 @@ def parse_args():
         num, name = result.groups()
     else:
         sys.stderr.write(
-            "***Error: Incorrectly formed homing plc filename: %s\n" % filename
+            f"***Error: Incorrectly formed homing plc filename: {filename}\n"
         )
         sys.exit(1)
     return int(num), name, filename

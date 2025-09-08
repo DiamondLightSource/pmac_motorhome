@@ -4,4 +4,3 @@
 
 ; Load standard i-variable definitions
 #include "Variables/STANDARD_CONTROL.pmc"
-

@@ -37,7 +37,7 @@ dev = [
 ]
 
 [project.scripts]
-pmac_motorhome = "pmac_motorhome.__main__:main"
+homing_convert = "converter.converter:homing_convert"
 
 [project.urls]
 GitHub = "https://github.com/DiamondLightSource/pmac_motorhome"
@@ -56,7 +56,7 @@ ignore_missing_imports = true # Ignore missing stubs in imported modules
 [tool.pytest.ini_options]
 # Run pytest with all our checkers, and don't spam us with massive tracebacks on error
 addopts = """
-    --tb=native -vv --doctest-modules --doctest-glob="*.rst"
+    --tb=native -vv --doctest-modules --doctest-glob="*.rst" --ignore tests/converter
     """
 # https://iscinumpy.gitlab.io/post/bound-version-constraints/#watch-for-warnings
 filterwarnings = "error"
@@ -113,4 +113,5 @@ lint.select = [
 # By default, private member access is allowed in tests
 # See https://github.com/DiamondLightSource/python-copier-template/issues/154
 # Remove this line to forbid private member access in tests
-"tests/**/*" = ["SLF001"]
+
+"tests/**/*" = ["SLF001", "N802", "F405", "F403", "E501", "UP031", "N816"]

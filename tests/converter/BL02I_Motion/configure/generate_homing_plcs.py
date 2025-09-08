@@ -2,7 +2,9 @@
 
 # type: ignore
 
-import sys, os, re
+import re
+import sys
+
 from motorhome import *
 
 # Gonio omega pre string for phasing
@@ -126,7 +128,7 @@ if result is not None:
     num, name = result.groups()
 else:
     sys.stderr.write(
-        "***Error: Incorrectly formed homing plc filename: %s\n" % filename
+        f"***Error: Incorrectly formed homing plc filename: {filename}\n"
     )
     sys.exit(1)
 

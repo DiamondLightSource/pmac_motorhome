@@ -1,7 +1,7 @@
 import logging
 from collections import OrderedDict
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 from .constants import ControllerType, PostHomeMove
 from .group import Group
@@ -53,8 +53,8 @@ class Plc:
         self.post = post
         self.post_home: PostHomeMove = post_home
         self.post_distance: int = post_distance
-        self.groups: List[Group] = []
-        self.motors: "OrderedDict[int, Motor]" = OrderedDict()
+        self.groups: list[Group] = []
+        self.motors: OrderedDict[int, Motor] = OrderedDict()
         self.generator = PlcGenerator(self.controller)
         if not self.filepath.parent.exists():
             log.error(f"Cant find parent of {self.filepath} from dir {Path.cwd()}")
@@ -66,11 +66,19 @@ class Plc:
             raise ValueError("plc_number should be an integer")
 
         if self.controller == ControllerType.pbrick:
-            if self.plc_num < 11 or self.plc_num > 15: # PLC 11-15 are reserved for homing PLCs
-                raise ValueError("For pbrick, plc_number should be integer between 11 and 15")
+            if (
+                self.plc_num < 11 or self.plc_num > 15
+            ):  # PLC 11-15 are reserved for homing PLCs
+                raise ValueError(
+                    "For pbrick, plc_number should be integer between 11 and 15"
+                )
         else:
-            if self.plc_num < 8 or self.plc_num > 31: # PLCs 1-8 are reserved | 31 is the highest PLC number possible
-                raise ValueError("For non-pbrick, plc_number should be integer between 8 and 31")
+            if (
+                self.plc_num < 8 or self.plc_num > 31
+            ):  # PLCs 1-8 are reserved | 31 is the highest PLC number possible
+                raise ValueError(
+                    "For non-pbrick, plc_number should be integer between 8 and 31"
+                )
 
     def __enter__(self):
         """
@@ -138,10 +146,10 @@ class Plc:
             pre,
             post,
         )
-        if group.post_home is PostHomeMove.none: # use the plc post home if it exists
-            group.post_home=plc.post_home
+        if group.post_home is PostHomeMove.none:  # use the plc post home if it exists
+            group.post_home = plc.post_home
         if group.post_distance == 0:
-            group.post_distance=plc.post_distance
+            group.post_distance = plc.post_distance
         plc.groups.append(group)
         return group
 
@@ -159,7 +167,7 @@ class Plc:
         if axis not in plc.motors:
             plc.motors[axis] = motor
 
-    def _all_axes(self, format: str, separator: str, *arg, filter_function = None) -> str:
+    def _all_axes(self, format: str, separator: str, *arg, filter_function=None) -> str:
         """
         A helper function to generate code for all axes in a group when one
         of the callback functions below is called from a Jinja template.
@@ -232,8 +240,23 @@ class Plc:
             return self._all_axes("MSR{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("P{homed}={pb_homed_flag}", " ")
-        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
-            return self._all_axes("MSR{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("P{homed}=i{homed_flag}", " ",filter_function = Group.filter_motors_without_macro)
+        if (
+            self.controller is ControllerType.brick
+            and self.has_motors_with_macro_brick()
+        ):
+            return (
+                self._all_axes(
+                    "MSR{macro_station_brick},i912,P{homed}",
+                    " ",
+                    filter_function=Group.filter_motors_with_macro,
+                )
+                + " "
+                + self._all_axes(
+                    "P{homed}=i{homed_flag}",
+                    " ",
+                    filter_function=Group.filter_motors_without_macro,
+                )
+            )
 
         return self._all_axes("P{homed}=i{homed_flag}", " ")
 
@@ -254,8 +277,23 @@ class Plc:
             return self._all_axes("MSW{macro_station},i912,P{homed}", " ")
         if self.controller is ControllerType.pbrick:
             return self._all_axes("{pb_homed_flag}=P{homed}", " ")
-        if self.controller is ControllerType.brick and self.has_motors_with_macro_brick():
-            return self._all_axes("MSW{macro_station_brick},i912,P{homed}", " ",filter_function = Group.filter_motors_with_macro) + " " + self._all_axes("i{homed_flag}=P{homed}", " ",filter_function = Group.filter_motors_without_macro)
+        if (
+            self.controller is ControllerType.brick
+            and self.has_motors_with_macro_brick()
+        ):
+            return (
+                self._all_axes(
+                    "MSW{macro_station_brick},i912,P{homed}",
+                    " ",
+                    filter_function=Group.filter_motors_with_macro,
+                )
+                + " "
+                + self._all_axes(
+                    "i{homed_flag}=P{homed}",
+                    " ",
+                    filter_function=Group.filter_motors_without_macro,
+                )
+            )
 
         return self._all_axes("i{homed_flag}=P{homed}", " ")
 
@@ -329,7 +367,9 @@ class Plc:
         Returns:
             str: the resulting command string
         """
-        return self._all_axes("P{homed}=0", " or ", filter_function = Group.filter_motors_with_macro)
+        return self._all_axes(
+            "P{homed}=0", " or ", filter_function=Group.filter_motors_with_macro
+        )
 
     def has_motors_with_macro_brick(self) -> bool:
         """
@@ -340,4 +380,3 @@ class Plc:
         """
         motors = list(filter(Group.filter_motors_with_macro, self.motors.values()))
         return len(motors) > 0
-

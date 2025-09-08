@@ -40,5 +40,3 @@ this module will create exactly the same PLC code.
 This is to the extent that existing homing PLCs have been imported into
 this project's test area and used for system tests that generate the same
 code.
-
-

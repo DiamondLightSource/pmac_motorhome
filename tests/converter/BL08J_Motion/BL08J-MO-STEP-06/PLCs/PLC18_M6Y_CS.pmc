@@ -288,5 +288,3 @@ CLEAR
     endif
 CLOSE
 ENABLE PLC 18
-
-

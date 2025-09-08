@@ -21,7 +21,15 @@ from .snippets import (
 )
 
 
-def plc(plc_num, controller, filepath, timeout=600000, post=None, post_home=PostHomeMove.none, post_home_distance=0):
+def plc(
+    plc_num,
+    controller,
+    filepath,
+    timeout=600000,
+    post=None,
+    post_home=PostHomeMove.none,
+    post_home_distance=0,
+):
     """
     Define a new PLC. Use this to create a new Plc context using the 'with'
     keyword.
@@ -43,7 +51,15 @@ def plc(plc_num, controller, filepath, timeout=600000, post=None, post_home=Post
         Plc: the Plc object for use in the context
     """
 
-    return Plc(plc_num, ControllerType(controller), Path(filepath), timeout, post, post_home, post_home_distance)
+    return Plc(
+        plc_num,
+        ControllerType(controller),
+        Path(filepath),
+        timeout,
+        post,
+        post_home,
+        post_home_distance,
+    )
 
 
 def group(
@@ -81,7 +97,15 @@ def comment(htype):
     Group.add_comment(htype)
 
 
-def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0, enc_axes=list(), ms=-1):
+def motor(
+    axis,
+    jdist=0,
+    index=-1,
+    post_home=PostHomeMove.none,
+    post_distance=0,
+    enc_axes=None,
+    ms=-1,
+):
     """
     Declare a motor for use in the current group.
 
@@ -99,6 +123,8 @@ def motor(axis, jdist=0, index=-1, post_home=PostHomeMove.none, post_distance=0,
         enc_axes (list): List of additional encoders that need zeroing on homing
             completion
     """
+    if enc_axes is None:
+        enc_axes = []
     motor = Group.add_motor(axis, jdist, index, post_home, post_distance, enc_axes, ms)
     Plc.add_motor(axis, motor)
 
@@ -136,9 +162,9 @@ def post_home(**args):
     group = Group.instance()
     are_same, post_homes_motors = group.all_motors_have_same_post_move_type()
     if not (are_same):
-        pass # different types of post home move not supported in the current version 
+        pass  # different types of post home move not supported in the current version
     elif post_homes_motors == PostHomeMove.none:
-        if group.post is not "":
+        if group.post != "":
             post_home_action()
     elif post_homes_motors == PostHomeMove.initial_position:
         drive_to_initial_pos(**args)

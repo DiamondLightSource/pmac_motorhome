@@ -44,4 +44,3 @@ TODO - flesh this out
 - add the function to Plc or Group
 - use the all_axes function to generate axis commands
 - or output arbitrary text
-

@@ -2,6 +2,7 @@
 Defines some Enumerations for constant values
 
 """
+
 from enum import Enum
 
 
@@ -25,7 +26,7 @@ class PostHomeMove(Enum):
 
     #: no action
     none = "None"
-    zero = "0" # setting post to 0 will result in no post and not inheriting the group post
+    zero = "0"  # setting post to 0 will result in no post and not inheriting the group post
     #: move jdist counts away from the home mark and set that as home
     move_and_hmz = "z"
     #: move jdist counts away from the home mark

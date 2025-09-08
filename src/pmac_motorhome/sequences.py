@@ -5,25 +5,24 @@ Predefined homing sequences. These functions can all be called directly from
 Call these functions in a group context to
 perform the sequence on all axes in the group.
 """
-import sys
 
-if sys.version_info[0] > 2:
-    from .commands import only_axes, post_home
-    from .group import Group
-    from .snippets import (
-        check_homed,
-        disable_limits,
-        drive_off_home,
-        drive_to_home,
-        drive_to_hstop,
-        drive_to_limit,
-        home,
-        jog_if_on_limit,
-        pre_home_action,
-        restore_limits,
-        store_position_diff,
-        zero_encoders,
-    )
+
+from .commands import only_axes, post_home
+from .group import Group
+from .snippets import (
+    check_homed,
+    disable_limits,
+    drive_off_home,
+    drive_to_home,
+    drive_to_hstop,
+    drive_to_limit,
+    home,
+    jog_if_on_limit,
+    pre_home_action,
+    restore_limits,
+    store_position_diff,
+    zero_encoders,
+)
 
 
 def home_rlim():
@@ -78,7 +77,9 @@ def home_hsw():
     # drive in opposite to homing direction until home flag or limit hit
     drive_to_home(homing_direction=False)
     drive_to_home(
-        with_limits=True, homing_direction=True, state="FastSearch",
+        with_limits=True,
+        homing_direction=True,
+        state="FastSearch",
     )
     store_position_diff()
     drive_off_home()
@@ -159,7 +160,7 @@ def home_hsw_dir():
 def home_limit():
     """
     Home on a limit switch.
-    - (Pre Home action) - only added if group pre-home is defined 
+    - (Pre Home action) - only added if group pre-home is defined
     - (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
     - (Fast Retrace) Jog in -hdir until limit switch deactivates
     - (Home) Disable limits and home

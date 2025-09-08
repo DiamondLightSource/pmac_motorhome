@@ -1,5 +1,3 @@
-from typing import Dict
-
 from pmac_motorhome.constants import PostHomeMove
 
 
@@ -10,7 +8,7 @@ class Motor:
     Should always be instantiated using `pmac_motorhome.commands.motor`
     """
 
-    instances: Dict[int, "Motor"] = {}
+    instances: dict[int, "Motor"] = {}
 
     # offsets into the PLC's PVariables for storing the state of axes
     # these names go into long format strings so keep them short for legibility
@@ -31,7 +29,7 @@ class Motor:
         post_home: PostHomeMove = PostHomeMove.none,
         post_distance: int = 0,
         index: int = -1,
-        ms: int = -1
+        ms: int = -1,
     ) -> None:
         """
         Args:
@@ -104,7 +102,7 @@ class Motor:
     @property
     def nx(self) -> str:
         nx = int(int((self.axis - 1) / 4) * 10 + int((self.axis - 1) % 4 + 1))
-        return "{:02}".format(nx)
+        return f"{nx:02}"
 
     # Determine the gate number if power pmac
     @property
@@ -127,22 +125,22 @@ class Motor:
     @property
     def macro_station(self) -> str:
         """
-        Calculate macro and generate a command string for this motor 
+        Calculate macro and generate a command string for this motor
         Pmac specific command string
 
         Returns:
-            str: pmac specific ms command string 
+            str: pmac specific ms command string
         """
         # this calculations are only correct for a pmac
         if self.ms != -1:
-            return "{}".format(self.ms)
+            return f"{self.ms}"
         msr = int(4 * int(int(self.axis - 1) / 2) + int(self.axis - 1) % 2)
-        return "{}".format(msr)
+        return f"{msr}"
 
     @property
     def macro_station_brick_str(self) -> str:
         """
-        Generate a command string for this motor 
+        Generate a command string for this motor
         Brick specific command string
 
         Returns:
@@ -150,7 +148,7 @@ class Motor:
         """
         if self.macro_station_brick() == -1:
             return ""
-        return "{}".format(self.macro_station_brick() )
+        return f"{self.macro_station_brick()}"
 
     def macro_station_brick(self) -> int:
         """
@@ -191,10 +189,10 @@ class Motor:
             return self.post_home.value
         elif self.post_home in (PostHomeMove.none, PostHomeMove.move_absolute):
             return str(self.post_distance)
-        return  self.post_home.value + str(self.post_distance)
+        return self.post_home.value + str(self.post_distance)
 
     def has_macro_station_brick(self) -> bool:
-        """"
+        """ "
         Check if the motor has macro station defined (brick only)
 
         Returns:
@@ -203,4 +201,3 @@ class Motor:
         if self.macro_station_brick() != -1:
             return True
         return False
-

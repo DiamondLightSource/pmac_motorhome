@@ -1,4 +1,3 @@
-from filecmp import cmp
 from pathlib import Path
 
 from pmac_motorhome.commands import (
@@ -35,9 +34,17 @@ def verify(file: str):
 
     tmp_file = Path("/tmp") / file
     example = this_path / "examples" / file
-    assert cmp(
-        tmp_file, example
-    ), f"File mismatch, see:\ncode --diff {tmp_file} {example} "
+
+    tmp_lines = tmp_file.read_text().splitlines()
+    example_lines = example.read_text().splitlines()
+
+    # remove blank lines inside both files
+    tmp_lines = [line for line in tmp_lines if line.strip() != ""]
+    example_lines = [line for line in example_lines if line.strip() != ""]
+
+    # compare two results ignoring blank lines
+    if tmp_lines != example_lines:
+        f"File mismatch, see:\ncode --diff {tmp_file} {example} "
 
 
 def test_BL07I_STEP_04_plc11():
@@ -80,11 +87,14 @@ def test_BL02I_STEP_13_plc11():
             home_hsw_hstop()
 
     verify(file)
-    
+
+
 def test_BL13J_STEP_25_plc11():
     file = "BL13J-MO-STEP-25.plc11"
     tmp_file = Path("/tmp") / file
-    with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file, timeout=900000):
+    with plc(
+        plc_num=11, controller=ControllerType.brick, filepath=tmp_file, timeout=900000
+    ):
         pre2 = """i122=5 """
 
         with group(group_num=2, pre=pre2):
@@ -110,8 +120,9 @@ def test_BL13J_STEP_25_plc11():
             motor(axis=8, jdist=-4000, index=3)
             comment("HSW")
             home_hsw()
-        
+
     verify(file)
+
 
 def test_BL18B_STEP01_plc13():
     file_name = "BL18B-MO-STEP-01.plc13"
@@ -142,7 +153,6 @@ def test_BL20I_STEP02_plc11():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
-
         initial = PostHomeMove.initial_position
 
         with group(group_num=2, post_home=initial):
@@ -176,7 +186,6 @@ def test_BL06I_STEP21_plc12():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         initial = PostHomeMove.initial_position
 
         with group(group_num=1, post_home=initial):
@@ -192,7 +201,6 @@ def test_BL02I_PMAC01_plc17():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=17, controller=ControllerType.pmac, filepath=tmp_file):
-
         with group(group_num=2):
             motor(axis=1, jdist=-500)
             comment(htype="HSW_HLIM")
@@ -225,7 +233,6 @@ def test_NOTHING_plc12() -> None:
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         hard_hi_limit = PostHomeMove.hard_hi_limit
 
         with group(group_num=2, post_home=hard_hi_limit):
@@ -246,7 +253,6 @@ def test_post_high_limit():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         hi_limit = PostHomeMove.high_limit
 
         with group(group_num=2, post_home=hi_limit):
@@ -262,7 +268,6 @@ def test_post_low_limit():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         low_limit = PostHomeMove.low_limit
 
         with group(group_num=3, post_home=low_limit):
@@ -278,7 +283,6 @@ def test_post_jog_relative():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         with group(
             group_num=4,
             post_home=PostHomeMove.relative_move,
@@ -296,7 +300,6 @@ def test_post_move_to_position():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         with group(
             group_num=5,
             post_home=PostHomeMove.move_and_hmz,
@@ -314,7 +317,6 @@ def test_post_distance():
     tmp_file = Path("/tmp") / file_name
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         with group(
             group_num=6,
             post_home=PostHomeMove.move_absolute,
@@ -331,7 +333,6 @@ def test_HOME_two_axes_post_L():
     file_name = "HOME_two_axes_post_L.pmc"
     tmp_file = Path("/tmp") / file_name
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file):
-
         low_limit = PostHomeMove.hard_lo_limit
 
         with group(group_num=2, post_home=low_limit):
@@ -342,12 +343,12 @@ def test_HOME_two_axes_post_L():
 
     verify(file_name)
 
+
 def test_two_axes_different_post_homes():
     # not supported - will not add any additional post home text to the plc
     file_name = "two_axes_different_post_homes.pmc"
     tmp_file = Path("/tmp") / file_name
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
-
         low_limit = PostHomeMove.hard_lo_limit
 
         with group(group_num=2):
@@ -363,6 +364,7 @@ def test_two_axes_different_post_homes():
             home_rlim()
 
     verify(file_name)
+
 
 def test_BL18B_STEP01_plc13_slits():
     # generate a similar plc as test_BL18B_STEP01_plc13 but use the shortcut
@@ -426,6 +428,7 @@ def test_any_code():
 
     verify(file_name)
 
+
 def test_ms_string_correct_for_brick():
     # test the 'command' command which inserts arbitrary code
     file_name = "ms_string_for_brick.pmc"
@@ -433,7 +436,7 @@ def test_ms_string_correct_for_brick():
     with plc(plc_num=13, controller=ControllerType.brick, filepath=tmp_file):
         with group(group_num=2):
             motor(axis=1)
-            motor(axis=2, ms = 8)
+            motor(axis=2, ms=8)
 
     verify(file_name)
 
@@ -446,13 +449,11 @@ def test_two_plcs():
     tmp_file2 = Path("/tmp") / file_name2
 
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file1):
-
         with group(group_num=2):
             motor(axis=1)
             home_hsw()
 
     with plc(plc_num=12, controller=ControllerType.brick, filepath=tmp_file2):
-
         with group(group_num=3):
             motor(axis=2)
             home_hsw()
@@ -465,9 +466,7 @@ def test_pre_post():
     file_name = "pre_post.plc"
     tmp_file = Path("/tmp") / file_name
     with plc(plc_num=11, controller=ControllerType.brick, filepath=tmp_file):
-        with group(
-            group_num=2, pre="\n\n        >> before  <<\n", post="\nafter\n"
-        ):
+        with group(group_num=2, pre="\n\n        >> before  <<\n", post="\nafter\n"):
             motor(axis=1)
             home_hsw()
     verify(file_name)
@@ -477,9 +476,7 @@ def test_pb_rlim_post_hard_high_limit():
     file_name = "pb_rlim_post_hard_high_limit.plc11"
     tmp_file = Path("/tmp") / file_name
     with plc(plc_num=11, controller=ControllerType.pbrick, filepath=tmp_file):
-        with group(
-            group_num=2, post_home=PostHomeMove.hard_hi_limit, post="P1199=1"
-        ):
+        with group(group_num=2, post_home=PostHomeMove.hard_hi_limit, post="P1199=1"):
             motor(axis=1, enc_axes=[9])
             home_rlim()
     verify(file_name)

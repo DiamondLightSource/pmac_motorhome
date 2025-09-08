@@ -1,4 +1,4 @@
-class ControllerType():
+class ControllerType:
     """
     Defines the types of controller supported
     """

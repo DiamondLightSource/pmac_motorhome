@@ -186,9 +186,3 @@ then the output of the command :py:meth:`~pmac_motorhome.group.Group.home`
 will look like this::
 
     #1hm #2hm #3hm
-
-
-
-
-
-

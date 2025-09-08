@@ -22,9 +22,9 @@ class OnlyAxes:
         self.axes = axes
 
     def __enter__(self):
-        assert (
-            not OnlyAxes.the_only_axes
-        ), "cannot use only_axes within another only_axes"
+        assert not OnlyAxes.the_only_axes, (
+            "cannot use only_axes within another only_axes"
+        )
 
         OnlyAxes.the_only_axes = self
         group = Group.instance()

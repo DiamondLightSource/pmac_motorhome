@@ -8,8 +8,9 @@ These functions can all be called directly from
 """
 
 import inspect
+from collections.abc import Callable
 from functools import wraps
-from typing import Any, Callable, Dict, TypeVar, cast
+from typing import Any, TypeVar, cast
 
 from .group import Group
 
@@ -57,7 +58,7 @@ A type to represent a callable function
 """
 
 
-def _snippet_function(*arglists: Dict[str, Any]) -> Callable[[F], F]:
+def _snippet_function(*arglists: dict[str, Any]) -> Callable[[F], F]:
     """
     A decorator function to allow simple declaration of snippet functions.
     Snippet functions are used to append snippets of Jinja PLC code to
@@ -85,9 +86,9 @@ def _snippet_function(*arglists: Dict[str, Any]) -> Callable[[F], F]:
 
     def wrap(wrapped: F) -> F:
         sig = inspect.signature(wrapped)
-        assert (
-            "kwargs" in sig.parameters.keys() or len(arglists) == 0
-        ), f"Bad snippet function definition - {wrapped.__name__} must take **kwargs"
+        assert "kwargs" in sig.parameters.keys() or len(arglists) == 0, (
+            f"Bad snippet function definition - {wrapped.__name__} must take **kwargs"
+        )
 
         merged_args = {}
         # merge in any included jinja tempates arguments with defaults
@@ -99,9 +100,9 @@ def _snippet_function(*arglists: Dict[str, Any]) -> Callable[[F], F]:
         @wraps(wrapped)
         def wrapper(**kwargs) -> None:
             bad_keys = kwargs.keys() - merged_args.keys()
-            assert (
-                len(bad_keys) == 0
-            ), f"illegal arguments: {wrapped.__name__} does not take {bad_keys}"
+            assert len(bad_keys) == 0, (
+                f"illegal arguments: {wrapped.__name__} does not take {bad_keys}"
+            )
 
             all_merged = merged_args.copy()
             all_merged.update(kwargs)
@@ -322,6 +323,7 @@ def post_home_action():
     """
     Insert an extra block with the group's post home action in it
     """
+
 
 @_snippet_function()
 def pre_home_action():
