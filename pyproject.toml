@@ -49,6 +49,7 @@ name = "Urszula Neuman"
 
 [tool.setuptools_scm]
 version_file = "src/pmac_motorhome/_version.py"
+write_to = "src/converter/_version.py"
 
 [tool.mypy]
 ignore_missing_imports = true  # Ignore missing stubs in imported modules
