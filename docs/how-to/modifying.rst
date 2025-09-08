@@ -16,12 +16,12 @@ Adding a New Homing Sequence Function
 TODO - flesh this out
 
 - Add a new function in :py:mod:`pmac_motorhome.sequences`
-- Make calls to functions in :std:ref:`Commands`, `snippets`
+- Make calls to functions in :std:ref:`Commands`, `Snippet_Functions`
   and possibly other :py:mod:`pmac_motorhome.sequences`
 
 A nice example is home_slits_hsw
 
-.. literalinclude:: ../../pmac_motorhome/sequences.py
+.. literalinclude:: ../../src/pmac_motorhome/sequences.py
   :pyobject: home_slits_hsw
 
 Adding a New Snippet Template

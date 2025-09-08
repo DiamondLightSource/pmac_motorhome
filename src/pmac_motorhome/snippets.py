@@ -24,7 +24,7 @@ snippet_docstring = """
     This will cause the jinja template {template} to be expanded and inserted
     into the PLC code. The template is as follows:
 
-    .. include:: ../../pmac_motorhome/snippets/turbo/{template}
+    .. include:: ../../src/pmac_motorhome/snippets/turbo/{template}
         :literal:
 """
 
