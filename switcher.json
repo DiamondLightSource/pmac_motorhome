@@ -1,0 +1,30 @@
+[
+  {
+    "version": "master",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/master/"
+  },
+  {
+    "version": "1.12-beta.1",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/1.12-beta.1/"
+  },
+  {
+    "version": "1.7",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/1.7/"
+  },
+  {
+    "version": "1.6",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/1.6/"
+  },
+  {
+    "version": "1.5",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/1.5/"
+  },
+  {
+    "version": "1.0",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/1.0/"
+  },
+  {
+    "version": "0.5",
+    "url": "https://DiamondLightSource.github.io/pmac_motorhome/0.5/"
+  }
+]
