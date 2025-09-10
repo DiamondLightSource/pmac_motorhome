@@ -220,4 +220,3 @@ i3225 = $347d     ;axis bits
 i3202 = $7b43e    ;DSP gate address
 i8157 = $d03540   ;Method D = Exponential Filter, 3540 = Source Address of Encoder Input
 i3203..3204=$3540 ;$35a0 to enable encoder filter
-

@@ -23,4 +23,3 @@ substitute "SM15=1"
 substitute "SM16=1"
  
 include "PLC_auto_cure.pmc"
-
