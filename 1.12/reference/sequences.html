@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Predfined Homing Sequences &#8212; pmac_motorhome 1.12 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=2d52a127"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/sequences';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://DiamondLightSource.github.io/pmac_motorhome/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.12';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/dls-logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Snippet Functions" href="snippets.html" />
+    <link rel="prev" title="Commands" href="commands.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.12" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/dls-logo.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/dls-logo.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">pmac_motorhome</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/pmac_motorhome" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pmac_motorhome" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/pmac_motorhome" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pmac_motorhome" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="external.html">User API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Predfined Homing Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_api/pmac_motorhome.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/DiamondLightSource/pmac_motorhome/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="external.html" class="nav-link">User API</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Predfined Homing Sequences</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-pmac_motorhome.sequences">
+<span id="predfined-homing-sequences"></span><span id="sequences"></span><h1>Predfined Homing Sequences<a class="headerlink" href="#module-pmac_motorhome.sequences" title="Link to this heading">#</a></h1>
+<p>Predefined homing sequences. These functions can all be called directly from
+<a class="reference internal" href="overview.html#plcdefinition"><span class="std std-ref">Homing PLC definition file</span></a></p>
+<p>Call these functions in a group context to
+perform the sequence on all axes in the group.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_rlim">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_rlim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_rlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_rlim" title="Link to this definition">#</a></dt>
+<dd><p>Home on release of a limit</p>
+<p>This can also be used for homing on a rotary encoder (back of motor)
+with an index mark on the rotation: Drive to limit and then home away
+from limit to the first index mark.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until the limit switch is hit</p></li>
+<li><p>(Fast Search) Jog in hdir until the limit switch is released</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until the limit switch is hit</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>This example shows homing off the -ve limit with +ve hdir.
+E.g. ixx23 = 1, msyy,i912 = 10, msyy,i913 = 2.</p>
+<img alt="../_images/RLIM.png" src="../_images/RLIM.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw" title="Link to this definition">#</a></dt>
+<dd><p>Home on a home switch or index mark.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until either index/home switch (Figure 1) or
+limit switch (Figure 2)</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<img alt="../_images/HSW.png" src="../_images/HSW.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_hstop">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_hstop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_hstop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_hstop" title="Link to this definition">#</a></dt>
+<dd><p>Home on a home switch or index mark on a stage that has no limit switches.</p>
+<p>Detection of following error due to hitting the hard stop is taken as the
+limit indication.</p>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until following error - Ixx97 (in-position
+trigger mode) set to 3 for this phase.</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>The axis must be configured to trigger on home index or home flag
+this is used when there are hard stops instead of limit switches
+e.g. piezo walker</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_dir">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_dir" title="Link to this definition">#</a></dt>
+<dd><blockquote>
+<div><p>Home on a directional home switch (newport style)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in -hdir until off the home switch</p></li>
+<li><p>(Fast Search) Jog in hdir until the home switch is hit</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p>This example shows homing on a directional home switch with -ve hdir.
+E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 0.</p>
+<p>The first figure shows what happens when the axis starts on the home switch.
+E.g. Pos = -20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_DIR.png" src="../_images/HSW_DIR.png" />
+<p>The second figure shows what happens when the axis starts off the home switch.
+E.g. Pos = 20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_DIR2.png" src="../_images/HSW_DIR2.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_limit">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_limit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_limit" title="Link to this definition">#</a></dt>
+<dd><p>Home on a limit switch.
+- (Pre Home action) - only added if group pre-home is defined
+- (Fast Search) Jog in hdir (direction of ixx23) until limit switch activ
+- (Fast Retrace) Jog in -hdir until limit switch deactivates
+- (Home) Disable limits and home</p>
+<p>Finally re-enable limits and do post home move if any.</p>
+<p>This example shows homing on -ve limit with -ve hdir.
+E.g. ixx23 = -1, msyy,i912 = 2, msyy,i913 = 2.</p>
+<img alt="../_images/LIMIT.png" src="../_images/LIMIT.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_hsw_hlim">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_hsw_hlim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_hsw_hlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_hsw_hlim" title="Link to this definition">#</a></dt>
+<dd><blockquote>
+<div><p>Home on a home switch or index mark near the limit switch in hdir.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>(Prehome Move) Jog in hdir until either index/home switch (Figure 1) or
+limit switch (Figure 2)</p></li>
+<li><p>If limit switch hit, jog in -hdir until index/home switch</p></li>
+<li><p>(Fast Search) Jog in hdir until index/home switch</p></li>
+<li><p>(Fast Retrace) Jog in -hdir until off the index/home switch</p></li>
+<li><p>(Home) Home</p></li>
+</ul>
+<p>Finally do post home move if any.</p>
+<p><strong>NOTE:</strong> if using a reference mark, set jdist as described under
+<a class="reference internal" href="commands.html#pmac_motorhome.commands.group" title="pmac_motorhome.commands.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a></p>
+<p>This example shows homing on an index with -ve hdir and +ve jdist.
+E.g. ixx23 = -1, msyy,i912 = 1, jdist = 1000.</p>
+<p>The first figure shows what happens when the index is in hdir of the
+starting position. E.g. Pos = 20000 cts, Index = 0 cts</p>
+<img alt="../_images/HSW_HLIM.png" src="../_images/HSW_HLIM.png" />
+<p>The second figure shows what happens when the index is in -hdir of the</p>
+<img alt="../_images/HSW_HLIM2.png" src="../_images/HSW_HLIM2.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_home">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_home" title="Link to this definition">#</a></dt>
+<dd><p>Dumb home, shouldn’t be needed - just executes HM command on all axes
+in the group</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_nothing">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_nothing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_nothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_nothing" title="Link to this definition">#</a></dt>
+<dd><p>NOTHING</p>
+<p>Simply goes through to post home move without homing or changing home status.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmac_motorhome.sequences.home_slits_hsw">
+<span class="sig-prename descclassname"><span class="pre">pmac_motorhome.sequences.</span></span><span class="sig-name descname"><span class="pre">home_slits_hsw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">posx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/sequences.html#home_slits_hsw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.sequences.home_slits_hsw" title="Link to this definition">#</a></dt>
+<dd><p>A special seqence for two pairs of slits in which the vertical and horizontal
+pairs may collide with each other at the extreme of their homing direction.</p>
+<ul class="simple">
+<li><p>move all axes to the limit away from their homing direction</p></li>
+<li><p>home both positive axes using home switch or mark</p></li>
+<li><p>move the positive axes out of the way</p></li>
+<li><p>home both negative axes using home switch or mark</p></li>
+<li><p>move the negative axes out of the way</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>posx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – axis number of the positive horizontal motor</p></li>
+<li><p><strong>negx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – axis number of the negative horizontal motor</p></li>
+<li><p><strong>posy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – axis number of the positive vertical motor</p></li>
+<li><p><strong>negy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – axis number of the negative vertical motor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="commands.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Commands</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="snippets.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Snippet Functions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_rlim"><code class="docutils literal notranslate"><span class="pre">home_rlim()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_hsw"><code class="docutils literal notranslate"><span class="pre">home_hsw()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_hsw_hstop"><code class="docutils literal notranslate"><span class="pre">home_hsw_hstop()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_hsw_dir"><code class="docutils literal notranslate"><span class="pre">home_hsw_dir()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_limit"><code class="docutils literal notranslate"><span class="pre">home_limit()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_hsw_hlim"><code class="docutils literal notranslate"><span class="pre">home_hsw_hlim()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_home"><code class="docutils literal notranslate"><span class="pre">home_home()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_nothing"><code class="docutils literal notranslate"><span class="pre">home_nothing()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.sequences.home_slits_hsw"><code class="docutils literal notranslate"><span class="pre">home_slits_hsw()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/DiamondLightSource/pmac_motorhome/edit/1.12/docs/reference/sequences.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/sequences.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

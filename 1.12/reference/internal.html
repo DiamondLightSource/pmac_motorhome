@@ -1,0 +1,1347 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Internal Documentation &#8212; pmac_motorhome 1.12 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=2d52a127"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/internal';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://DiamondLightSource.github.io/pmac_motorhome/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.12';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/dls-logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pmac_motorhome" href="../_api/pmac_motorhome.html" />
+    <link rel="prev" title="Constants" href="constants.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.12" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/dls-logo.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/dls-logo.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">pmac_motorhome</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/pmac_motorhome" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pmac_motorhome" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../how-to.html">
+    How-to Guides
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../explanations.html">
+    Explanations
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/DiamondLightSource/pmac_motorhome" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pmac_motorhome" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-cube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="external.html">User API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequences.html">Predfined Homing Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Snippet Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Internal Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_api/pmac_motorhome.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/DiamondLightSource/pmac_motorhome/releases">Release Notes</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Internal Documentation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="internal-documentation">
+<span id="internal"></span><h1>Internal Documentation<a class="headerlink" href="#internal-documentation" title="Link to this heading">#</a></h1>
+<p>Documentation for maintainers.</p>
+<section id="module-pmac_motorhome.plc">
+<span id="classes"></span><h2>Classes<a class="headerlink" href="#module-pmac_motorhome.plc" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.plc.</span></span><span class="sig-name descname"><span class="pre">Plc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plc_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.ControllerType" title="pmac_motorhome.constants.ControllerType"><span class="pre">ControllerType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">600000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PostHomeMove.none</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc" title="Link to this definition">#</a></dt>
+<dd><p>This class is used in a PLC definition to declare that a PLC is to
+be generated.</p>
+<p>Should always be instantiated using <a class="reference internal" href="commands.html#pmac_motorhome.commands.plc" title="pmac_motorhome.commands.plc"><code class="xref any py py-func docutils literal notranslate"><span class="pre">pmac_motorhome.commands.plc</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The PLC number to use in generated code</p></li>
+<li><p><strong>controller</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.ControllerType" title="pmac_motorhome.constants.ControllerType"><em>ControllerType</em></a>) – Target controller type for the code</p></li>
+<li><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>pathlib.Path</em></a>) – Output file to receive the generated code</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Timeout for the plc - default 600000ms (10min).</p></li>
+<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the home sequence completes</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A distance to use in post_home if required</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – Invalid output file name</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – Invalid PLC number supplied</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.instance">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pmac_motorhome.plc.Plc" title="pmac_motorhome.plc.Plc"><span class="pre">Plc</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.instance" title="Link to this definition">#</a></dt>
+<dd><p>Get the current in-scope PLC.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.add_group">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><span class="pre">Group</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.add_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.add_group" title="Link to this definition">#</a></dt>
+<dd><p>Add a new group of axes to the current Plc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A Unique group number (1 is reserved for ‘All Groups’)</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – A post home action to perform on success</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A distance for those post home actions which require it</p></li>
+<li><p><strong>comment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Add a group comment to the top of the Plc code</p></li>
+<li><p><strong>pre</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – some raw PLC code to insert at the start of a group</p></li>
+<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created Group</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group">Group</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.add_motor">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">motor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><span class="pre">Motor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.add_motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.add_motor" title="Link to this definition">#</a></dt>
+<dd><p>Add a motor to the PLC. The Plc object collects all the motors in all
+of its groups for use in the Plc callback functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – axis number</p></li>
+<li><p><strong>motor</strong> (<a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><em>Motor</em></a>) – motor details</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_hi_limits">
+<span class="sig-name descname"><span class="pre">save_hi_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_hi_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_hi_limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving all axes high limits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.restore_hi_limits">
+<span class="sig-name descname"><span class="pre">restore_hi_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.restore_hi_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.restore_hi_limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for restoring all axes high limits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_lo_limits">
+<span class="sig-name descname"><span class="pre">save_lo_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_lo_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_lo_limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving all axes low limits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.restore_lo_limits">
+<span class="sig-name descname"><span class="pre">restore_lo_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.restore_lo_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.restore_lo_limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for restoring all axes low limits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_homed">
+<span class="sig-name descname"><span class="pre">save_homed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_homed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_homed" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving all axes homed state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_not_homed">
+<span class="sig-name descname"><span class="pre">save_not_homed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_not_homed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_not_homed" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving the inverse of all axes homed state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.restore_homed">
+<span class="sig-name descname"><span class="pre">restore_homed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.restore_homed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.restore_homed" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for restoring all axes homed state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_limit_flags">
+<span class="sig-name descname"><span class="pre">save_limit_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_limit_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_limit_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving all axes limit flags</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.restore_limit_flags">
+<span class="sig-name descname"><span class="pre">restore_limit_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.restore_limit_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.restore_limit_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for restoring all axes limit flags</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.save_position">
+<span class="sig-name descname"><span class="pre">save_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.save_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.save_position" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for saving all axes positions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.clear_limits">
+<span class="sig-name descname"><span class="pre">clear_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.clear_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.clear_limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for clearing all axes limits</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.stop_motors">
+<span class="sig-name descname"><span class="pre">stop_motors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.stop_motors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.stop_motors" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for stopping all axes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.are_homed_flags_zero">
+<span class="sig-name descname"><span class="pre">are_homed_flags_zero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.are_homed_flags_zero"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.are_homed_flags_zero" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for checking if all axes homed=0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.are_homed_flags_zero_brick">
+<span class="sig-name descname"><span class="pre">are_homed_flags_zero_brick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.are_homed_flags_zero_brick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.are_homed_flags_zero_brick" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all axes in the plc which have macros: zero the homed flag (brick specific)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the resulting command string</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.plc.Plc.has_motors_with_macro_brick">
+<span class="sig-name descname"><span class="pre">has_motors_with_macro_brick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/plc.html#Plc.has_motors_with_macro_brick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.plc.Plc.has_motors_with_macro_brick" title="Link to this definition">#</a></dt>
+<dd><p>Check if any of the motors in the plc has macros (brick specific)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>returns true is any of the motors in the plc have defined macro (brick specific)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pmac_motorhome.motor">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.motor.</span></span><span class="sig-name descname"><span class="pre">Motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plc_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PostHomeMove.none</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/motor.html#Motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.motor.Motor" title="Link to this definition">#</a></dt>
+<dd><p>Declares a motor for use in homing routines in the enclosing Group, Plc</p>
+<p>Should always be instantiated using <a class="reference internal" href="commands.html#pmac_motorhome.commands.motor" title="pmac_motorhome.commands.motor"><code class="xref any py py-func docutils literal notranslate"><span class="pre">pmac_motorhome.commands.motor</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Axis number of the motor</p></li>
+<li><p><strong>jdist</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Distance in counts to jog after finding the home mark
+this should be enough distance to move clear of the home mark</p></li>
+<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – the plc number of the enclosing Plc</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – the action to perform on this motor when
+homing is complete</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A distance to use in post_home</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – for internal use in conversion of old scripts sets
+the index of this motor to a different value than the order of
+declaration.</p></li>
+<li><p><strong>ms</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – macrostation number</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.get_motor">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plc_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PostHomeMove.none</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><span class="pre">Motor</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/motor.html#Motor.get_motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.motor.Motor.get_motor" title="Link to this definition">#</a></dt>
+<dd><p>A factory function to return a Motor object but ensure that there
+is only ever one instance of each axis number. This is required since
+PLC code allocates p variables on a per axis basis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.macro_station">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">macro_station</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#pmac_motorhome.motor.Motor.macro_station" title="Link to this definition">#</a></dt>
+<dd><p>Calculate macro and generate a command string for this motor
+Pmac specific command string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pmac specific ms command string</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.macro_station_brick_str">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">macro_station_brick_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#pmac_motorhome.motor.Motor.macro_station_brick_str" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for this motor
+Brick specific command string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>brick specific ms command string</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.macro_station_brick">
+<span class="sig-name descname"><span class="pre">macro_station_brick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/motor.html#Motor.macro_station_brick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.motor.Motor.macro_station_brick" title="Link to this definition">#</a></dt>
+<dd><p>Return or calculate macro station number.
+Brick specific calculation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>brick specific macro station number</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.post_home_distance">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">post_home_distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#pmac_motorhome.motor.Motor.post_home_distance" title="Link to this definition">#</a></dt>
+<dd><p>Generate a post distance string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>post distance string, “*” if post distance is 0</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.post_home_with_distance">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">post_home_with_distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#pmac_motorhome.motor.Motor.post_home_with_distance" title="Link to this definition">#</a></dt>
+<dd><p>Generate one string which contains the post home move with distance (if applicable) for this motor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>one string describing the post home move for this motor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.motor.Motor.has_macro_station_brick">
+<span class="sig-name descname"><span class="pre">has_macro_station_brick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/motor.html#Motor.has_macro_station_brick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.motor.Motor.has_macro_station_brick" title="Link to this definition">#</a></dt>
+<dd><p>”
+Check if the motor has macro station defined (brick only)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if macro station defined for the motor</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pmac_motorhome.group">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.group.</span></span><span class="sig-name descname"><span class="pre">Group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plc_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PostHomeMove.none</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group" title="Link to this definition">#</a></dt>
+<dd><p>Defines a group of axes to be homed as a unit</p>
+<p>Should always be instantiated using <a class="reference internal" href="commands.html#pmac_motorhome.commands.group" title="pmac_motorhome.commands.group"><code class="xref any py py-func docutils literal notranslate"><span class="pre">pmac_motorhome.commands.group</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A unique number to represent this group within its
+Plc. group 1 is reservered for ‘all groups’</p></li>
+<li><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><em>Motor</em></a><em>]</em>) – A list of axis numbers that this group will control</p></li>
+<li><p><strong>plc_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The plc number of the enclosing Plc</p></li>
+<li><p><strong>controller</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.ControllerType" title="pmac_motorhome.constants.ControllerType"><em>ControllerType</em></a>) – Enum representing the type of motor controller</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the home sequence completes</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A distance to use in post_home if required</p></li>
+<li><p><strong>comment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – [description]. A comment to place in the output Plc code
+at the beginning of this group’s definition</p></li>
+<li><p><strong>pre</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – some raw PLC code to insert at the start of a group</p></li>
+<li><p><strong>post</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – some raw PLC code to insert at the end of a group</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.add_motor">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_motor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">jdist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">enc_axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><span class="pre">Motor</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.add_motor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.add_motor" title="Link to this definition">#</a></dt>
+<dd><p>Add a new motor to the current group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Axis number</p></li>
+<li><p><strong>jdist</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – distance to jog to move off of home mark</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – internal use</p></li>
+<li><p><strong>post_home</strong> (<a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><em>PostHomeMove</em></a>) – action to perform on all axes after the home sequence completes</p></li>
+<li><p><strong>post_distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A distance to use in post_home if required</p></li>
+<li><p><strong>enc_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of additional encoders that need zeroing on homing
+completion</p></li>
+<li><p><strong>ms</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – macrostation number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created Motor</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor">Motor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.instance">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><span class="pre">Group</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.instance" title="Link to this definition">#</a></dt>
+<dd><p>Get the current in-scope Group</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.add_comment">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">htype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.add_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.add_comment" title="Link to this definition">#</a></dt>
+<dd><p>Add a group comment to the top of the Plc code in the style of the original
+motorhome.py module but note that you can use any descriptive text
+for htype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>htype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Homing sequence type e.g. RLIM HSW etc.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.add_snippet">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_snippet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.add_snippet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.add_snippet" title="Link to this definition">#</a></dt>
+<dd><p>Add a jinja snippet to the list of snippets to be rendered</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – prefix of the jinja template’s filename
+‘.pmc.jinja’ is added to this name and the template file
+should be in pmac_motorhome/snippets</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.add_action">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.add_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.add_action" title="Link to this definition">#</a></dt>
+<dd><p>Add a callback to the list of ‘snippets’ to be rendered The callback
+function should return an string to be inserted into the rendered
+template</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>Callable</em>) – the function to call</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – arguments to pass to func</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.set_axis_filter">
+<span class="sig-name descname"><span class="pre">set_axis_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.set_axis_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.set_axis_filter" title="Link to this definition">#</a></dt>
+<dd><p>A callback function to set group actions to only act on a subset of the
+group’s axes.</p>
+<p>Will be called back during the rendering of plc.pmc.jinja, and is inserted
+using Group.add_action()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – List of axis numbers to be controlled in this context</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Blank string. Required because this function is used as a callback</dt><dd><p>from a jinja template and thus must return some string to insert into
+the template</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.all_motors_have_same_post_move_type">
+<span class="sig-name descname"><span class="pre">all_motors_have_same_post_move_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="constants.html#pmac_motorhome.constants.PostHomeMove" title="pmac_motorhome.constants.PostHomeMove"><span class="pre">PostHomeMove</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.all_motors_have_same_post_move_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.all_motors_have_same_post_move_type" title="Link to this definition">#</a></dt>
+<dd><p>Check that all motors in the group have the same post move type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.command" title="Link to this definition">#</a></dt>
+<dd><p>A callback function to insert arbitrarty text into the ouput Plc code.</p>
+<p>Will be called back during the rendering of plc.pmc.jinja, and is inserted
+using Group.add_action()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Any string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the passed string (for jinja rendering)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.callback">
+<span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.callback" title="Link to this definition">#</a></dt>
+<dd><p>Callback from plc.pmc.jinja to a function that was added into the group
+using <a class="reference internal" href="#pmac_motorhome.group.Group.add_action" title="pmac_motorhome.group.Group.add_action"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_action()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function</strong> (<em>Callable</em>) – the function to call</p></li>
+<li><p><strong>args</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – arguments to pass to function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The string to insert into the PLC output file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.jog_stopped">
+<span class="sig-name descname"><span class="pre">jog_stopped</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.jog_stopped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.jog_stopped" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string that will jog any stopped axes in the group</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.jog_axes">
+<span class="sig-name descname"><span class="pre">jog_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.jog_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.jog_axes" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: jog a set distance</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.set_large_jog_distance">
+<span class="sig-name descname"><span class="pre">set_large_jog_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.set_large_jog_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.set_large_jog_distance" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: set large jog distance</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.jog">
+<span class="sig-name descname"><span class="pre">jog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.jog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.jog" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: jog indefinitely</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.in_pos">
+<span class="sig-name descname"><span class="pre">in_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'&amp;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relOperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'=='</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.in_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.in_pos" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: check in postiion
+relOperator (relationalOperator) is required for power pmac based
+controllers as each variable needs to be evaluated separately</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.limits">
+<span class="sig-name descname"><span class="pre">limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relOperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'!='</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.limits" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: check limits
+relOperator (relationalOperator) is required for power pmac based
+controllers as each variable needs to be evaluated separately</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.following_err">
+<span class="sig-name descname"><span class="pre">following_err</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relOperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'=='</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.following_err"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.following_err" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: check following error</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.homed">
+<span class="sig-name descname"><span class="pre">homed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.homed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.homed" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: check homed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.clear_home">
+<span class="sig-name descname"><span class="pre">clear_home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.clear_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.clear_home" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: clear home flag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.store_position_diff">
+<span class="sig-name descname"><span class="pre">store_position_diff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.store_position_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.store_position_diff" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: save position</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.stored_pos_to_jogdistance">
+<span class="sig-name descname"><span class="pre">stored_pos_to_jogdistance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.stored_pos_to_jogdistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.stored_pos_to_jogdistance" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: calculate jog distance
+to return to pre homed position</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.stored_limit_to_jogdistance">
+<span class="sig-name descname"><span class="pre">stored_limit_to_jogdistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">homing_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.stored_limit_to_jogdistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.stored_limit_to_jogdistance" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: save distance to limit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.jog_distance">
+<span class="sig-name descname"><span class="pre">jog_distance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.jog_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.jog_distance" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: jog to prejog position.
+Useful if a program has been aborted in the middle of a move, because it
+will move the motor to the programmed move end position</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.negate_home_flags">
+<span class="sig-name descname"><span class="pre">negate_home_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.negate_home_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.negate_home_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: invert homing flags</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.restore_home_flags">
+<span class="sig-name descname"><span class="pre">restore_home_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.restore_home_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.restore_home_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: restore original homing flags</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.jog_to_home_jdist">
+<span class="sig-name descname"><span class="pre">jog_to_home_jdist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.jog_to_home_jdist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.jog_to_home_jdist" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: jog to home and then move jdist</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.home">
+<span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.home" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: home command</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.set_home">
+<span class="sig-name descname"><span class="pre">set_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.set_home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.set_home" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: set current position as home</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.restore_limit_flags">
+<span class="sig-name descname"><span class="pre">restore_limit_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.restore_limit_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.restore_limit_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: restore original limit flags</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.overwrite_inverse_flags">
+<span class="sig-name descname"><span class="pre">overwrite_inverse_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.overwrite_inverse_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.overwrite_inverse_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: reuse the not homed store to
+store ?? (TODO what is this doing ?)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.set_inpos_trigger">
+<span class="sig-name descname"><span class="pre">set_inpos_trigger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.set_inpos_trigger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.set_inpos_trigger" title="Link to this definition">#</a></dt>
+<dd><p>Generate a command string for all group axes: set the inpos trigger ixx97</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.filter_motors_with_macro">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_motors_with_macro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.filter_motors_with_macro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.filter_motors_with_macro" title="Link to this definition">#</a></dt>
+<dd><p>Check if motor (on a brick) has macro.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>motor</strong> (<a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><em>Motor</em></a>) – motor being checked</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the motor has macro (brick only)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.filter_motors_without_macro">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_motors_without_macro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.filter_motors_without_macro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.filter_motors_without_macro" title="Link to this definition">#</a></dt>
+<dd><p>Check if motor (on a brick) doesn’t have a  macro.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>motor</strong> (<a class="reference internal" href="#pmac_motorhome.motor.Motor" title="pmac_motorhome.motor.Motor"><em>Motor</em></a>) – motor being checked</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the motor doesn’t have macro (brick only)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pmac_motorhome.group.Group.has_motors_with_macro_brick">
+<span class="sig-name descname"><span class="pre">has_motors_with_macro_brick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pmac_motorhome/group.html#Group.has_motors_with_macro_brick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.group.Group.has_motors_with_macro_brick" title="Link to this definition">#</a></dt>
+<dd><p>Check if any of the motors in the group has macros (brick specific)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>returns true is any of the motors in the group have defined macro (brick specific)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pmac_motorhome.onlyaxes">
+<dt class="sig sig-object py" id="pmac_motorhome.onlyaxes.OnlyAxes">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.onlyaxes.</span></span><span class="sig-name descname"><span class="pre">OnlyAxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/onlyaxes.html#OnlyAxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.onlyaxes.OnlyAxes" title="Link to this definition">#</a></dt>
+<dd><p>Sets the current axis filter applied to the current group</p>
+<p>Should always be instantiated using <a class="reference internal" href="commands.html#pmac_motorhome.commands.only_axes" title="pmac_motorhome.commands.only_axes"><code class="xref any py py-func docutils literal notranslate"><span class="pre">pmac_motorhome.commands.only_axes</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference internal" href="#pmac_motorhome.group.Group" title="pmac_motorhome.group.Group"><em>Group</em></a>) – The parent group context</p></li>
+<li><p><strong>axes</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The subset of axes from the parent to enable</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-pmac_motorhome.template">
+<span id="module-pmac_motorhome.plcgenerator"></span><dt class="sig sig-object py" id="pmac_motorhome.template.Template">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pmac_motorhome.template.</span></span><span class="sig-name descname"><span class="pre">Template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jinja_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pmac_motorhome/template.html#Template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pmac_motorhome.template.Template" title="Link to this definition">#</a></dt>
+<dd><p>A dataclass for holding details of a jinja template to render into the PLC code.</p>
+<p>As the Plc object is being evaluated a list of these is build up. It is then used
+at render time to insert snippets with arguments into the rendered code.</p>
+<p>May also represent a callback function to be called from the root plc.pmc.jinja.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jinja_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – the prefix of the jinja template file name</p></li>
+<li><p><strong>args</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – arguments to pass to the template if jinja file
+is not None, or to pass to the function if function is not None</p></li>
+<li><p><strong>function</strong> – (Callable): if not None then this is a callback function to call
+instead of inserting a jinja template snippet</p></li>
+<li><p><strong>custom_text</strong> – str = “”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="constants.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Constants</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../_api/pmac_motorhome.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">pmac_motorhome</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pmac_motorhome.plc">Classes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc"><code class="docutils literal notranslate"><span class="pre">Plc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.instance"><code class="docutils literal notranslate"><span class="pre">Plc.instance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.add_group"><code class="docutils literal notranslate"><span class="pre">Plc.add_group()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.add_motor"><code class="docutils literal notranslate"><span class="pre">Plc.add_motor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_hi_limits"><code class="docutils literal notranslate"><span class="pre">Plc.save_hi_limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.restore_hi_limits"><code class="docutils literal notranslate"><span class="pre">Plc.restore_hi_limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_lo_limits"><code class="docutils literal notranslate"><span class="pre">Plc.save_lo_limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.restore_lo_limits"><code class="docutils literal notranslate"><span class="pre">Plc.restore_lo_limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_homed"><code class="docutils literal notranslate"><span class="pre">Plc.save_homed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_not_homed"><code class="docutils literal notranslate"><span class="pre">Plc.save_not_homed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.restore_homed"><code class="docutils literal notranslate"><span class="pre">Plc.restore_homed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_limit_flags"><code class="docutils literal notranslate"><span class="pre">Plc.save_limit_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.restore_limit_flags"><code class="docutils literal notranslate"><span class="pre">Plc.restore_limit_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.save_position"><code class="docutils literal notranslate"><span class="pre">Plc.save_position()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.clear_limits"><code class="docutils literal notranslate"><span class="pre">Plc.clear_limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.stop_motors"><code class="docutils literal notranslate"><span class="pre">Plc.stop_motors()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.are_homed_flags_zero"><code class="docutils literal notranslate"><span class="pre">Plc.are_homed_flags_zero()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.are_homed_flags_zero_brick"><code class="docutils literal notranslate"><span class="pre">Plc.are_homed_flags_zero_brick()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.plc.Plc.has_motors_with_macro_brick"><code class="docutils literal notranslate"><span class="pre">Plc.has_motors_with_macro_brick()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor"><code class="docutils literal notranslate"><span class="pre">Motor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.get_motor"><code class="docutils literal notranslate"><span class="pre">Motor.get_motor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.macro_station"><code class="docutils literal notranslate"><span class="pre">Motor.macro_station</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.macro_station_brick_str"><code class="docutils literal notranslate"><span class="pre">Motor.macro_station_brick_str</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.macro_station_brick"><code class="docutils literal notranslate"><span class="pre">Motor.macro_station_brick()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.post_home_distance"><code class="docutils literal notranslate"><span class="pre">Motor.post_home_distance</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.post_home_with_distance"><code class="docutils literal notranslate"><span class="pre">Motor.post_home_with_distance</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.motor.Motor.has_macro_station_brick"><code class="docutils literal notranslate"><span class="pre">Motor.has_macro_station_brick()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group"><code class="docutils literal notranslate"><span class="pre">Group</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.add_motor"><code class="docutils literal notranslate"><span class="pre">Group.add_motor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.instance"><code class="docutils literal notranslate"><span class="pre">Group.instance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.add_comment"><code class="docutils literal notranslate"><span class="pre">Group.add_comment()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.add_snippet"><code class="docutils literal notranslate"><span class="pre">Group.add_snippet()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.add_action"><code class="docutils literal notranslate"><span class="pre">Group.add_action()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.set_axis_filter"><code class="docutils literal notranslate"><span class="pre">Group.set_axis_filter()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.all_motors_have_same_post_move_type"><code class="docutils literal notranslate"><span class="pre">Group.all_motors_have_same_post_move_type()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.command"><code class="docutils literal notranslate"><span class="pre">Group.command()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.callback"><code class="docutils literal notranslate"><span class="pre">Group.callback()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.jog_stopped"><code class="docutils literal notranslate"><span class="pre">Group.jog_stopped()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.jog_axes"><code class="docutils literal notranslate"><span class="pre">Group.jog_axes()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.set_large_jog_distance"><code class="docutils literal notranslate"><span class="pre">Group.set_large_jog_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.jog"><code class="docutils literal notranslate"><span class="pre">Group.jog()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.in_pos"><code class="docutils literal notranslate"><span class="pre">Group.in_pos()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.limits"><code class="docutils literal notranslate"><span class="pre">Group.limits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.following_err"><code class="docutils literal notranslate"><span class="pre">Group.following_err()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.homed"><code class="docutils literal notranslate"><span class="pre">Group.homed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.clear_home"><code class="docutils literal notranslate"><span class="pre">Group.clear_home()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.store_position_diff"><code class="docutils literal notranslate"><span class="pre">Group.store_position_diff()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.stored_pos_to_jogdistance"><code class="docutils literal notranslate"><span class="pre">Group.stored_pos_to_jogdistance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.stored_limit_to_jogdistance"><code class="docutils literal notranslate"><span class="pre">Group.stored_limit_to_jogdistance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.jog_distance"><code class="docutils literal notranslate"><span class="pre">Group.jog_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.negate_home_flags"><code class="docutils literal notranslate"><span class="pre">Group.negate_home_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.restore_home_flags"><code class="docutils literal notranslate"><span class="pre">Group.restore_home_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.jog_to_home_jdist"><code class="docutils literal notranslate"><span class="pre">Group.jog_to_home_jdist()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.home"><code class="docutils literal notranslate"><span class="pre">Group.home()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.set_home"><code class="docutils literal notranslate"><span class="pre">Group.set_home()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.restore_limit_flags"><code class="docutils literal notranslate"><span class="pre">Group.restore_limit_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.overwrite_inverse_flags"><code class="docutils literal notranslate"><span class="pre">Group.overwrite_inverse_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.set_inpos_trigger"><code class="docutils literal notranslate"><span class="pre">Group.set_inpos_trigger()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.filter_motors_with_macro"><code class="docutils literal notranslate"><span class="pre">Group.filter_motors_with_macro()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.filter_motors_without_macro"><code class="docutils literal notranslate"><span class="pre">Group.filter_motors_without_macro()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.group.Group.has_motors_with_macro_brick"><code class="docutils literal notranslate"><span class="pre">Group.has_motors_with_macro_brick()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.onlyaxes.OnlyAxes"><code class="docutils literal notranslate"><span class="pre">OnlyAxes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pmac_motorhome.template.Template"><code class="docutils literal notranslate"><span class="pre">Template</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/DiamondLightSource/pmac_motorhome/edit/1.12/docs/reference/internal.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/internal.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
