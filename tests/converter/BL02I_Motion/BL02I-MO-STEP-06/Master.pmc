@@ -44,5 +44,3 @@
  
 ; Motion program for the CS moves
 #include "PROGs/PROG10_CS_motion.pmc"
-
-

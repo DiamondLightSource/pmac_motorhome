@@ -31,7 +31,7 @@ elif name == "PXY2":
     plc = PLC(num, ctype=GEOBRICK, post=post)
     plc.add_motor(7, group=2, htype=RLIM, jdist=-1000)
     plc.add_motor(8, group=3, htype=RLIM, jdist=-1000)
-elif name == "SPY": # SAXS Platform Table Y
+elif name == "SPY":  # SAXS Platform Table Y
     plc = PLC(num, htype=HSW, ctype=GEOBRICK, post=post)
     plc.add_motor(17, jdist=-1000, group=2, ms=5)
 else:

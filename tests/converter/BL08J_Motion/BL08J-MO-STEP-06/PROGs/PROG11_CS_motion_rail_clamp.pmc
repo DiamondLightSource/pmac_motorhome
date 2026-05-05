@@ -109,4 +109,3 @@ if AirControlEnabled
 		STATE=STATE_CLOSE_ERROR
 	endif
 CLOSE
-

@@ -1,3 +1,4 @@
+.. _Commands:
 
 Commands
 --------

@@ -237,6 +237,3 @@ CLEAR
     endif
 CLOSE
 ENABLE PLC 17
-
-
-

@@ -1,16 +1,13 @@
 import unittest
-from pathlib import Path
-from unittest.mock import Mock
-from pmac_motorhome.commands import motor
+
 from pmac_motorhome.constants import ControllerType, PostHomeMove
-
-
 from pmac_motorhome.group import Group
 
 
 class TestMotionArea(unittest.TestCase):
-
-    def test_all_motors_have_same_post_move_type_returns_correct_tuple_if_no_motors(self):
+    def test_all_motors_have_same_post_move_type_returns_correct_tuple_if_no_motors(
+        self,
+    ):
         # Arrange
         group = Group(2, 11, ControllerType.brick)
         group.all_motors = []
@@ -21,4 +18,3 @@ class TestMotionArea(unittest.TestCase):
         # Assert
         self.assertFalse(result[0])
         self.assertEqual(result[1], PostHomeMove.none)
-
