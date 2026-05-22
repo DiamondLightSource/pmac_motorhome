@@ -391,7 +391,9 @@ class Group:
         Generate a command string for all group axes: OR the current inPos state with local var
         """
         if self.controller is ControllerType.pbrick:
-            return self._all_axes("inPosLatch{axis} |= motor[{axis}].InPos", separator="\n            ")
+            return self._all_axes(
+                "inPosLatch{axis} |= motor[{axis}].InPos", separator="\n            "
+            )
         raise NotImplementedError("latched inPos implemented for power brick only")
 
     def in_pos_latch_reset(self, operator="&") -> str:
