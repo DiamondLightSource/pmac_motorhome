@@ -901,7 +901,9 @@
 <span class="sd">        Generate a command string for all group axes: OR the current inPos state with local var</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="n">ControllerType</span><span class="o">.</span><span class="n">pbrick</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span><span class="s2">&quot;inPosLatch</span><span class="si">{axis}</span><span class="s2"> |= motor[</span><span class="si">{axis}</span><span class="s2">].InPos&quot;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">            &quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_axes</span><span class="p">(</span>
+                <span class="s2">&quot;inPosLatch</span><span class="si">{axis}</span><span class="s2"> |= motor[</span><span class="si">{axis}</span><span class="s2">].InPos&quot;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">            &quot;</span>
+            <span class="p">)</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;latched inPos implemented for power brick only&quot;</span><span class="p">)</span></div>
 
 
