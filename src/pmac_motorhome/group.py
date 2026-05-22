@@ -374,9 +374,33 @@ class Group:
 
         if self.controller is ControllerType.pbrick:
             pbrickVar = "Motor[{axis}].InPos"
-            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", f"{operator} ")
         else:
             return self._all_axes("m{axis}40", operator)
+
+    def in_pos_latch(self, operator="&") -> str:
+        """
+        Generate a command string for all group axes: check in position latch
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("inPosLatch{axis}", operator)
+        raise NotImplementedError("latched inPos implemented for power brick only")
+
+    def in_pos_variable_latch(self, operator="&") -> str:
+        """
+        Generate a command string for all group axes: OR the current inPos state with local var
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("inPosLatch{axis} |= motor[{axis}].InPos", separator="\n            ")
+        raise NotImplementedError("latched inPos implemented for power brick only")
+
+    def in_pos_latch_reset(self, operator="&") -> str:
+        """
+        Generate a command string for all group axes: reset the latched inPos state
+        """
+        if self.controller is ControllerType.pbrick:
+            return self._all_axes("inPosLatch{axis} = 0", separator="\n        ")
+        raise NotImplementedError("latched inPos implemented for power brick only")
 
     def limits(self, relOperator="!=", value=0) -> str:
         """
@@ -390,25 +414,25 @@ class Group:
         else:
             return self._all_axes("m{axis}30", "|")
 
-    def following_err(self, relOperator="==", value=0) -> str:
+    def following_err(self, operator="|") -> str:
         """
         Generate a command string for all group axes: check following error
         """
         if self.controller is ControllerType.pbrick:
             pbrickVar = "Motor[{axis}].FeFatal"
-            return self._all_axes(f"{pbrickVar} {relOperator} {value} ", "|| ")
+            return self._all_axes(f"{pbrickVar}", operator)
         else:
-            return self._all_axes("m{axis}42", "|")
+            return self._all_axes("m{axis}42", operator)
 
-    def homed(self, value=0) -> str:
+    def homed(self, operator="&") -> str:
         """
         Generate a command string for all group axes: check homed
         """
         if self.controller is ControllerType.pbrick:
-            pbrickVar = "Motor[{axis}].HomeComplete == "
-            return self._all_axes(f"{pbrickVar}{value} ", "&& ")
+            pbrickVar = "Motor[{axis}].HomeComplete"
+            return self._all_axes(f"{pbrickVar}", operator)
         else:
-            return self._all_axes("m{axis}45", "&")
+            return self._all_axes("m{axis}45", operator)
 
     def clear_home(self) -> str:
         """
