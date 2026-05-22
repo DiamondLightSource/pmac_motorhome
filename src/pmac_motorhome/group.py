@@ -213,8 +213,6 @@ class Group:
         else:
             self.motors = [motor for motor in self.all_motors if motor.axis in axes]
             assert len(self.motors) == len(axes), "set_axis_filter: invalid axis number"
-            # callback functions must return a string since we call them with
-            # {{- group.callback(template.function, template.args) -}} from jinja
         return ""
 
     def all_motors_have_same_post_move_type(self) -> tuple[bool, PostHomeMove]:
@@ -609,7 +607,6 @@ class Group:
         Generate a command string for all group axes: reuse the not homed store to
         store ?? (TODO what is this doing ?)
         """
-        # meow
         if self.controller == ControllerType.pmac:
             return self._all_axes("MSR{macro_station},i913,P{not_homed}", " ")
         if self.controller == ControllerType.pbrick:
