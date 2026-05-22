@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "pmac_motorhome is a python3 tool to generator homing PLCs from a python script"
-dependencies = [] # Add project dependencies here, e.g. ["click", "numpy"]
+dependencies = ["jinja2",] # Add project dependencies here, e.g. ["click", "numpy"]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
